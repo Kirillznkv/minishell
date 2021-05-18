@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 19:33:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/05/14 19:36:06 by kshanti          ###   ########.fr        #
+#    Updated: 2021/05/18 22:11:27 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ all:
 	$(MAKE) $(NAME) -j 4
 
 $(NAME): $(O_FILE)
-	$(MAKE) -C ./libft all
+	$(MAKE) -C ./libft bonus
 	gcc $(O_FILE) ./libft/libft.a -o $(NAME)
 
 %.o: %.c $(HEAD)

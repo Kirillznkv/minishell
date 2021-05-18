@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/17 22:05:18 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 22:14:19 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,57 @@ void		preparser(char *commands_line)
 	}
 }
 
-void		skip_spases_tabs(char *str, int *i)
+void		skip_spases_tabs(char **p_command_line, size_t begin)
 {
-	while (str[*i] == ' ' || str[*i] == '\t')
-		(*i)++;
+	size_t	end;
+	char	*command_line;
+	char	*save_to_free;
+
+	command_line = *p_command_line;
+	end = begin;
+	while (command_line[end] == ' ' || command_line[end] == '\t')
+		end++;
+	if (end == begin)
+		return ;
+	save_to_free = *p_command_line;
+	*p_command_line = ft_substr(*p_command_line, end, -1);
+	free(save_to_free);
 }
 
-void		delete_single_quotes(char **p_command_line, size_t beg_sin, size_t end_sin)
+void		replace_spases_tabs_whis_spase(char **p_command_line, size_t *begin)
+{
+	char	*command_line;
+	char	*first_part;
+	char	*last_part;
+	char	*save_to_free;
+
+	command_line = *p_command_line;
+	if (command_line[*begin] != ' ' && command_line[*begin] != '\t')
+		return ;
+	skip_spases_tabs(p_command_line, *begin);
+	save_to_free = *p_command_line;
+	first_part = ft_substr(*p_command_line, 0, *begin);
+	last_part = ft_substr(*p_command_line, *begin, -1);
+	*p_command_line = ft_strjoin(first_part, " ");
+	free(save_to_free);
+	save_to_free = *p_command_line;
+	*p_command_line = ft_strjoin(*p_command_line, last_part);
+	free(save_to_free);
+	free(first_part);
+	free(last_part);
+	(*begin)++;
+}
+
+void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes)
 {
 	char	*first_part;
 	char	*second_part;
 	char	*third_part;
 	char	*save_to_free;
 
-	first_part = ft_substr(*p_command_line, 0, beg_sin);
-	second_part = ft_substr(*p_command_line, beg_sin + 1, end_sin - beg_sin);
-	third_part = ft_substr(*p_command_line, end_sin + 1, -1);
+	first_part = ft_substr(*p_command_line, 0, beg_quotes);
+	second_part = ft_substr(*p_command_line, beg_quotes + 1, end_quotes - beg_quotes);
+	third_part = ft_substr(*p_command_line, end_quotes + 1, -1);
 	free(*p_command_line);
 	*p_command_line = ft_strjoin(first_part, second_part);
 	save_to_free = *p_command_line;
@@ -74,19 +109,19 @@ void		delete_single_quotes(char **p_command_line, size_t beg_sin, size_t end_sin
 	free(save_to_free);
 }
 
-void		replace_single_quotes(char **p_command_line, size_t *begin_single)
+void		replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 {
-	size_t	end_single;
+	size_t	end_quotes;
 	char	*command_line;
 
 	command_line = *p_command_line;
-	if (command_line[*begin_single] != '\'')
+	if (command_line[*begin_quotes] != '\'')
 		return ;
-	end_single = *begin_single + 1;
-	while (command_line[end_single] != '\'')
-		end_single++;
-	delete_single_quotes(p_command_line, *begin_single, end_single);
-	*begin_single = end_single - 1; // + 1(next) - 2(quotes)
+	end_quotes = *begin_quotes + 1;
+	while (command_line[end_quotes] != '\'')
+		end_quotes++;
+	delete_quotes(p_command_line, *begin_quotes, end_quotes);
+	*begin_quotes = end_quotes - 1; // + 1(next) - 2(quotes)
 }
 
 int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
@@ -213,6 +248,53 @@ void		replace_dollar(char **p_command_line, char **env, size_t *begin_dollar) //
 	replace_dollar_from_env(p_command_line, env, begin_dollar);
 }
 
+void		replace_normal_char(char **p_command_line, int *i)
+{
+	char	*command_line;
+
+	command_line = *p_command_line;
+	if (command_line[*i] != ' ' && command_line[*i] != '\"' &&
+		command_line[*i] != '$' && command_line[*i] != '\'' &&
+		/*command_line[*i] != '|' && */command_line[*i] != '\t' &&
+		command_line[*i] != ';' && command_line[*i] != '\0' &&
+		command_line[*i] != '\n')
+		(*i)++;
+}
+
+void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quotes)
+{
+	size_t	end_quotes;
+	char	*command_line;
+
+	end_quotes = *begin_quotes + 1;
+	command_line = *p_command_line;
+	while (command_line[end_quotes] != '\"')
+	{
+		if (command_line[end_quotes] == '\\')
+			end_quotes++;
+		else if (command_line[end_quotes] == '$')
+			replace_double_quotes(p_command_line, env, &end_quotes);
+		else if (command_line[end_quotes] == '\'')
+			replace_single_quotes(p_command_line, &end_quotes);
+		end_quotes++;
+	}
+	delete_quotes(p_command_line, *begin_quotes, end_quotes);
+	*begin_quotes = end_quotes - 1;
+}
+
+void		check_end_word(char **p_command_line, size_t *i, t_commands *command)///////////////////////
+{
+	char	*command_line;
+	char	*save_to_free;
+
+	command_line = *p_command_line;
+	if (command_line[*i] != ' '/* && command_line[i] != '\0' */&&//////
+		/*command_line[i] != '|' && */command_line[*i] != '\t')////////
+		return ;
+	//command->args = ft_substr(*p_command_line, 0, i);////////
+	replace_spases_tabs_whis_spase(p_command_line, i);
+}
+
 t_commands	*get_one_command(char **p_commands_line, char **env)
 {
 	size_t		i;
@@ -224,15 +306,18 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command->next = NULL;
 	command_line = *p_commands_line;
 	i = 0;
-	skip_spases_tabs(command_line, &i);
+	skip_spases_tabs(p_commands_line, &i);
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
 		replace_single_quotes(&command_line, &i);//       '
 		replace_double_quotes(&command_line, env, &i);//  "
 		replace_dollar(&command_line, env, &i);//         $
 		replace_normal_char(&command_line, &i);//         word
-		check_end_word(&command_line, &i, command);
+		check_end_word(&command_line, &i, command);//     add || < > >> 
 	}
+	command->args = ft_substr(command_line, 0, i);
+	if (command_line[i])
+		*p_commands_line = &command_line[i] + 1;
 }
 
 t_commands	*parser(char *commands_line, char **env)
@@ -245,6 +330,7 @@ t_commands	*parser(char *commands_line, char **env)
 	while (*commands_line)
 	{
 		ft_lstadd_back(&first, get_one_command(&commands_line, env));
+		printf("%s\n", first->args);
 	}
 	return (NULL);
 }

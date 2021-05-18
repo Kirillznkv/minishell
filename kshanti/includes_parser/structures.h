@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:22:18 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/17 17:02:14 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 22:13:28 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 typedef struct			s_commands
 {
-	char				**args;
-	struct s_command	*next;
+	char				/***/*args;
+	struct s_commands	*next;
 }						t_commands;
 
 #endif

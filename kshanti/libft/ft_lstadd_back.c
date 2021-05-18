@@ -6,15 +6,15 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:43:06 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/03 16:29:44 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 22:11:56 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstadd_back(t_list **lst, t_list *new)
+void		ft_lstadd_back(t_commands **lst, t_commands *new)
 {
-	t_list	*pl;
+	t_commands	*pl;
 
 	pl = *lst;
 	if (*lst == NULL)

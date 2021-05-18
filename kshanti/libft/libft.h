@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 19:29:56 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/05 13:01:29 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 22:08:22 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "unistd.h"
 # include "stdlib.h"
+# include "../includes_parser/structures.h"
 
 typedef struct		s_list
 {
@@ -26,7 +27,7 @@ void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
-void				ft_lstadd_back(t_list **lst, t_list *new);
+void				ft_lstadd_back(t_commands **lst, t_commands *new);
 t_list				*ft_lstlast(t_list *lst);
 int					ft_lstsize(t_list *lst);
 void				ft_lstadd_front(t_list **lst, t_list *new);
