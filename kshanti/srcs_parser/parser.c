@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/18 22:41:36 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 23:05:42 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void		replace_spases_tabs_whis_spase(char **p_command_line, size_t *begin)
 	if (command_line[*begin] != ' ' && command_line[*begin] != '\t')
 		return ;
 	skip_spases_tabs(p_command_line, *begin);
+	if (!command_line[*begin])
+		return ;
 	save_to_free = *p_command_line;
 	first_part = ft_substr(*p_command_line, 0, *begin);
 	last_part = ft_substr(*p_command_line, *begin, -1);
@@ -321,6 +323,8 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command->args = ft_substr(command_line, 0, i);
 	if (command_line[i])
 		*p_commands_line = &command_line[i] + 1;
+	else
+		*p_commands_line = &command_line[i];
 	return (command);
 }
 
@@ -331,10 +335,11 @@ t_commands	*parser(char *commands_line, char **env)
 	if (!commands_line)
 		error_control("Commands line is NULL");
 	preparser(commands_line);
+	first = NULL;
 	while (*commands_line)
 	{
 		ft_lstadd_back(&first, get_one_command(&commands_line, env));
-		printf("%s\n", first->args);
+		printf("|%s|\n", first->args);
 	}
 	return (NULL);
 }
