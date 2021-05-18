@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/18 22:14:57 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/18 22:41:18 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 int		main(int argc, char **argv, char **env)
 {
-	parser("abc123   ", env);
+	char	*line;
+
+	line = ft_strdup("abc123   ");
+	parser(line, env);
 	return (0);
 }
