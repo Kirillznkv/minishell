@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/19 21:22:57 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 22:18:44 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int		main(int argc, char **argv, char **env)
 	char	*line;
 	char	*line_read;
 
-	line = ft_strdup("\" kir'ill \" dasha   masha");
+	line = ft_strdup("sdcjns |$sdvsvs| sfef");
 	line_read = (char*)calloc(10, 1);
-	read(0, line_read, 9);
-	parser(line_read, env);
+	//read(0, line_read, 9);
+	parser(line, env);
+	free(line_read);
+	free(line);
 	return (0);
 }
