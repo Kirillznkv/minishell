@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/19 20:31:08 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 21:17:10 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes)
 	char	*save_to_free;
 
 	first_part = ft_substr(*p_command_line, 0, beg_quotes);
-	second_part = ft_substr(*p_command_line, beg_quotes + 1, end_quotes - beg_quotes);
+	second_part = ft_substr(*p_command_line, beg_quotes + 1, end_quotes - beg_quotes - 1);
 	third_part = ft_substr(*p_command_line, end_quotes + 1, -1);
 	free(*p_command_line);
 	*p_command_line = ft_strjoin(first_part, second_part);
@@ -131,7 +131,9 @@ void		replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 	end_quotes = *begin_quotes + 1;
 	while (command_line[end_quotes] != '\'')
 		end_quotes++;
+	//printf("|%s| start=%zu end=%zu\n", command_line, *begin_quotes, end_quotes);
 	delete_quotes(p_command_line, *begin_quotes, end_quotes);
+	//printf("|%s| start=%zu end=%zu\n", command_line, *begin_quotes, end_quotes);
 	*begin_quotes = end_quotes - 1; // + 1(next) - 2(quotes)
 }
 
@@ -264,7 +266,7 @@ void		replace_normal_char(char **p_command_line, size_t *i)
 	char	*command_line;
 
 	command_line = *p_command_line;
-	if (command_line[*i] != ' ' && command_line[*i] != '\"' &&
+	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&
 		command_line[*i] != '$' && command_line[*i] != '\'' &&
 		/*command_line[*i] != '|' && */command_line[*i] != '\t' &&
 		command_line[*i] != ';' && command_line[*i] != '\0' &&
@@ -322,7 +324,9 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
+		//printf("|%s|\n", command_line);
 		replace_single_quotes(&command_line, &i);//       '
+		//write(1, "###\n", 4);
 		replace_double_quotes(&command_line, env, &i);//  "
 		replace_dollar(&command_line, env, &i);//         $
 		replace_normal_char(&command_line, &i);//         word
