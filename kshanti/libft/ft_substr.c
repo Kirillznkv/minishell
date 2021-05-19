@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/01 18:25:02 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/01 18:55:38 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 20:30:49 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char		*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (s == NULL)
 		return (NULL);
+	if (ft_strlen(&s[start]) < len)
+		len = ft_strlen(&s[start]);
 	str = (char*)ft_calloc(len + 1, 1);
 	if (str && start <= ft_strlen(s))
 		while (s[start] && i < len)

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/18 23:12:20 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 20:31:08 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ void		skip_spases_tabs(char **p_command_line, size_t begin)
 
 	command_line = *p_command_line;
 	end = begin;
+	//printf("|%s|\n", &command_line[begin]);
 	while (command_line[end] == ' ' || command_line[end] == '\t')
 		end++;
 	if (end == begin)
 		return ;
+	//printf("1\n");
 	save_to_free = *p_command_line;
 	first_part = ft_substr(*p_command_line, 0, begin);
 	last_part = ft_substr(*p_command_line, end, -1);
@@ -82,7 +84,8 @@ void		replace_spases_tabs_whis_spase(char **p_command_line, size_t *begin)
 	if (command_line[*begin] != ' ' && command_line[*begin] != '\t')
 		return ;
 	skip_spases_tabs(p_command_line, *begin);
-	if (!command_line[*begin])
+	command_line = *p_command_line;
+	if (command_line[*begin] == '\0')
 		return ;
 	save_to_free = *p_command_line;
 	first_part = ft_substr(*p_command_line, 0, *begin);
@@ -314,16 +317,15 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command = (t_commands*)malloc(sizeof(t_commands));
 	command->args = NULL;
 	command->next = NULL;
-	command_line = *p_commands_line;
 	i = 0;
 	skip_spases_tabs(p_commands_line, i);
+	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
 		replace_single_quotes(&command_line, &i);//       '
 		replace_double_quotes(&command_line, env, &i);//  "
 		replace_dollar(&command_line, env, &i);//         $
 		replace_normal_char(&command_line, &i);//         word
-		//printf("###### %zu\n", i);
 		check_end_word(&command_line, &i, command);//     add || < > >> 
 	}
 	command->args = ft_substr(command_line, 0, i);

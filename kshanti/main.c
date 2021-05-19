@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/18 23:12:48 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 20:31:34 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		main(int argc, char **argv, char **env)
 {
 	char	*line;
 
-	line = ft_strdup("abc123     ");
+	line = ft_strdup("acdsgegegergcdbdfbdbdfxbseb  aadfa   afgdegbsdf");
 	parser(line, env);
 	return (0);
 }
