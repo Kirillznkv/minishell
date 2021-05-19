@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/19 21:17:10 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/19 22:05:47 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,21 @@ void		replace_normal_char(char **p_command_line, size_t *i)
 		(*i)++;
 }
 
+void		delete_one_char(char **str, size_t i_delete)
+{
+	char	*save_to_delete;
+	char	*first_part;
+	char	*last_part;
+
+	save_to_delete = *str;
+	first_part = ft_substr(*str, 0, i_delete);
+	last_part = ft_substr(*str, i_delete + 1, -1);
+	*str = ft_strjoin(first_part, last_part);
+	free(save_to_delete);
+	free(first_part);
+	free(last_part);
+}
+
 void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quotes)
 {
 	size_t	end_quotes;
@@ -285,12 +300,15 @@ void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quo
 		return ;
 	while (command_line[end_quotes] != '\"')
 	{
-		if (command_line[end_quotes] == '\\')
+		if (command_line[end_quotes] == '\\' && command_line[end_quotes + 1] != '\"' &&
+												command_line[end_quotes + 1] != '\\' &&
+												command_line[end_quotes + 1] != '$')
 			end_quotes++;
 		else if (command_line[end_quotes] == '$')
 			replace_double_quotes(p_command_line, env, &end_quotes);
-		else if (command_line[end_quotes] == '\'')
-			replace_single_quotes(p_command_line, &end_quotes);
+		else if (command_line[end_quotes] == '\\')
+			delete_one_char(p_command_line, end_quotes);
+		command_line = *p_command_line;
 		end_quotes++;
 	}
 	delete_quotes(p_command_line, *begin_quotes, end_quotes);
