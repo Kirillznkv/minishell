@@ -69,5 +69,7 @@ void		ft_error(int n)
 		printf("Недостаточное количество аргументов\n");
 	else if (n == 2)
 		printf("Команда не существует\n");
+	else if (n == 2)
+		printf("Ошибка выделения памяти\n");
 	exit(EXIT_FAILURE);
 }
