@@ -34,15 +34,13 @@ void		write_env_value(t_env *env_export, char *env, int i)
 	tmp = i;
 	while (env[tmp++])
 		j++;
-	env_export->value = (char *)malloc(sizeof(char) * j);
+	env_export->content.value = (char *)malloc(sizeof(char) * (j + 2));
 	j = 0;
+	env_export->content.value[j++] = '"';
 	while (env[i])
-	{
-		env_export->value[j] = env[i];
-		j++;
-		i++;
-	}
-	env_export->value[j] = '\0';
+		env_export->content.value[j++] = env[i++];
+	env_export->content.value[j++] = '"';
+	env_export->content.value[j] = '\0';
 }
 int		write_env_key(t_env *env_export, char *env)
 {
@@ -53,13 +51,13 @@ int		write_env_key(t_env *env_export, char *env)
 	j = 0;
 	while (env[i] != '=')
 		i++;
-	env_export->key = (char *)malloc(sizeof(char) * i);
+	env_export->content.key = (char *)malloc(sizeof(char) * i);
 	while (j < i)
 	{
-		env_export->key[j] = env[j];
+		env_export->content.key[j] = env[j];
 		j++;
 	}
-	env_export->key[j] = '\0';
+	env_export->content.key[j] = '\0';
 	return (j + 1);
 }
 
@@ -69,8 +67,42 @@ void		write_env_export(t_env *env_export, char *env)
 
 	i = write_env_key(env_export, env);
 	write_env_value(env_export, env, i);
-	printf("%s\n", env_export->key);
-	printf("%s\n", env_export->value);
+}
+
+void			ft_env_sort(t_env *env_export, int i)
+{
+	t_content		tmp;
+	t_env			*ptr;
+
+	ptr = env_export;
+	while (i--)
+	{
+		env_export = ptr;
+		while (env_export->next)
+		{
+			if (ft_strcmp(env_export->content.key, env_export->next->content.key) > 0)
+			{
+				tmp = env_export->content;
+				env_export->content = env_export->next->content;
+				env_export->next->content = tmp;
+			}
+			env_export = env_export->next;
+		}
+	}
+}
+
+void	ft_print_env_export(t_env *env_export)
+{
+	ft_putstr("declare -x ");
+	ft_putstr(env_export->content.key);
+	ft_putchar('=');
+	ft_putstr(env_export->content.value);
+	ft_putchar('\n');
+}
+
+void	ft_export_add(char **env)
+{
+	//если есть = - то записываем в env, иначе только в env_export
 }
 
 
@@ -80,29 +112,25 @@ void	ft_export_shell(char **env)
 
 	i = 0;
 	t_env	*env_export;
-	env_export = new_elem_env();
+	t_env	*ptr;
+
+	ptr = new_elem_env();
+	env_export = ptr;
 	while (env[i])
 	{
-		//printf("%s\n", env[i]);
-		write_env_export(env_export, env[i]);
-		add_elem_env(env_export, new_elem_env());
+		write_env_export(ptr, env[i]);
+		if (env[i + 1])
+		{
+			add_elem_env(ptr, new_elem_env());
+			ptr = ptr->next;
+		}
 		i++;
 	}
-	// t_env	*env_ptr;
-	// env_ptr = env_export;
-	// while (env_ptr)
-	// {
-	// 	printf("%s\n", env_ptr->key);
-	// 	printf("%s\n", env_ptr->value);
-	// 	env_ptr = env_ptr->next;
-	// }
-	
-	//ft_env_sort(env);
-
-	// while (env[i])
-	// {
-	// 	ft_putstr("declare -x ");
-	// 	ft_putstr(env[i++]);
-	// 	ft_putchar('\n');
-	// }
+	//добавляем элементы в env_export
+	ft_env_sort(env_export, i);
+	while (i-- && env_export)
+	{
+		ft_print_env_export(env_export);
+		env_export = env_export->next;
+	}
 }

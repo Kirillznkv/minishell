@@ -5,10 +5,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef	struct 				s_env
+typedef	struct 				s_content
 {
 	char					*key;
 	char					*value;
+}							t_content;
+
+typedef	struct 				s_env
+{
+	t_content				content;
 	struct s_env			*next;
 }							t_env;
 
@@ -19,7 +24,7 @@ void		ft_error(int n);
 int			ft_strcmp(const char *str1, const char *str2);
 int			ft_isalpha(int ch);
 void		ft_env_shell(char **env);
-t_env		*ft_env_sort(t_env *env_export);
+void		ft_env_sort(t_env *env_export, int i);
 void		ft_export_shell(char **env);
 char		*ft_strnstr(const char *s, const char *find, size_t slen);
 void		ft_pwd_shell(char **env);

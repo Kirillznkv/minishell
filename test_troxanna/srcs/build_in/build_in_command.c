@@ -1,25 +1,5 @@
 #include "../../includes/minishell.h"
 
-
-// t_env			*ft_env_sort(t_env *env_export)
-// {
-// 	int			i;
-// 	char		*tmp;
-// 	t_env		*ptr;
-
-// 	i = 0;
-// 	tmp = NULL;
-// 	ptr = env_export;
-// 	while (ptr)
-// 	{
-// 		// if (ft_strcmp(ptr->key, ptr->next->key) < 0)
-// 		// {
-
-// 		// }
-// 		//сортировка по списку
-// 	}
-// }
-
 static char		*get_pwd(char **env)
 {
 	int 		i;
@@ -89,15 +69,16 @@ void	ft_env_shell(char **env)
 
 void	ft_unset_shell(char **env, char **argv, int args)
 {
-	//1. Получить export (хранить значения export в статической переменной (?))
+	//1. Получить export (хранить значения export в статической переменной (?) - уточнить)
 
-	char	**key_env;
+	t_env	*env_unset;
 	int 	i;
 
 	i = 0;
-	//2. Получить ключи экспорта (создать экспорт не как массив, а как структуру ключ - значение)
 	while (args)
 	{
+		//поиск необходимого элемента списка (ключ == аргумент)
+		//удаление элемента из списка, если нашли
 		//if (!ft_strcmp(key_env[i], argv[args])) 
 	}
 }
