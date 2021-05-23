@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:52:01 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/23 20:52:53 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/23 21:34:20 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,17 @@ char		*get_second_env_word(char *env_line)
 
 char		*get_new_dollar_word(char **env, char *dollar_word)
 {
-	char	*env_line;
 	char	*new_dollar_word;
 
-	env_line = *env;
-	while (*env_line)
+	while (*env)
 	{
-		if (ft_strnstr(env_line, dollar_word, -1) &&
-			check_env_word(env_line, dollar_word))
+		if (ft_strnstr(*env, dollar_word, -1) &&
+			check_env_word(*env, dollar_word))
 		{
-			new_dollar_word = get_second_env_word(env_line);
+			new_dollar_word = get_second_env_word(*env);
 			return (new_dollar_word);
 		}
-		env_line++;
+		env++;
 	}
 	return (NULL);
 }
@@ -57,7 +55,7 @@ void		replace_dollar_word(char **p_command_line, char *new_dollar_word, int beg_
 	char	*save_to_free;
 
 	first_part = ft_substr(*p_command_line, 0, beg_dollar);
-	last_part = ft_substr(*p_command_line, end_dollar_word + 1, -1);
+	last_part = ft_substr(*p_command_line, end_dollar_word, -1);
 	free(*p_command_line);
 	*p_command_line = ft_strjoin(first_part, new_dollar_word);
 	save_to_free = *p_command_line;
