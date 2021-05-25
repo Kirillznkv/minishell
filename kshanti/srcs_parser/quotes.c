@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 22:03:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 23:07:22 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quo
 												command_line[end_quotes + 1] != '$')
 			end_quotes++;
 		else if (command_line[end_quotes] == '$')
-			replace_double_quotes(p_command_line, env, &end_quotes);
+		{;
+			replace_dollar(p_command_line, env, &end_quotes);
+			end_quotes--;
+		}
 		else if (command_line[end_quotes] == '\\')
 			delete_one_char(p_command_line, end_quotes);
 		command_line = *p_command_line;
