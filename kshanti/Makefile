@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 19:33:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/05/23 20:58:29 by kshanti          ###   ########.fr        #
+#    Updated: 2021/05/25 21:21:13 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = ./srcs_parser/
 CFLAGS = -Wall -Wextra -Werror
 
 C_FILE =	$(SRCS)errors.c $(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
-			$(SRCS)skip_spases.c $(SRCS)dollar.c $(SRCS)dollar_utils.c\
+			$(SRCS)utils.c $(SRCS)dollar.c $(SRCS)dollar_utils.c\
 			./main.c
 
 O_FILE = $(C_FILE:.c=.o)
