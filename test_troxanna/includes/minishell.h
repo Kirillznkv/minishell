@@ -18,6 +18,8 @@ typedef	struct 				s_env
 }							t_env;
 
 void		ft_putchar(char c);
+void		ft_bzero(void *s, size_t n);
+char		*ft_strdup(char *str);
 int			ft_strlen(char *s);
 void		ft_putstr(char *s);
 void		ft_error(int n);
@@ -30,5 +32,6 @@ char		*ft_strnstr(const char *s, const char *find, size_t slen);
 void		ft_pwd_shell(char **env);
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(char **env, char **argv, int args);
+void		ft_cd_shell(char **env, char *argv);
 
 #endif

@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
 
+
 char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
 	size_t i;
@@ -72,4 +73,40 @@ void		ft_error(int n)
 	else if (n == 2)
 		printf("Ошибка выделения памяти\n");
 	exit(EXIT_FAILURE);
+}
+
+char		*ft_strdup(char *str)
+{
+	char	*ptr;
+	int		i;
+
+	ptr = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	i = 0;
+	if (ptr)
+	{
+		while (str[i] != '\0')
+		{
+			ptr[i] = str[i];
+			i++;
+		}
+		ptr[i] = '\0';
+		return (ptr);
+	}
+	else
+		return (NULL);
+}
+
+void				ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*tmp;
+
+	tmp = s;
+	i = 0;
+	while (i < n)
+	{
+		tmp[i] = '\0';
+		i++;
+	}
+	s = tmp;
 }

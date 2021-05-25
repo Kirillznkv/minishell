@@ -14,6 +14,8 @@ int		main(int argc, char **argv, char **env)
 		ft_echo_shell(argv);
 	else if (!ft_strcmp(argv[1], "unset"))
 		ft_unset_shell(env, argv, argc - 2);
+	else if (!ft_strcmp(argv[1], "cd"))
+		ft_cd_shell(env, argv[2]);
 	else
 		ft_error(2);
 }
