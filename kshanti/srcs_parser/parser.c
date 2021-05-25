@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 21:34:37 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 21:56:47 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,13 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 		replace_normal_char(&command_line, &i);//         word
 		check_end_word(&command_line, &i, command);//     add || < > >> 
 	}
-	*p_commands_line = command_line;//malloc error?
+	if (command_line[i] == ';')
+	{
+		*p_commands_line = ft_substr(command_line, 1, -1);
+		free(command_line);
+	}
+	else
+		*p_commands_line = command_line;//malloc error?
 	return (command);
 }
 
@@ -82,19 +88,19 @@ t_commands	*parser(char *commands_line, char **env)
 	first = NULL;
 	while (*commands_line)
 	{
-		ft_lstadd_back(&first, get_one_command(&commands_line, env));
+		first = get_one_command(&commands_line, env);
 		int i = -1;
 		while (++i < first->argc)
 			printf("argv[%d] = |%s|\n", i, first->argv[i]);
+		///Free
+		i = -1;
+		while (++i < first->argc)
+		{
+			free(first->argv[i]);
+		}
+		free(first->argv);
+		free(first);
 	}
-	///Free
 	free(commands_line);
-	int i = -1;
-	while (++i < first->argc)
-	{
-		free(first->argv[i]);
-	}
-	free(first->argv);
-	free(first);
 	return (NULL);
 }
