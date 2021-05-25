@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 21:25:35 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 21:34:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		main(int argc, char **argv, char **env)
 	char	*line_read;
 
 	line = ft_strdup("   sdcjns |$PWD| sfef");
-	line_read = (char*)calloc(10, 1);
-	//read(0, line_read, 9);
+	// line_read = (char*)calloc(10, 1);
+	// read(0, line_read, 9);
 	parser(line, env);
 	// while (1)
 	// 	;

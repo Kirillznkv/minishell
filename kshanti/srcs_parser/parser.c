@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 21:24:54 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 21:34:37 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,17 @@ t_commands	*parser(char *commands_line, char **env)
 	{
 		ft_lstadd_back(&first, get_one_command(&commands_line, env));
 		int i = -1;
-		printf("argc = %d\n", first->argc);
 		while (++i < first->argc)
-		{
 			printf("argv[%d] = |%s|\n", i, first->argv[i]);
-		}
 	}
+	///Free
+	free(commands_line);
+	int i = -1;
+	while (++i < first->argc)
+	{
+		free(first->argv[i]);
+	}
+	free(first->argv);
+	free(first);
 	return (NULL);
 }
