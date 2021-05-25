@@ -54,6 +54,35 @@ void	ft_pwd_shell(char **env)
 		show_pwd(str);
 }
 
+void		ft_cd_shell(char **env, char *argv)
+{
+	char *new_pwd;
+	char *old_pwd;
+	int i;
+	int j;
+
+	new_pwd = get_pwd(env);
+	old_pwd = ft_strdup(new_pwd);
+	i = 0;
+	while (new_pwd[i] != '\0')
+		i++;
+	j = i;
+	if (new_pwd)
+	{
+		if (argv[0] == '.' && argv[1] == '.')
+		{
+			while (new_pwd[j] != '/')
+				j--;
+			ft_bzero(new_pwd + j, (size_t)i);
+		}
+		//добавить old к pwd
+		printf ("%s\n", new_pwd);
+		printf ("%s\n", old_pwd);
+		show_pwd(env[15]);
+	}
+	free(old_pwd);
+}
+
 
 void	ft_env_shell(char **env)
 {
