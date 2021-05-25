@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/24 19:45:59 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 20:59:21 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int		main(int argc, char **argv, char **env)
 	line_read = (char*)calloc(10, 1);
 	//read(0, line_read, 9);
 	parser(line, env);
+	// while (1)
+	// 	;
 	return (0);
 }
