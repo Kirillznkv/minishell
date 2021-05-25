@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/23 20:37:11 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/05/25 22:03:32 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 	while (command_line[end_quotes] != '\'')
 		end_quotes++;
 	delete_quotes(p_command_line, *begin_quotes, end_quotes);
+	*begin_quotes = end_quotes - *begin_quotes;
 }
 
 void		delete_one_char(char **str, size_t i_delete)
