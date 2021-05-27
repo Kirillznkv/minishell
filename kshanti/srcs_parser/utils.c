@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_spases.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/23 20:33:16 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 20:45:01 by kshanti          ###   ########.fr       */
+/*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
+/*   Updated: 2021/05/25 21:29:44 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
+
+char		**malloc_argv(int argc, char **argv)
+{
+	int		i;
+	char	**new_argv;
+
+	if (argv == NULL)
+		return ((char**)malloc(sizeof(char*)));
+	new_argv = (char**)malloc(sizeof(char*) * (argc + 1));
+	i = -1;
+	while (++i < argc)
+		new_argv[i] = argv[i];
+	free(argv);
+	return (new_argv);
+}
 
 void		skip_spases_tabs(char **p_command_line, size_t begin)
 {
