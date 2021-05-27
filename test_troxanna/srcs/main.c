@@ -2,9 +2,10 @@
 
 int		main(int argc, char **argv, char **env)
 {
-	if (argc < 2)
-		ft_error(1);
-	else if (!ft_strcmp(argv[1], "env")) 
+	// if (argc < 2)
+	// 	ft_error(1);
+	//write(1, "test", 5);
+	if (!ft_strcmp(argv[1], "env")) 
 		ft_env_shell(env);
 	else if (!ft_strcmp(argv[1], "export"))
 		ft_export_shell(env);
@@ -19,5 +20,5 @@ int		main(int argc, char **argv, char **env)
 	else if (!ft_strcmp(argv[1], "exit"))
 		ft_exit_shell();
 	else
-		ft_error(2);
+		exec_run(argv, env);
 }
