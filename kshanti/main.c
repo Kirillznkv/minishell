@@ -18,7 +18,7 @@ int		main(int argc, char **argv, char **env)
 	char	*line;
 	char	*line_read;
 
-	line = ft_strdup("   sdcjns |$PWD| sfef");
+	line = ft_strdup("   sdcjns   |$PWD|    sfef  ;  skjdfs dfskjsdk ;hjk");
 	line_read = (char*)calloc(10, 1);
 	//read(0, line_read, 9);
 	parser(line, env);

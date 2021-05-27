@@ -54,6 +54,18 @@ void	ft_pwd_shell(char **env)
 		show_pwd(str);
 }
 
+void	ft_env_shell(char **env)
+{
+	int i;
+
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr(env[i++]);
+		ft_putchar('\n');
+	}
+}
+
 void		ft_cd_shell(char **env, char *argv)
 {
 	char new_pwd[1024];
@@ -64,7 +76,8 @@ void		ft_cd_shell(char **env, char *argv)
 	chdir(argv);
 	getcwd(new_pwd, sizeof(new_pwd));
 	printf("%s\n", new_pwd);
-
+	//установить в env и export текущий pwd
+	
 	// if (new_pwd)
 	// {
 	// 	if (argv[0] == '.' && argv[1] == '.')
@@ -81,18 +94,6 @@ void		ft_cd_shell(char **env, char *argv)
 }
 
 
-void	ft_env_shell(char **env)
-{
-	int i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_putstr(env[i++]);
-		ft_putchar('\n');
-	}
-}
-
 void	ft_unset_shell(char **env, char **argv, int args)
 {
 	//1. Получить export (хранить значения export в статической переменной (?) - уточнить)
@@ -107,4 +108,9 @@ void	ft_unset_shell(char **env, char **argv, int args)
 		//удаление элемента из списка, если нашли
 		//if (!ft_strcmp(key_env[i], argv[args])) 
 	}
+}
+
+void	ft_exit_shell()
+{
+	exit(EXIT_SUCCESS);
 }

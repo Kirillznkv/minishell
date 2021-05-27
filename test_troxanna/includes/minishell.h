@@ -33,5 +33,6 @@ void		ft_pwd_shell(char **env);
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(char **env, char **argv, int args);
 void		ft_cd_shell(char **env, char *argv);
+void		ft_exit_shell();
 
 #endif
