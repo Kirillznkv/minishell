@@ -129,3 +129,31 @@ void				ft_bzero(void *s, size_t n)
 	}
 	s = tmp;
 }
+
+char				*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char			*sub;
+	unsigned int	i;
+	size_t			j;
+
+	if (!s)
+		return (NULL);
+	j = 0;
+	i = start;
+	sub = (char *)malloc((len + 1) * (sizeof(char)));
+	if (!sub)
+		return (NULL);
+	if (start > ft_strlen(s))
+	{
+		sub[j] = '\0';
+		return (sub);
+	}
+	while (s[i] && j < len)
+	{
+		sub[j] = s[i];
+		i++;
+		j++;
+	}
+	sub[j] = '\0';
+	return (sub);
+}

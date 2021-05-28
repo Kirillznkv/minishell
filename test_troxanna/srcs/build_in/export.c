@@ -114,7 +114,7 @@ void	ft_export_shell(char **env)
 	t_env	*env_export;
 	t_env	*ptr;
 
-	ptr = n ;
+	ptr = new_elem_env();
 	env_export = ptr;
 	while (env[i])
 	{

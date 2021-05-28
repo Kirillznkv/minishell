@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/stat.h>
 
 typedef	struct 				s_content
 {
@@ -23,6 +24,8 @@ char		*ft_stpcpy(char *dst, const char *src);
 char		*ft_strdup(char *str);
 int			ft_strlen(char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_substr(char *s, unsigned int start, size_t len);
+char		**ft_split(char *s, char c);
 void		ft_putstr(char *s);
 void		ft_error(int n);
 int			ft_strcmp(const char *str1, const char *str2);
@@ -35,10 +38,7 @@ void		ft_pwd_shell(char **env);
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(char **env, char **argv, int args);
 void		ft_cd_shell(char **env, char *argv);
-<<<<<<< HEAD
 void		exec_run(char **argv, char **env);
-=======
 void		ft_exit_shell();
->>>>>>> a54d8fca3b9fedd44642c78d94b7d059758a2c87
 
 #endif
