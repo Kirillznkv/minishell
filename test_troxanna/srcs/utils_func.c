@@ -59,6 +59,8 @@ int			ft_strlen(char *s)
 	return (i);
 }
 
+
+
 void		ft_putstr(char *s)
 {
 	write(1, s, ft_strlen(s));
@@ -104,6 +106,8 @@ char	*ft_stpcpy(char *dst, const char *src)
 	return (dst);
 }
 
+
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
@@ -114,6 +118,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ft_stpcpy(ft_stpcpy(str, s1), s2);
 	return (str);
 }
+
 
 void				ft_bzero(void *s, size_t n)
 {

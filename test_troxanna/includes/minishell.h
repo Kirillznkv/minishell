@@ -29,6 +29,7 @@ char		**ft_split(char *s, char c);
 void		ft_putstr(char *s);
 void		ft_error(int n);
 int			ft_strcmp(const char *str1, const char *str2);
+size_t		ft_strlcat(char *dest, char *src, size_t size);
 int			ft_isalpha(int ch);
 void		ft_env_shell(char **env);
 void		ft_env_sort(t_env *env_export, int i);

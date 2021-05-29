@@ -100,7 +100,7 @@ void	ft_print_env_export(t_env *env_export)
 	ft_putchar('\n');
 }
 
-void	ft_export_add(char **env)
+void	ft_only_export_add(char **env)
 {
 	//если есть = - то записываем в env, иначе только в env_export
 }

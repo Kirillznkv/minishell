@@ -1,21 +1,40 @@
 #include "../includes/minishell.h"
 
 
-char         *find_path(char **env)
-{
-    char *p_str;
-    int i;
+// char         *find_path(char **env)
+// {
+//     char *p_str;
+//     int i;
 
-    i = 0;
-    while (env[i])
+//     i = 0;
+//     while (env[i])
+// 	{
+// 		p_str = ft_strnstr(env[i], "PATH", 4);
+// 		if (p_str)
+// 			return (p_str);
+// 		else
+// 			i++;
+// 	}
+//     return (NULL);
+// }
+
+char		*add_slach_arg(char *str)
+{
+	int count;
+	int i;
+	char *arg;
+
+	i = 0;
+	count = ft_strlen(str);
+	arg = malloc(count + 2);
+	arg[i] = '/';
+	while (str[i])
 	{
-		p_str = ft_strnstr(env[i], "PATH", 4);
-		if (p_str)
-			return (p_str);
-		else
-			i++;
+		arg[i + 1] = str[i];
+		i++;
 	}
-    return (NULL);
+	arg[i + 1] = '\0';
+	return (arg);
 }
 
 void       exec_run(char **argv, char **env)
@@ -25,38 +44,26 @@ void       exec_run(char **argv, char **env)
 	struct stat buff[1];
     char *bin;
     int i;
-	int tmp;
+	char *arg;
+	char *newargv[] = {argv[1], NULL};
 
 
-	s = find_path(env);
+	//s = find_path(env);
+	s = getenv("PATH");
     path = ft_split(s + 5, ':');
-	//stat
-	//printf("%s\n", path[1]);
+	arg = add_slach_arg(argv[1]);
 	i = 0;
     while (path[i])
     {
 		bin = NULL;
-        bin = ft_strjoin(path[i], "/ls");
-		tmp = lstat(bin, buff);
-		// if (lstat(bin, buff) == 0)
-		// 	execve(bin, argv, env);
-		printf("%d\n", tmp);
-        // printf("%s\n", bin);
-		if (tmp == -1)
+        bin = ft_strjoin(path[i], arg);
+		if ((lstat(bin, buff)) == 0)
+			execve(bin, newargv, env);
+		else
+		{
 			free(bin);
-		// else
-		i++;
-        //i = execve(bin, argv, env);
-       // i = -1;
-        // if (i == -1)
-        // {
-        //     free(bin);
-        //     count--;
-        // }
-    }
-    // i = execve(bin, argv, env);
-    // printf("%d", i);
-    //free(path[1]);
-    //if ()
-
+			i++;
+		}
+	}
+	free(arg);
 }
