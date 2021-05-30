@@ -54,16 +54,16 @@ void	ft_pwd_shell(char **env)
 		show_pwd(str);
 }
 
-void	ft_env_shell(char **env)
+void	ft_env_shell(t_env *env, int c_env)
 {
 	int i;
 
 	i = 0;
 	
-	while (env[i])
+	while (c_env-- && env)
 	{
-		ft_putstr(env[i++]);
-		ft_putchar('\n');
+		ft_print_env(env, 0);
+		env = env->next;
 	}
 }
 
@@ -73,42 +73,41 @@ void		ft_cd_shell(char **env, char *argv)
 	int	size = ft_strlen(getenv("PATH"));
 	char old_pwd[size];
 
+	//HOME dir
 	getcwd(old_pwd, sizeof(old_pwd));
 	chdir(argv);
 	getcwd(new_pwd, sizeof(new_pwd));
 	printf("%s\n", new_pwd);
-	//установить в env и export текущий pwd
-	
-	// if (new_pwd)
-	// {
-	// 	if (argv[0] == '.' && argv[1] == '.')
-	// 	{
-	// 		while (new_pwd[j] != '/')
-	// 			j--;
-	// 		ft_bzero(new_pwd + j, (size_t)i);
-	// 	}
-	// 	//добавить old к pwd
-	// 	printf ("%s\n", old_pwd);
-	// 	show_pwd(env[15]);
-	// }
-	//free(old_pwd);
+}
+
+void	split_argv_unset(char *argv, int *i)
+{
+	while (argv[*i] != '=')
+			(*i)++;
 }
 
 
-void	ft_unset_shell(char **env, char **argv, int args)
+void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 {
-	//1. Получить export (хранить значения export в статической переменной (?) - уточнить)
-
-	t_env	*env_unset;
 	int 	i;
+	//t_env	*env_unset;
+	t_env	*ptr;
 
-	i = 0;
-	while (args)
+	ptr = env;
+	//if argc == 3
+	while(ptr)
 	{
-		//поиск необходимого элемента списка (ключ == аргумент)
-		//удаление элемента из списка, если нашли
-		//if (!ft_strcmp(key_env[i], argv[args])) 
+		i = 0;
+		split_argv_unset(argv[2], &i);
+		if((!ft_strncmp(argv[2], ptr->content.key, i)))
+		{
+			delet_elem_env(env, ptr);
+			//ft_env_shell(env, c_env);
+		}
+		ptr = ptr->next;
 	}
+	//получить удаляемый элемент списка
+	//delet_elem_env(env, env_unset);
 }
 
 void	ft_exit_shell()

@@ -2,22 +2,26 @@
 
 int		main(int argc, char **argv, char **env)
 {
-	// if (argc < 2)
-	// 	ft_error(1);
-	//write(1, "test", 5);
-	if (!ft_strcmp(argv[1], "env")) 
-		ft_env_shell(env);
-	else if (!ft_strcmp(argv[1], "export"))
-		ft_export_shell(env);
-	else if (!ft_strcmp(argv[1], "pwd"))
+	t_env	*env_main;
+	int		c_env;
+
+	c_env = 0;
+	if (argc < 2)
+		ft_error(1);
+	env_main = ft_create_env(env, &c_env);
+	if (!ft_strncmp(argv[1], "env", 3)) 
+		ft_env_shell(env_main, c_env);
+	else if (!ft_strncmp(argv[1], "export", 6))
+		ft_export_shell(env_main, argv, argc, c_env);
+	else if (!ft_strncmp(argv[1], "pwd", 3))
 		ft_pwd_shell(env);
-	else if (!ft_strcmp(argv[1], "echo"))
+	else if (!ft_strncmp(argv[1], "echo", 4))
 		ft_echo_shell(argv);
-	else if (!ft_strcmp(argv[1], "unset"))
-		ft_unset_shell(env, argv, argc - 2);
-	else if (!ft_strcmp(argv[1], "cd"))
+	else if (!ft_strncmp(argv[1], "unset", 5))
+		ft_unset_shell(env_main, argv, argc, c_env);
+	else if (!ft_strncmp(argv[1], "cd", 2))
 		ft_cd_shell(env, argv[2]);
-	else if (!ft_strcmp(argv[1], "exit"))
+	else if (!ft_strncmp(argv[1], "exit", 4))
 		ft_exit_shell();
 	else
 		exec_run(argv, env);

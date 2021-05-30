@@ -30,7 +30,7 @@ int		ft_isalpha(int ch)
 		return (0);
 }
 
-int					ft_strcmp(const char *str1, const char *str2)
+int					ft_strncmp(const char *str1, const char *str2, size_t num)
 {
 	size_t			i;
 	unsigned char	*p1;
@@ -39,7 +39,9 @@ int					ft_strcmp(const char *str1, const char *str2)
 	p1 = (unsigned char *)str1;
 	p2 = (unsigned char *)str2;
 	i = 0;
-	while (p1[i] && p2[i] && p1[i] == p2[i])
+	if (num == 0)
+		return (0);
+	while ((p1[i] || p2[i]) && i < num - 1 && p1[i] == p2[i])
 		i++;
 	return (p1[i] - p2[i]);
 }
@@ -104,6 +106,23 @@ char	*ft_stpcpy(char *dst, const char *src)
 		*dst++ = *src++;
 	*dst = '\0';
 	return (dst);
+}
+
+char	*ft_strchr(const char *string, int symbol)
+{
+	int	i;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == symbol)
+			return ((char *)string + i);
+		else
+			i++;
+	}
+	if (string[i] == symbol)
+		return ((char *)string + i);
+	return (NULL);
 }
 
 

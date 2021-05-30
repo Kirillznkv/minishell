@@ -25,6 +25,19 @@ void				add_elem_env(t_env *env, t_env *new_env)
 	}
 }
 
+void				delet_elem_env(t_env *env, t_env *env_unset)
+{
+	t_env *ptr;
+
+	ptr = env;
+	while (ptr->next != env_unset) 
+	{ 
+	  ptr = ptr->next;
+	}
+	ptr->next = env_unset->next; // переставляем указатель
+	free(env_unset); // освобождаем память удаляемого узла
+}
+
 void		write_env_value(t_env *env_export, char *env, int i)
 {
 	int j;
@@ -34,12 +47,10 @@ void		write_env_value(t_env *env_export, char *env, int i)
 	tmp = i;
 	while (env[tmp++])
 		j++;
-	env_export->content.value = (char *)malloc(sizeof(char) * (j + 2));
+	env_export->content.value = (char *)malloc(sizeof(char) * (j));
 	j = 0;
-	env_export->content.value[j++] = '"';
 	while (env[i])
 		env_export->content.value[j++] = env[i++];
-	env_export->content.value[j++] = '"';
 	env_export->content.value[j] = '\0';
 }
 int		write_env_key(t_env *env_export, char *env)
@@ -61,7 +72,7 @@ int		write_env_key(t_env *env_export, char *env)
 	return (j + 1);
 }
 
-void		write_env_export(t_env *env_export, char *env)
+void		write_env(t_env *env_export, char *env)
 {
 	int i;
 
@@ -80,7 +91,9 @@ void			ft_env_sort(t_env *env_export, int i)
 		env_export = ptr;
 		while (env_export->next)
 		{
-			if (ft_strcmp(env_export->content.key, env_export->next->content.key) > 0)
+			if (ft_strncmp(env_export->content.key, env_export->next->content.key,
+				ft_strlen(env_export->content.key) > ft_strlen(env_export->next->content.key) ?
+					ft_strlen(env_export->content.key) : ft_strlen(env_export->next->content.key)) > 0)
 			{
 				tmp = env_export->content;
 				env_export->content = env_export->next->content;
@@ -91,46 +104,66 @@ void			ft_env_sort(t_env *env_export, int i)
 	}
 }
 
-void	ft_print_env_export(t_env *env_export)
+void	ft_print_env(t_env *env_export, int ex)
 {
-	ft_putstr("declare -x ");
 	ft_putstr(env_export->content.key);
 	ft_putchar('=');
+	if (ex == 1)
+		ft_putchar('"');
 	ft_putstr(env_export->content.value);
+	if (ex == 1)
+		ft_putchar('"');
 	ft_putchar('\n');
 }
 
-void	ft_only_export_add(char **env)
+void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
 {
-	//если есть = - то записываем в env, иначе только в env_export
+	t_env *new_env;
+	
+	if (argc < 3)
+	{
+		ft_env_sort(env_export, c_env);
+		while (c_env-- && env_export)
+		{
+			ft_putstr("declare -x ");
+			ft_print_env(env_export, 1);
+			env_export = env_export->next;
+		}
+	}
+	else if (argc > 2) // == 3
+	{
+		//if "=" true
+		new_env = new_elem_env();
+		write_env(new_env, argv[2]);
+		add_elem_env(env_export, new_env);
+		c_env++;
+		// ft_env_sort(env_export, c_env);
+		// while (c_env-- && env_export)
+		// {
+		// 	ft_putstr("declare -x ");
+		// 	ft_print_env(env_export, 1);
+		// 	env_export = env_export->next;
+		// }
+	}
 }
 
 
-void	ft_export_shell(char **env)
+t_env 	*ft_create_env(char **env, int *i)
 {
-	int i;
-
-	i = 0;
-	t_env	*env_export;
 	t_env	*ptr;
+	t_env	*env_export;
 
 	ptr = new_elem_env();
 	env_export = ptr;
-	while (env[i])
+	while (env[*i])
 	{
-		write_env_export(ptr, env[i]);
-		if (env[i + 1])
+		write_env(ptr, env[*i]);
+		if (env[(*i) + 1])
 		{
 			add_elem_env(ptr, new_elem_env());
 			ptr = ptr->next;
 		}
-		i++;
+		(*i)++;
 	}
-	//добавляем элементы в env_export
-	ft_env_sort(env_export, i);
-	while (i-- && env_export)
-	{
-		ft_print_env_export(env_export);
-		env_export = env_export->next;
-	}
+	return (env_export);
 }
