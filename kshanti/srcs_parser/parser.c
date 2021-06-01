@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 22:00:15 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 23:19:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,7 @@ t_commands	*parser(char *commands_line, char **env)
 		printf("command = |%s|\n", command->name);
 		while (++i < command->argc)
 			printf("argv[%d] = |%s|\n", i, command->argv[i]);
-		//Free
-		i = -1;
-		while (++i < command->argc)
-		{
-			free(command->argv[i]);
-		}
-		free(command->argv);
-		free(command->name);
-		free(command);
+		free_struct(command);
 	}
 	free(commands_line);
 	return (NULL);

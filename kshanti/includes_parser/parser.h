@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 20:50:45 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 23:19:49 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structures.h"
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
-# include "../../test_troxanna/includes/minishell.h"//////
+# include "../../test_troxanna/includes/minishell.h"
 # include "stdio.h"
 # include "stdlib.h"
 # include "errno.h"
@@ -50,6 +50,7 @@ void			check_single_quotes(char *str, int *i);
 void			check_double_quotes(char *str, int *i);
 int				check_back_slash(char *str, int *i);
 /*-----------------------------------Utils------------------------------------*/
+void			free_struct(t_commands *command);
 char			**malloc_argv(int argc, char **argv);
 void			skip_spases_tabs(char **p_command_line, size_t begin);
 

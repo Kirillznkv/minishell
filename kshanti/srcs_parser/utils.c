@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 19:56:18 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 23:17:59 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,16 @@ void		skip_spases_tabs(char **p_command_line, size_t begin)
 	free(save_to_free);
 	free(first_part);
 	free(last_part);
+}
+
+void		free_struct(t_commands *command)
+{
+	int		i;
+
+	i = -1;
+	while (++i < command->argc)
+		free(command->argv[i]);
+	free(command->argv);
+	free(command->name);
+	free(command);
 }
