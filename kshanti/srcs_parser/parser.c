@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 22:53:50 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 18:45:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands *command)
 		command_line[*i] == ';' || command_line[*i] == '\n' ||
 		command_line[*i] == '\0')
 	{
-		command->argv = malloc_argv(command->argc, command->argv);
-		command->argv[command->argc++] = ft_substr(*p_command_line, 0, *i);
+		if (command->name)
+		{
+			command->argv = malloc_argv(command->argc, command->argv);
+			command->argv[command->argc++] = ft_substr(*p_command_line, 0, *i);
+		}
+		else
+			command->name = ft_substr(*p_command_line, 0, *i);
 		skip_spases_tabs(p_command_line, *i);
 		save_to_free = *p_command_line;
 		*p_command_line = ft_substr(*p_command_line, *i, -1);
@@ -57,6 +62,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command->argv = NULL;
 	command->next = NULL;
 	command->argv = NULL;
+	command->name = NULL;
 	i = 0;
 	skip_spases_tabs(p_commands_line, i);
 	command_line = *p_commands_line;
@@ -80,26 +86,29 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 
 t_commands	*parser(char *commands_line, char **env)
 {
-	t_commands		*first;
+	t_commands		*command;
 
 	if (!commands_line)
 		error_control("Commands line is NULL");
 	preparser(commands_line);
-	first = NULL;
+	command = NULL;
 	while (*commands_line)
 	{
-		first = get_one_command(&commands_line, env);
+		command = get_one_command(&commands_line, env);
 		int i = -1;
-		while (++i < first->argc)
-			printf("argv[%d] = |%s|\n", i, first->argv[i]);
-		///Free
+		//command->name = ft_strjoin("/usr/bin/", command->argv[0]);
+		printf("command = |%s|\n", command->name);
+		while (++i < command->argc)
+			printf("argv[%d] = |%s|\n", i, command->argv[i]);
+		//Free
 		i = -1;
-		while (++i < first->argc)
+		while (++i < command->argc)
 		{
-			free(first->argv[i]);
+			free(command->argv[i]);
 		}
-		free(first->argv);
-		free(first);
+		free(command->argv);
+		free(command->name);
+		free(command);
 	}
 	free(commands_line);
 	return (NULL);
