@@ -17,14 +17,17 @@ FLAGS = -Wall -Wextra -Werror
 	$(GCC) $(FLAGS) -I $(DIR_INC) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(GCC) $(FLAGS) -I $(DIR_INC) $(OBJS) -o $(NAME)
+	$(MAKE) -C ../kshanti/libft
+	$(GCC) $(FLAGS) -I $(DIR_INC) $(OBJS) ../kshanti/libft/libft.a -o $(NAME)
 
 all: $(NAME)
 
 clean:
+	$(MAKE) -C ../kshanti/libft clean
 	rm -f $(OBJS)
 
 fclean: clean
+	$(MAKE) -C ../kshanti/libft fclean
 	rm -f $(NAME)
 
 re: fclean all

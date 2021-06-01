@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 19:29:56 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/18 22:08:22 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 19:09:23 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,4 @@ void				ft_putendl_fd(char *s, int fd);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putnbr_fd(int n, int fd);
-char				**ft_split(char const *s, char c);
 #endif
