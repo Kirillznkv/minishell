@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 19:06:15 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 20:50:45 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void			replace_normal_char(char **p_command_line, size_t *i);
 void			preparser(char *commands_line);
 void			check_single_quotes(char *str, int *i);
 void			check_double_quotes(char *str, int *i);
+int				check_back_slash(char *str, int *i);
 /*-----------------------------------Utils------------------------------------*/
 char			**malloc_argv(int argc, char **argv);
 void			skip_spases_tabs(char **p_command_line, size_t begin);
-void			replace_spases_tabs_whis_spase(char **p_command_line, size_t *begin);
 
 #endif

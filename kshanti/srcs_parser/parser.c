@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 18:45:29 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/01 22:00:15 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands *command)
 	char	*command_line;
 	char	*save_to_free;
 
-	//replace_spases_tabs_whis_spase(p_command_line, i);
 	command_line = *p_command_line;
 	if (command_line[*i] == ' ' || command_line[*i] == '\t' ||
 		command_line[*i] == ';' || command_line[*i] == '\n' ||
@@ -51,6 +50,24 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands *command)
 	}
 }
 
+void		replace_back_slash(char **p_command_line, size_t *i)
+{
+	char	*command_line;
+	char	*fist_part;
+	char	*last_part;
+
+	command_line = *p_command_line;
+	if (command_line[*i] != '\\')
+		return ;
+	fist_part = ft_substr(*p_command_line, 0, *i);
+	last_part = ft_substr(*p_command_line, *i + 1, -1);
+	free(*p_command_line);
+	*p_command_line = ft_strjoin(fist_part, last_part);
+	free(fist_part);
+	free(last_part);
+	(*i)++;
+}
+
 t_commands	*get_one_command(char **p_commands_line, char **env)
 {
 	size_t		i;
@@ -68,6 +85,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
+		replace_back_slash(&command_line, &i);//          /
 		replace_single_quotes(&command_line, &i);//       '
 		replace_double_quotes(&command_line, env, &i);//  "
 		replace_dollar(&command_line, env, &i);//         $
@@ -80,7 +98,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 		free(command_line);
 	}
 	else
-		*p_commands_line = command_line;//malloc error?
+		*p_commands_line = command_line;
 	return (command);
 }
 
@@ -96,7 +114,6 @@ t_commands	*parser(char *commands_line, char **env)
 	{
 		command = get_one_command(&commands_line, env);
 		int i = -1;
-		//command->name = ft_strjoin("/usr/bin/", command->argv[0]);
 		printf("command = |%s|\n", command->name);
 		while (++i < command->argc)
 			printf("argv[%d] = |%s|\n", i, command->argv[i]);
