@@ -12,6 +12,7 @@ typedef	struct 				s_content
 {
 	char					*key;
 	char					*value;
+	//хранить указатель на часть строки, которую получаю из env
 }							t_content;
 
 typedef	struct 				s_env
@@ -34,7 +35,7 @@ void		ft_pwd_shell(char **env);
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(t_env *env, char **argv, int argc, int c_env);
 void		ft_cd_shell(char **env, char *argv);
-t_env 		*ft_create_env(char **env, int *i);
+t_env 		*ft_create_env(char **env);
 void		exec_run(char **argv, char **env);
 void		ft_exit_shell();
 

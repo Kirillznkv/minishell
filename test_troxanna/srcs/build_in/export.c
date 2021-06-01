@@ -148,22 +148,24 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
 }
 
 
-t_env 	*ft_create_env(char **env, int *i)
+t_env 	*ft_create_env(char **env)
 {
 	t_env	*ptr;
 	t_env	*env_export;
+	int i;
 
 	ptr = new_elem_env();
 	env_export = ptr;
-	while (env[*i])
+	i = 0;
+	while (env[i])
 	{
-		write_env(ptr, env[*i]);
-		if (env[(*i) + 1])
+		write_env(ptr, env[i]);
+		if (env[i + 1])
 		{
 			add_elem_env(ptr, new_elem_env());
 			ptr = ptr->next;
 		}
-		(*i)++;
+		i++;
 	}
 	return (env_export);
 }
