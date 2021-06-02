@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 23:17:59 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/02 16:19:57 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,17 @@ void		free_struct(t_commands *command)
 	free(command->argv);
 	free(command->name);
 	free(command);
+}
+
+t_commands	*init_command(void)
+{
+	t_commands	*command;
+
+	command = (t_commands*)malloc(sizeof(t_commands));
+	command->argc = 0;
+	command->argv = NULL;
+	command->next = NULL;
+	command->argv = NULL;
+	command->name = NULL;
+	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 23:19:12 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/02 16:21:24 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,8 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	t_commands	*command;
 	char		*command_line;
 
-	command = (t_commands*)malloc(sizeof(t_commands));
-	command->argc = 0;
-	command->argv = NULL;
-	command->next = NULL;
-	command->argv = NULL;
-	command->name = NULL;
 	i = 0;
+	command = init_command();
 	skip_spases_tabs(p_commands_line, i);
 	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 23:19:49 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/02 16:19:50 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int				check_back_slash(char *str, int *i);
 void			free_struct(t_commands *command);
 char			**malloc_argv(int argc, char **argv);
 void			skip_spases_tabs(char **p_command_line, size_t begin);
+t_commands		*init_command(void);
 
 #endif
