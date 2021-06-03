@@ -45,7 +45,7 @@ void	ft_echo_shell(char **argv)
 	ft_putchar('\n');
 }
 
-void	ft_pwd_shell(char **env)
+void	ft_pwd_shell()
 {
 	char *str;
 
@@ -67,7 +67,7 @@ void	ft_env_shell(t_env *env, int c_env)
 	}
 }
 
-void		ft_cd_shell(char **env, char *argv)
+void		ft_cd_shell(char *argv)
 {
 	char new_pwd[1024];
 	int	size = ft_strlen(getenv("PATH"));
@@ -94,7 +94,7 @@ void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 	//t_env	*env_unset;
 	t_env	*ptr;
 	int counter;
-	
+
 	ptr = env;
 	//if argc == 3
 	while(ptr)
