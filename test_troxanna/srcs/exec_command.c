@@ -45,8 +45,6 @@ void       exec_run(char **argv, char **env)
     char *bin;
     int i;
 	char *arg;
-	char *newargv[] = {argv[1], NULL};
-
 
 	//s = find_path(env);
 	s = getenv("PATH");
@@ -58,7 +56,7 @@ void       exec_run(char **argv, char **env)
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
-			execve(bin, newargv, env);
+			execve(bin, argv + 1, env);
 		else
 		{
 			free(bin);

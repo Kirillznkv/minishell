@@ -145,13 +145,13 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
 			new_env = new_env->next;
 			args++;
 		}
-		ft_env_sort(env_export, c_env);
-		while (c_env-- && env_export)
-		{
-			ft_putstr("declare -x ");
-			ft_print_env(env_export, 1);
-			env_export = env_export->next;
-		}
+		// ft_env_sort(env_export, c_env);
+		// while (c_env-- && env_export)
+		// {
+		// 	ft_putstr("declare -x ");
+		// 	ft_print_env(env_export, 1);
+		// 	env_export = env_export->next;
+		// }
 	}
 	// else if (argc > 2) // == 3
 	// {

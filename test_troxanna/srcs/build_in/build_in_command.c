@@ -90,22 +90,28 @@ void	split_argv_unset(char *argv, int *i)
 void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 {
 	int 	i;
+	int 	args;
 	//t_env	*env_unset;
 	t_env	*ptr;
-
+	int counter;
+	
 	ptr = env;
 	//if argc == 3
 	while(ptr)
 	{
 		i = 0;
-		split_argv_unset(argv[2], &i);
-		if((!ft_strncmp(argv[2], ptr->content.key, i)))
+		args = 2;
+		while (args < argc)
 		{
-			delet_elem_env(env, ptr);
-			//ft_env_shell(env, c_env);
+			split_argv_unset(argv[args], &i);
+			if((!ft_strncmp(argv[args], ptr->content.key, i)))
+				delet_elem_env(env, ptr);
+			args++;
 		}
 		ptr = ptr->next;
 	}
+	// counter = ft_counter_lstenv(env);
+	// ft_env_shell(env, counter + 2);
 	//получить удаляемый элемент списка
 	//delet_elem_env(env, env_unset);
 }

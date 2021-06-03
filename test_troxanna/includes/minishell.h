@@ -24,6 +24,8 @@ typedef	struct 				s_env
 void		ft_putchar(char c);
 char		**ft_split(char *s, char c);
 void		ft_putstr(char *s);
+int			ft_counter_env(char **env);
+int			ft_counter_lstenv(t_env *lst);
 void		delet_elem_env(t_env *env, t_env *env_unset);
 void		ft_error(int n);
 void		ft_print_env(t_env *env_export, int ex);

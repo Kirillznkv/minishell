@@ -10,6 +10,21 @@ int		ft_counter_env(char **env)
 	return (i);
 }
 
+int			ft_counter_lstenv(t_env *lst)
+{
+	t_env	*beg;
+	int		size;
+
+	size = 0;
+	beg = lst;
+	while (beg)
+	{
+		beg = beg->next;
+		size++;
+	}
+	return (size);
+}
+
 // void	env_parse(t_env *env_main, char **env_parse)
 // {
 // 	t_env 	*ptr;
