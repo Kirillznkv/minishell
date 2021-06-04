@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/02 16:19:57 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/04 21:37:14 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ t_commands	*init_command(void)
 	command->argv = NULL;
 	command->name = NULL;
 	return (command);
+}
+
+void		delete_one_char(char **p_command_line, size_t i)
+{
+	char	*first_part;
+	char	*last_part;
+
+	first_part = ft_substr(*p_command_line, 0, i);
+	last_part = ft_substr(*p_command_line, i + 1, -1);
+	free(*p_command_line);
+	*p_command_line = ft_strjoin(first_part, last_part);
+	free(first_part);
+	free(last_part);
 }

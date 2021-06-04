@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/25 23:01:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/04 21:37:34 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 		command_line[i] != '-' && command_line[i] != '_' &&
 		command_line[i] != '#' && !ft_isdigit(command_line[i]))
 		return (0);
-	first_part = ft_substr(*p_command_line, 0, *beg_dollar);
-	second_part = ft_substr(*p_command_line, *beg_dollar + 2, -1);
-	free(*p_command_line);
-	*p_command_line = ft_strjoin(first_part, second_part);
-	free(first_part);
-	free(second_part);
-	*beg_dollar = *beg_dollar - 1;
+	delete_one_char(p_command_line, *beg_dollar);
+	delete_one_char(p_command_line, *beg_dollar);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/02 16:22:12 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/04 22:00:10 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		check_double_quotes(char *str, int *i)
 		error_control("Double quote not closed");
 }
 
-int		check_back_slash(char *str, int *i)
+int			check_back_slash(char *str, int *i)
 {
 	if (str[*i] != '\\')
 		return (0);
