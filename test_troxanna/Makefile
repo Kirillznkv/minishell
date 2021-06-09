@@ -2,7 +2,7 @@ DIR_INC = ./includes/
 
 DIR_SRCS = ./srcs/
 
-FUNC = 	utils_func.c main.c build_in/build_in_command.c build_in/export.c exec_command.c ft_split.c
+FUNC = 	utils_func.c main.c build_in/build_in_command.c build_in/export.c exec_command.c ft_split.c 
 
 SRCS = $(addprefix $(DIR_SRCS), $(FUNC))
 

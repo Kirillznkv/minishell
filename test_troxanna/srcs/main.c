@@ -36,62 +36,33 @@ void	free_env(char **env)
 	free(env);
 }
 
-void	write_env_line(t_content line, char *new_line)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (line.key[i])
-	{
-		new_line[i] = line.key[i];
-		i++;
-	}
-	new_line[i++] = '=';
-	while (line.value[j])
-	{
-		new_line[i] = line.value[j];
-		j++;
-		i++;
-	}
-	new_line[i] = '\0';
-	//printf("%s\n", new_line);
-}
-
 char	**create_env_parse(t_env *env, char **env_parse)
 {
 	t_env	*ptr;
+	char	*tmp;
 	int i;
-	int j[2];
-	int count;
 
 	if (env_parse)
 		free_env(env_parse);
 	i = ft_counter_lstenv(env);
-	env_parse = malloc(sizeof(char *) * i);
+	env_parse = malloc(sizeof(char *) * i + 1);
+	env_parse[i] = NULL;
 	ptr = env;
-	while (i > 0 && ptr)
+	i = -1;
+	while (ptr)
 	{
 		//проверка на запись в env из env_export только значений со знаком '='
 		if (ptr->content.value)
 		{
-			j[0] = 0;
-			j[1] = 0;
-			while (ptr->content.key[j[0]])
-				j[0]++;
-			while (ptr->content.value[j[1]])
-				j[1]++;
-			//выделяем память под ключ + значение + '=' + '\0'
-			count = j[0] + j[1] + 2;
-			env_parse[i] = malloc(sizeof(char *) * (j[0] + j[1] + 2));
-			write_env_line(ptr->content, env_parse[i]);
+			tmp = ft_strjoin(ptr->content.key, "=");
+			env_parse[++i] = ft_strjoin(tmp, ptr->content.value);
+			free(tmp);
 		}
-		i++;
 		ptr = ptr->next;
 	}
 	return (env_parse);
 }
+
 
 int		main(int argc, char **argv, char **env)
 {

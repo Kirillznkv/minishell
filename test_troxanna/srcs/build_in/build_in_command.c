@@ -103,6 +103,7 @@ void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 		args = 2;
 		while (args < argc)
 		{
+			printf("%s\n", argv[args]);
 			split_argv_unset(argv[args], &i);
 			if((!ft_strncmp(argv[args], ptr->content.key, i)))
 				delet_elem_env(env, ptr);
@@ -110,10 +111,11 @@ void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 		}
 		ptr = ptr->next;
 	}
+	ft_export_shell(env, argv, 1, ft_counter_lstenv(env));
 	// counter = ft_counter_lstenv(env);
 	// ft_env_shell(env, counter + 2);
-	//получить удаляемый элемент списка
-	//delet_elem_env(env, env_unset);
+	// получить удаляемый элемент списка
+	// delet_elem_env(env, env_unset);
 }
 
 void	ft_exit_shell()

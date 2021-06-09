@@ -7,6 +7,7 @@ t_env			*new_elem_env(void)
 	if (!(new_elem = (t_env *)malloc(sizeof(t_env))))
 		ft_error(3);
 	new_elem->next = NULL;
+	new_elem->content.value = NULL;
 	return (new_elem);
 }
 
@@ -60,15 +61,17 @@ int		write_env_key(t_env *env_export, char *env)
 
 	i = 0;
 	j = 0;
-	while (env[i] != '=')
+	while (env[i] != '=' && env[i] != '\0')
 		i++;
-	env_export->content.key = (char *)malloc(sizeof(char) * i);
+	env_export->content.key = (char *)malloc(sizeof(char) * i + 1);
 	while (j < i)
 	{
 		env_export->content.key[j] = env[j];
 		j++;
 	}
 	env_export->content.key[j] = '\0';
+	if (env[i] == '\0')
+		return (0);
 	return (j + 1);
 }
 
@@ -77,7 +80,9 @@ void		write_env(t_env *env_export, char *env)
 	int i;
 
 	i = write_env_key(env_export, env);
-	write_env_value(env_export, env, i);
+	printf("\n%d\n", i);
+	if (i > 0)
+		write_env_value(env_export, env, i);
 }
 
 void			ft_env_sort(t_env *env_export, int i)
@@ -107,13 +112,38 @@ void			ft_env_sort(t_env *env_export, int i)
 void	ft_print_env(t_env *env_export, int ex)
 {
 	ft_putstr(env_export->content.key);
-	ft_putchar('=');
-	if (ex == 1)
-		ft_putchar('"');
-	ft_putstr(env_export->content.value);
-	if (ex == 1)
-		ft_putchar('"');
+	if (env_export->content.value)
+	{
+		ft_putchar('=');
+		if (ex == 1)
+			ft_putchar('"');
+		ft_putstr(env_export->content.value);
+		if (ex == 1)
+			ft_putchar('"');
+	}
 	ft_putchar('\n');
+}
+
+void		check_repeat_export(t_env *env_export, char *key)
+{
+	t_env *ptr;
+	int i;
+
+	i = 0;
+	while (key[i] != '=')
+		i++;
+	ptr = env_export;
+	while (ptr)
+	{
+		if (!ft_strncmp(ptr->content.key, key, i))
+		{
+			//обработать ситуацию export ll="value" -> export ll
+			//в таком случае переменная llне должна заменяться
+			delet_elem_env(env_export, ptr);
+			return ;
+		}
+		ptr = ptr->next;
+	}
 }
 
 void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
@@ -139,35 +169,22 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
 		ptr_env = env_export;
 		while (args < argc)
 		{
+			check_repeat_export(env_export, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
 			new_env = new_elem_env();
 			write_env(new_env, argv[args]);
 			add_elem_env(ptr_env, new_env);
 			new_env = new_env->next;
 			args++;
 		}
-		// ft_env_sort(env_export, c_env);
-		// while (c_env-- && env_export)
-		// {
-		// 	ft_putstr("declare -x ");
-		// 	ft_print_env(env_export, 1);
-		// 	env_export = env_export->next;
-		// }
+		c_env = ft_counter_lstenv(env_export);
+		ft_env_sort(env_export, c_env);
+		while (c_env-- && env_export)
+		{
+			ft_putstr("declare -x ");
+			ft_print_env(env_export, 1);
+			env_export = env_export->next;
+		}
 	}
-	// else if (argc > 2) // == 3
-	// {
-	// 	//if "=" true
-	// 	// while (args < argv)
-	// 	// {
-
-	// 	// }
-	// 	// ft_env_sort(env_export, c_env);
-	// 	// while (c_env-- && env_export)
-	// 	// {
-	// 	// 	ft_putstr("declare -x ");
-	// 	// 	ft_print_env(env_export, 1);
-	// 	// 	env_export = env_export->next;
-	// 	// }
-	// }
 }
 
 
