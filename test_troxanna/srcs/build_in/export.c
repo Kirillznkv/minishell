@@ -80,7 +80,6 @@ void		write_env(t_env *env_export, char *env)
 	int i;
 
 	i = write_env_key(env_export, env);
-	printf("\n%d\n", i);
 	if (i > 0)
 		write_env_value(env_export, env, i);
 }
@@ -130,7 +129,7 @@ void		check_repeat_export(t_env *env_export, char *key)
 	int i;
 
 	i = 0;
-	while (key[i] != '=')
+	while (key[i] != '=' && key[i] != '\0')
 		i++;
 	ptr = env_export;
 	while (ptr)
@@ -138,7 +137,7 @@ void		check_repeat_export(t_env *env_export, char *key)
 		if (!ft_strncmp(ptr->content.key, key, i))
 		{
 			//обработать ситуацию export ll="value" -> export ll
-			//в таком случае переменная llне должна заменяться
+			//в таком случае переменная ll не должна заменяться
 			delet_elem_env(env_export, ptr);
 			return ;
 		}
@@ -146,18 +145,18 @@ void		check_repeat_export(t_env *env_export, char *key)
 	}
 }
 
-void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
+void	ft_export_shell(t_env *env_export, char **argv, int argc)
 {
 	t_env *new_env;
 	t_env *ptr_env;
 	int		args;
 
-	args = 2;
+	args = 1;
 	ptr_env = env_export;
 	if (argc < 3)
 	{
-		ft_env_sort(env_export, c_env);
-		while (c_env-- && env_export)
+		ft_env_sort(env_export, ft_counter_lstenv(env_export));
+		while (env_export)
 		{
 			ft_putstr("declare -x ");
 			ft_print_env(env_export, 1);
@@ -167,22 +166,15 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int c_env)
 	else if (argc > 2)
 	{
 		ptr_env = env_export;
-		while (args < argc)
+		while (args < (argc - 1))
 		{
 			check_repeat_export(env_export, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+			//write(1, "test", 4);
 			new_env = new_elem_env();
 			write_env(new_env, argv[args]);
 			add_elem_env(ptr_env, new_env);
 			new_env = new_env->next;
 			args++;
-		}
-		c_env = ft_counter_lstenv(env_export);
-		ft_env_sort(env_export, c_env);
-		while (c_env-- && env_export)
-		{
-			ft_putstr("declare -x ");
-			ft_print_env(env_export, 1);
-			env_export = env_export->next;
 		}
 	}
 }

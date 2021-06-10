@@ -54,13 +54,13 @@ void	ft_pwd_shell()
 		show_pwd(str);
 }
 
-void	ft_env_shell(t_env *env, int c_env)
+void	ft_env_shell(t_env *env)
 {
 	int i;
 
-	i = 0;
-	
-	while (c_env-- && env)
+	i = 0;	
+
+	while (env)
 	{
 		ft_print_env(env, 0);
 		env = env->next;
@@ -77,17 +77,16 @@ void		ft_cd_shell(char *argv)
 	getcwd(old_pwd, sizeof(old_pwd));
 	chdir(argv);
 	getcwd(new_pwd, sizeof(new_pwd));
-	printf("%s\n", new_pwd);
 }
 
 void	split_argv_unset(char *argv, int *i)
 {
-	while (argv[*i] != '=')
+	while (argv[*i] != '=' && argv[*i] != '\0')
 			(*i)++;
 }
 
 
-void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
+void	ft_unset_shell(t_env *env, char **argv, int argc)
 {
 	int 	i;
 	int 	args;
@@ -100,10 +99,9 @@ void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 	while(ptr)
 	{
 		i = 0;
-		args = 2;
-		while (args < argc)
+		args = 1;
+		while (args < (argc - 1))
 		{
-			printf("%s\n", argv[args]);
 			split_argv_unset(argv[args], &i);
 			if((!ft_strncmp(argv[args], ptr->content.key, i)))
 				delet_elem_env(env, ptr);
@@ -111,7 +109,6 @@ void	ft_unset_shell(t_env *env, char **argv, int argc, int c_env)
 		}
 		ptr = ptr->next;
 	}
-	ft_export_shell(env, argv, 1, ft_counter_lstenv(env));
 	// counter = ft_counter_lstenv(env);
 	// ft_env_shell(env, counter + 2);
 	// получить удаляемый элемент списка

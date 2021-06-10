@@ -2,7 +2,10 @@ DIR_INC = ./includes/
 
 DIR_SRCS = ./srcs/
 
-FUNC = 	utils_func.c main.c build_in/build_in_command.c build_in/export.c exec_command.c ft_split.c 
+GNL = ../../kshanti/get_next_line/
+
+FUNC = 	utils_func.c main.c build_in/build_in_command.c build_in/export.c exec_command.c ft_split.c  parse_command.c\
+		$(GNL)get_next_line.c $(GNL)get_next_line_utils.c 
 
 SRCS = $(addprefix $(DIR_SRCS), $(FUNC))
 
