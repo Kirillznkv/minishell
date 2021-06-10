@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/04 22:09:50 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/10 21:01:26 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,49 @@ void		replace_normal_char(char **p_command_line, size_t *i)
 	char	*command_line;
 
 	command_line = *p_command_line;
-	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&
+	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&// < << > >>
 		command_line[*i] != '$' && command_line[*i] != '\'' &&
-		/*command_line[*i] != '|' && */command_line[*i] != '\t' &&
+		command_line[*i] != '|' && command_line[*i] != '\t' &&
 		command_line[*i] != ';' && command_line[*i] != '\0' &&
 		command_line[*i] != '\n')
 		(*i)++;
 }
 
-void		check_end_word(char **p_command_line, size_t *i, t_commands *command)
+void		save_command(char **p_command_line, size_t *i, t_commands *command)
+{
+	char	*save_to_free;
+
+	if (command->name == NULL)
+		command->name = ft_substr(*p_command_line, 0, *i);
+	command->argv = malloc_argv(command->argc, command->argv);
+	command->argv[command->argc++] = ft_substr(*p_command_line, 0, *i);
+	skip_spases_tabs(p_command_line, *i);
+	save_to_free = *p_command_line;
+	*p_command_line = ft_substr(*p_command_line, *i, -1);
+	*i = 0;
+	free(save_to_free);
+}
+
+void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 {
 	char	*command_line;
-	char	*save_to_free;
 
 	command_line = *p_command_line;
 	if (command_line[*i] == ' ' || command_line[*i] == '\t' ||
 		command_line[*i] == ';' || command_line[*i] == '\n' ||
 		command_line[*i] == '\0')
 	{
-		if (command->name)
-		{
-			command->argv = malloc_argv(command->argc, command->argv);
-			command->argv[command->argc++] = ft_substr(*p_command_line, 0, *i);
-		}
-		else
-			command->name = ft_substr(*p_command_line, 0, *i);
-		skip_spases_tabs(p_command_line, *i);
-		save_to_free = *p_command_line;
-		*p_command_line = ft_substr(*p_command_line, *i, -1);
-		*i = 0;
-		free(save_to_free);
+		save_command(p_command_line, i, *command);
+	}
+	else if (command_line[*i] == '|')
+	{
+		if (command_line[*i + 1] == '|')
+			delete_one_char(p_command_line, *i);
+		(*command)->pipe = 1;
+		save_command(p_command_line, i, *command);
+		(*command)->next = init_command();
+		*command = (*command)->next;
+		printf("###########\n");
 	}
 }
 
@@ -66,24 +79,27 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 {
 	size_t		i;
 	t_commands	*command;
+	t_commands	*first;
 	char		*command_line;
 
 	i = 0;
-	command = init_command();
+	first = init_command();
+	command = first;
 	skip_spases_tabs(p_commands_line, i);
 	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
 		if (replace_back_slash(&command_line, &i))//      /
 		{
-			check_end_word(&command_line, &i, command);
+			check_end_word(&command_line, &i, &command);
 			continue ;
 		}
 		replace_single_quotes(&command_line, &i);//       '
 		replace_double_quotes(&command_line, env, &i);//  "
 		replace_dollar(&command_line, env, &i);//         $
 		replace_normal_char(&command_line, &i);//         word
-		check_end_word(&command_line, &i, command);//     add || < > >> 
+		check_end_word(&command_line, &i, &command);//     add || < > >>
+
 	}
 	if (command_line[i] == ';')
 	{
@@ -92,7 +108,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	}
 	else
 		*p_commands_line = command_line;
-	return (command);
+	return (first);
 }
 
 t_commands	*parser(char *commands_line, char **env)
@@ -107,10 +123,15 @@ t_commands	*parser(char *commands_line, char **env)
 	{
 		command = get_one_command(&commands_line, env);
 		int i = -1;
-		printf("command = |%s|\n", command->name);
-		while (++i < command->argc)
-			printf("argv[%d] = |%s|\n", i, command->argv[i]);
-		free_struct(command);
+		printf("->###########\n");
+		while (command)
+		{
+			printf("command = |%s|\n", command->name);
+			while (++i < command->argc)
+				printf("argv[%d] = |%s|\n", i, command->argv[i]);
+			free_struct(command);
+			command = command->next;
+		}
 	}
 	free(commands_line);
 	return (NULL);
