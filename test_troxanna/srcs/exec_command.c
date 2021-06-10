@@ -53,7 +53,13 @@ void       exec_run(char **argv, char **env)
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
-			execve(bin, argv, env);
+		{
+			if (fork() == 0)
+			{
+				execve(bin, argv, env);
+				exit(0);
+			}
+		}
 		free(bin);
 	}
 	free_char_array(path);
