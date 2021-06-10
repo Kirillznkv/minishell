@@ -23,6 +23,6 @@ void		parse_command(t_commands *cmd, char **env)
 	else if (!ft_strncmp(cmd->argv[0], "exit", 4))
 		ft_exit_shell();
 	else
-		exec_run(cmd->argv, env_parse);
+		exec_run(cmd->argv, env);
 	env_parse = rewrite_env_parse(env_main, env_parse);
 }

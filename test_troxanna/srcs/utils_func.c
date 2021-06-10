@@ -26,7 +26,7 @@ int			ft_counter_lstenv(t_env *lst)
 }
 
 
-void	free_env(char **env)
+void	free_char_array(char **env)
 {
 	int i;
 
@@ -64,7 +64,7 @@ char	**rewrite_env_parse(t_env *env, char **env_parse)
 	int i;
 
 	if (env_parse)
-		free_env(env_parse);
+		free_char_array(env_parse);
 	i = ft_counter_lstenv(env);
 	env_parse = malloc(sizeof(char *) * i + 1);
 	env_parse[i] = NULL;

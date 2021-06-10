@@ -40,28 +40,22 @@ char		*add_slach_arg(char *str)
 void       exec_run(char **argv, char **env)
 {
     char    **path;
-    char      *s;
 	struct stat buff[1];
     char *bin;
     int i;
 	char *arg;
 
-	//s = find_path(env);
-	s = getenv("PATH");
-    path = ft_split(s + 5, ':');
-	arg = add_slach_arg(argv[1]);
-	i = 0;
-    while (path[i])
+    path = ft_split((getenv("PATH") + 5), ':');
+	arg = add_slach_arg(argv[0]);
+	i = -1;
+    while (path[++i])
     {
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
-			execve(bin, argv + 1, env);
-		else
-		{
-			free(bin);
-			i++;
-		}
+			execve(bin, argv, env);
+		free(bin);
 	}
+	free_char_array(path);
 	free(arg);
 }
