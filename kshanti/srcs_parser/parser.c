@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/10 21:01:26 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/10 21:18:45 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 		if (command_line[*i + 1] == '|')
 			delete_one_char(p_command_line, *i);
 		(*command)->pipe = 1;
-		save_command(p_command_line, i, *command);
 		(*command)->next = init_command();
 		*command = (*command)->next;
-		printf("###########\n");
+		delete_one_char(p_command_line, *i);//add check |||
+		if (command_line[*i] == '|')
+			error_control("syntax error near unexpected token '|'");
+		skip_spases_tabs(p_command_line, *i);
 	}
 }
 
@@ -111,7 +113,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-t_commands	*parser(char *commands_line, char **env)
+t_commands	*parser(char *commands_line, char **env)//; в начале
 {
 	t_commands		*command;
 
@@ -122,10 +124,9 @@ t_commands	*parser(char *commands_line, char **env)
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, env);
-		int i = -1;
-		printf("->###########\n");
 		while (command)
 		{
+			int i = -1;
 			printf("command = |%s|\n", command->name);
 			while (++i < command->argc)
 				printf("argv[%d] = |%s|\n", i, command->argv[i]);
