@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 19:28:18 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/10 21:27:49 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,31 @@
 
 int		main(int argc, char **argv, char **env)
 {
-	t_env	*env_main;
-	int		c_env;
+	char	**new_env;
+	char	**start_env;
+	int		i;
+	int		j;
+
+	i = 0;
+	start_env = env;
+	while (*env)
+	{
+		i++;
+		env++;
+	}
+	new_env = malloc(i * sizeof(char*));
+	j = -1;
+	while (++j < i)
+		new_env[j] = ft_strdup(start_env[j]);
+
+
+
 	
-	env_main = ft_create_env(env, &c_env);
-	
+	char	*line;
+
+	while (get_next_line(0, &line) == 1)
+	{
+		parser(line, env);
+	}
 	return (0);
 }

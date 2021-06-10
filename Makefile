@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishel
+NAME = minishell
 
 HEAD = ./kshanti/includes_parser
 SRCS = ./kshanti/srcs_parser/
@@ -25,7 +25,7 @@ C_FILE =	$(SRCS)errors.c $(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
 			$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			./main.c\
 			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)utils_func.c\
-			$(SRCS3)build_in_command.c $(SRCS3)export.c
+			$(SRCS2)parse_command.c $(SRCS3)build_in_command.c $(SRCS3)export.c
 
 O_FILE = $(C_FILE:.c=.o)
 
@@ -33,19 +33,19 @@ all:
 	$(MAKE) $(NAME) -j 4
 
 $(NAME): $(O_FILE)
-	$(MAKE) -C ./libft bonus
-	gcc $(O_FILE) ./libft/libft.a -o $(NAME)
+	$(MAKE) -C ./kshanti/libft bonus
+	gcc $(O_FILE) ./kshanti/libft/libft.a -o $(NAME)
 
 %.o: %.c $(HEAD)
 	gcc -c $(СFLAGS) $< -o $@
 
 clean:
 	@rm -f $(O_FILE)
-	$(MAKE) -C ./libft clean
+	$(MAKE) -C ./kshanti/libft clean
 
 fclean: clean
 	@rm -f $(NAME)
-	$(MAKE) -C ./libft fclean
+	$(MAKE) -C ./kshanti/libft fclean
 
 re: fclean all
 
