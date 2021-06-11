@@ -57,6 +57,19 @@ void		ft_error(int n)
 	exit(EXIT_FAILURE);
 }
 
+// t_env	*free_t_env(t_env *env_t)
+// {
+// 	t_env	*env_next;
+
+// 	env_next = env_t->next;
+// 	if (env_t->content.key)
+// 		free(env_t->content.key);
+// 	if (env_t->content.value)
+// 		free(env_t->content.value);
+// 	//free(env_t);
+// 	return (env_next);
+// }
+
 char	**rewrite_env_parse(t_env *env, char **env_parse)
 {
 	t_env	*ptr;
@@ -80,6 +93,7 @@ char	**rewrite_env_parse(t_env *env, char **env_parse)
 			free(tmp);
 		}
 		ptr = ptr->next;
+		//ptr = free_t_env(ptr);
 	}
 	return (env_parse);
 }
