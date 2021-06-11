@@ -45,7 +45,7 @@ void       exec_run(char **argv, char **env)
     int i;
 	char *arg;
 
-    path = ft_split((getenv("PATH") + 5), ':');
+    path = ft_split((getenv("PATH")), ':');
 	arg = add_slach_arg(argv[0]);
 	i = -1;
     while (path[++i])
@@ -55,17 +55,19 @@ void       exec_run(char **argv, char **env)
 		if ((lstat(bin, buff)) == 0)
 		{
 			int a;
-			if (fork() == 0)
+			a = fork();
+			if (a == 0)
 			{
-				execve(bin, argv, env);
-				ft_putstr(argv[0]);
-				write(1, ": command not found\n", 21);
-				exit(0);
+				if (execve(bin, argv, env) == -1)
+					ft_error(argv[0], 1);
 			}
+			else if (a < 0)
+				ft_error(argv[0], 3);
 			wait(&a);
 		}
 		free(bin);
 	}
+	//добавить обработку ошибки, что команла не найдена
 	free_char_array(path);
 	free(arg);
 }

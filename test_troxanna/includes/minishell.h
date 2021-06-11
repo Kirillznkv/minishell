@@ -29,7 +29,7 @@ int			ft_counter_env(char **env);
 int			ft_counter_lstenv(t_env *lst);
 void		free_char_array(char **env);
 void		delet_elem_env(t_env *env, t_env *env_unset);
-void		ft_error(int n);
+void		ft_error(char *name, int n);
 void		ft_print_env(t_env *env_export, int ex);
 void		ft_env_shell(t_env *env);
 void		ft_env_sort(t_env *env_export, int i);

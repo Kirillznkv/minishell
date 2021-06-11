@@ -46,14 +46,20 @@ void		ft_putstr(char *s)
 	write(1, s, ft_strlen(s));
 }
 
-void		ft_error(int n)
+void		ft_error(char *name, int n)
 {
 	if (n == 1)
-		printf("Недостаточное количество аргументов\n");
+	{
+		ft_putstr(name);
+		write(1, ": permission denied\n", 20);
+	}
 	else if (n == 2)
-		printf("Команда не существует\n");
-	else if (n == 2)
-		printf("Ошибка выделения памяти\n");
+	{
+		ft_putstr(name);
+		write(1, ": Command not found\n", 21);
+	}
+	else if (n == 3)
+		write(1, "failed to fork\n", 15);
 	exit(EXIT_FAILURE);
 }
 
