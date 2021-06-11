@@ -58,6 +58,8 @@ void       exec_run(char **argv, char **env)
 			if (fork() == 0)
 			{
 				execve(bin, argv, env);
+				ft_putstr(argv[0]);
+				write(1, ": command not found\n", 21);
 				exit(0);
 			}
 			wait(&a);
