@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/10 21:26:55 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/11 16:55:07 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ t_commands	*parser(char *commands_line, char **env)//; в начале
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, env);
-		parse_command(command, env);
+		if (command)
+			parse_command(command, env);
 		// while (command)
 		// {
 		// 	int i = -1;
