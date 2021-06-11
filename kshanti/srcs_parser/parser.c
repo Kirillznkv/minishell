@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/11 18:06:09 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/11 19:21:32 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 		check_end_word(&command_line, &i, &command);//     add || < > >>
 
 	}
+	command->argv = malloc_argv(command->argc, command->argv);
 	if (command_line[i] == ';')
 	{
 		*p_commands_line = ft_substr(command_line, 1, -1);

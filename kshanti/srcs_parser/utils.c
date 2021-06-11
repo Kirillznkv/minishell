@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/10 21:09:25 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/11 19:20:37 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char		**malloc_argv(int argc, char **argv)
 	char	**new_argv;
 
 	if (argv == NULL)
-		return ((char**)malloc(sizeof(char*)));
-	new_argv = (char**)malloc(sizeof(char*) * (argc + 1));
+		return ((char**)calloc(1, sizeof(char*)));
+	new_argv = (char**)calloc(argc + 1, sizeof(char*));
 	i = -1;
 	while (++i < argc)
 		new_argv[i] = argv[i];
