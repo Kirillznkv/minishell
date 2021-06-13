@@ -1,17 +1,27 @@
 #include "../includes/minishell.h"
 
+
+
 void		parse_command(t_commands *cmd, char **env)
 {
 	t_env	*env_main;
-	char	**env_parse;
+	t_env	*ptr;
 	char	*line;
 
-	env_parse = NULL;
-	env_main = ft_create_env(env);
+	env_main = ft_create_env(env, new_elem_env());
 	if (!ft_strncmp(cmd->argv[0], "env", 3)) 
 		ft_env_shell(env_main);
 	else if (!ft_strncmp(cmd->argv[0], "export", 6))
+	{
 		ft_export_shell(env_main, cmd->argv, cmd->argc);
+		if (cmd->argc > 1)
+		{
+			//free_char_array(env);
+			env = rewrite_env_parse(env_main);
+			//env_main = NULL;
+			//printf("%p\n", env_main);
+		}
+	}
 	else if (!ft_strncmp(cmd->argv[0], "pwd", 3))
 		ft_pwd_shell();
 	else if (!ft_strncmp(cmd->argv[0], "echo", 4))
@@ -24,5 +34,7 @@ void		parse_command(t_commands *cmd, char **env)
 		ft_exit_shell();
 	else
 		exec_run(cmd->argv, env);
-	env_parse = rewrite_env_parse(env_main, env_parse);
+
+	// 	ptr=free_t_env(ptr);
+	// free_char_array(env_parse); - нет утечек
 }

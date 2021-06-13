@@ -56,14 +56,15 @@ void	ft_pwd_shell()
 
 void	ft_env_shell(t_env *env)
 {
-	int i;
+	t_env *ptr;
 
-	i = 0;	
+	ptr = env;
 
-	while (env)
+	while (ptr)
 	{
-		ft_print_env(env, 0);
-		env = env->next;
+		if (ptr->content->value)
+			ft_print_env(ptr, 0);
+		ptr = ptr->next;
 	}
 }
 
@@ -103,7 +104,7 @@ void	ft_unset_shell(t_env *env, char **argv, int argc)
 		while (args < (argc - 1))
 		{
 			split_argv_unset(argv[args], &i);
-			if((!ft_strncmp(argv[args], ptr->content.key, i)))
+			if((!ft_strncmp(argv[args], ptr->content->key, i)))
 				delet_elem_env(env, ptr);
 			args++;
 		}

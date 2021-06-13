@@ -18,7 +18,7 @@ typedef	struct 				s_content
 
 typedef	struct 				s_env
 {
-	t_content				content;
+	t_content				*content;
 	struct s_env			*next;
 }							t_env;
 
@@ -27,8 +27,10 @@ char		**ft_split(char *s, char c);
 void		ft_putstr(char *s);
 int			ft_counter_env(char **env);
 int			ft_counter_lstenv(t_env *lst);
+t_env		*new_elem_env(void);
 void		free_char_array(char **env);
 void		delet_elem_env(t_env *env, t_env *env_unset);
+t_env		*free_t_env(t_env *env_t);
 void		ft_error(char *name, int n);
 void		ft_print_env(t_env *env_export, int ex);
 void		ft_env_shell(t_env *env);
@@ -39,10 +41,11 @@ void		ft_pwd_shell();
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(t_env *env, char **argv, int argc);
 void		ft_cd_shell(char *argv);
-char		**rewrite_env_parse(t_env *env, char **env_parse);
-t_env 		*ft_create_env(char **env);
+char		**rewrite_env_parse(t_env *env);
+t_env 		*ft_create_env(char **env, t_env *env_export);
 void		exec_run(char **argv, char **env);
 void		ft_exit_shell();
+char		**new_env_malloc(char **env);
 void		parse_command(t_commands *cmd, char **env);
 
 #endif

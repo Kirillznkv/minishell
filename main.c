@@ -15,32 +15,14 @@
 int		main(int argc, char **argv, char **env)
 {
 	char	**new_env;
-	char	**start_env;
-	int		i;
-	int		j;
-
-	i = 0;
-	start_env = env;
-	while (*env)
-	{
-		i++;
-		env++;
-	}
-	new_env = malloc(i * sizeof(char*));
-	j = -1;
-	while (++j < i)
-		new_env[j] = ft_strdup(start_env[j]);
-
-
-
-	
 	char	*line;
-
+	
+	new_env = new_env_malloc(env);
 	write(1, "Minishell-2.0$ ", 16);
 	while (get_next_line(0, &line) == 1)
 	{
-		parser(line, env);
-		write(1, "Minishell-2.0$ ", 16);
+		parser(line, new_env);
+		write(1, "Minixshell-2.0$ ", 16);
 	}
 	return (0);
 }
