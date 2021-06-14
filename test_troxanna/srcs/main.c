@@ -14,7 +14,7 @@ int		main(int argc, char **argv, char **env)
 		cmd.argv[i - 1] = ft_strdup(argv[i]);
 		i++;
 	}
-	parse_command(&cmd, env);
+	//parse_command(&cmd, env);
 	free_char_array(cmd.argv);
 	while (1)
 		;

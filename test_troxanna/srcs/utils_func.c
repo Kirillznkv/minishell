@@ -97,13 +97,13 @@ char	**rewrite_env_parse(t_env *env)
 	//printf("%d\n", i);
 	//i = ft_counter_lstenv(env);
 	env_parse = malloc(sizeof(char *) * i + 1);
-	env_parse[i + 1] = NULL;
+	env_parse[i] = NULL;
 	ptr = env;
 	i = 0;
 	while (ptr)
 	{
 		//проверка на запись в env из env_export только значений со знаком '='
-		if (ptr->content->value)
+		if (ptr->content->value != NULL)
 		{
 			tmp = ft_strjoin(ptr->content->key, "=");
 			env_parse[i] = ft_strjoin(tmp, ptr->content->value);
@@ -111,8 +111,8 @@ char	**rewrite_env_parse(t_env *env)
 			//printf("%s\n", env_parse[i]);
 			i++;
 		}
-		//ptr = ptr->next;
-		ptr = free_t_env(ptr);
+		ptr = ptr->next;
+		//ptr = free_t_env(ptr);
 	}
 	//printf("%d\n", i);
 	return (env_parse);

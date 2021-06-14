@@ -16,13 +16,21 @@ int		main(int argc, char **argv, char **env)
 {
 	char	**new_env;
 	char	*line;
-	
-	new_env = new_env_malloc(env);
+	t_env	*env_main;
+	t_env	*ptr;
+
+	env_main = ft_create_env(env, new_elem_env());
+	ptr = env_main;
 	write(1, "Minishell-2.0$ ", 16);
 	while (get_next_line(0, &line) == 1)
 	{
-		parser(line, new_env);
+		new_env = rewrite_env_parse(env_main);
+		parser(line, new_env, env_main);
 		write(1, "Minixshell-2.0$ ", 16);
+		//free(line); - утечек меньше, но программа ломается если > 1 аргумента
 	}
+	while (ptr)
+		ptr = free_t_env(ptr);
+	free_char_array(new_env);
 	return (0);
 }

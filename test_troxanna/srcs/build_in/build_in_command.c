@@ -36,13 +36,25 @@ void	ft_echo_shell(char **argv)
 {
 	int i;
 
-	i = 2;
-	while (argv[i])
+	i = 1;
+	if (!ft_strncmp(argv[i], "-n", 0))
 	{
-		ft_putstr(argv[i++]);
-		ft_putchar(' ');
+		while (argv[++i])
+		{
+			ft_putstr(argv[i]);
+			if (argv[i + 1])
+				ft_putchar(' ');
+		}
 	}
-	ft_putchar('\n');
+	else 
+	{
+		while (argv[i])
+		{
+			ft_putstr(argv[i++]);
+			ft_putchar(' ');
+		}
+		ft_putchar('\n');
+	}
 }
 
 void	ft_pwd_shell()

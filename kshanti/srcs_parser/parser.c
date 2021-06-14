@@ -114,7 +114,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-t_commands	*parser(char *commands_line, char **env)//; в начале
+t_commands	*parser(char *commands_line, char **env, t_env *env_main)//; в начале
 {
 	t_commands		*command;
 
@@ -126,7 +126,7 @@ t_commands	*parser(char *commands_line, char **env)//; в начале
 	{
 		command = get_one_command(&commands_line, env);
 		if (command && command->name)
-			parse_command(command, env);
+			parse_command(command, env, env_main);
 		// while (command)
 		// {
 		// 	int i = -1;
