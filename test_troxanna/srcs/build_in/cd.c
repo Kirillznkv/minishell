@@ -23,10 +23,16 @@ void			ft_cd_shell(char *argv, t_env *env)
 {
 	char	*new_pwd;
 	char	*old_pwd;
-	//обработать случай, когда нет env HOME и PWD
+	char	*tmp_pwd;
+	//обработать случай, когда удаляем PWD - в OLDPWD не должно что либо записываться
+	tmp_pwd = getenv("PWD");
+	printf("%s\n", tmp_pwd);
 	old_pwd = getcwd(NULL, 0);
 	chdir(argv);
-	rewrite_env_pwd(env, "OLDPWD", old_pwd);
+	if (tmp_pwd)
+		rewrite_env_pwd(env, "OLDPWD", old_pwd);
+	else
+		rewrite_env_pwd(env, "OLDPWD", "");
 	new_pwd = getcwd(NULL, 0);
 	rewrite_env_pwd(env, "PWD", new_pwd);
 }
