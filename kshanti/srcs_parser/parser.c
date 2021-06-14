@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/11 19:21:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/14 18:58:46 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-t_commands	*parser(char *commands_line, char **env, t_env *env_main)//; в начале
+t_commands	*parser(char *commands_line, char ***env, t_env *env_main)//; в начале
 {
 	t_commands		*command;
 
@@ -124,16 +124,19 @@ t_commands	*parser(char *commands_line, char **env, t_env *env_main)//; в на�
 	command = NULL;
 	while (*commands_line)
 	{
-		command = get_one_command(&commands_line, env);
+		command = get_one_command(&commands_line, *env);
 		if (command && command->name)
+		{
 			parse_command(command, env, env_main);
+			free_command(command);
+		}
 		// while (command)
 		// {
 		// 	int i = -1;
 		// 	printf("command = |%s|\n", command->name);
 		// 	while (++i < command->argc)
 		// 		printf("argv[%d] = |%s|\n", i, command->argv[i]);
-		// 	free_struct(command);
+		//free_struct(command);
 		// 	command = command->next;
 		// }
 	}

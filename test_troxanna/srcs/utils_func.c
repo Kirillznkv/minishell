@@ -34,6 +34,7 @@ void	free_char_array(char **env)
 	while (env[++i])
 		free(env[i]);
 	free(env);
+	env = NULL;
 }
 
 void		ft_putchar(char c)

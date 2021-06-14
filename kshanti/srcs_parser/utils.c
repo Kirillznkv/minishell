@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/11 19:20:37 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/14 18:10:35 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,6 @@ void		skip_spases_tabs(char **p_command_line, size_t begin)
 	free(last_part);
 }
 
-void		free_struct(t_commands *command)
-{
-	int		i;
-
-	i = -1;
-	while (++i < command->argc)
-		free(command->argv[i]);
-	free(command->argv);
-	free(command->name);
-	free(command);
-}
-
 t_commands	*init_command(void)
 {
 	t_commands	*command;
@@ -87,4 +75,16 @@ void		delete_one_char(char **p_command_line, size_t i)
 	*p_command_line = ft_strjoin(first_part, last_part);
 	free(first_part);
 	free(last_part);
+}
+
+void		free_command(t_commands *command)
+{
+	if (!command)
+		return ;
+	if (command->name)
+		free(command->name);
+	free_char_array(command->argv);
+	if (command->next)
+		free_command(command->next);
+	free(command);
 }

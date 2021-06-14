@@ -2,7 +2,7 @@
 
 
 
-void		parse_command(t_commands *cmd, char **env, t_env *env_main)
+void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 {
 	//t_env	*env_main;
 	t_env	*ptr;
@@ -25,8 +25,7 @@ void		parse_command(t_commands *cmd, char **env, t_env *env_main)
 	else if (!ft_strncmp(cmd->argv[0], "exit", 4))
 		ft_exit_shell();
 	else
-		exec_run(cmd->argv, env);
-	free_char_array(env);
-	env = NULL;
-	//
+		exec_run(cmd->argv, *env);
+	free_char_array(*env);
+	*env = rewrite_env_parse(env_main);
 }
