@@ -20,7 +20,6 @@ static void		print_echo_star(void)
 	}
 	ft_putchar('\n');
 	closedir(dir);
-
 }
 
 void			ft_echo_shell(char **argv)

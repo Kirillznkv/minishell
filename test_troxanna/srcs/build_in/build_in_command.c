@@ -55,21 +55,6 @@ void	ft_env_shell(t_env *env)
 	}
 }
 
-void		ft_cd_shell(char *argv)
-{
-	//добавить обработку OLDPWD - если изменяется директория, то добавлять value к OLDPWD
-	// char new_pwd[1024];
-	// int	size = ft_strlen(getenv("PATH"));
-	// char old_pwd[size];
-	char *new_pwd;
-	char *old_pwd;
-
-	//HOME dir
-	getcwd(old_pwd, sizeof(old_pwd));
-	chdir(argv);
-	getcwd(new_pwd, sizeof(new_pwd));
-}
-
 void	split_argv_unset(char *argv, int *i)
 {
 	while (argv[*i] != '=' && argv[*i] != '\0')

@@ -21,7 +21,7 @@ void		parse_command(t_commands *cmd, char **env, t_env *env_main)
 	else if (!ft_strncmp(cmd->argv[0], "unset", 5))
 		ft_unset_shell(env_main, cmd->argv, cmd->argc);
 	else if (!ft_strncmp(cmd->argv[0], "cd", 2))
-		ft_cd_shell(cmd->argv[1]);
+		ft_cd_shell(cmd->argv[1], env_main);
 	else if (!ft_strncmp(cmd->argv[0], "exit", 4))
 		ft_exit_shell();
 	else

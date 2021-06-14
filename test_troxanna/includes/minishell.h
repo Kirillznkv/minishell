@@ -41,7 +41,7 @@ char		*ft_strnstr(const char *s, const char *find, size_t slen);
 void		ft_pwd_shell();
 void		ft_echo_shell(char **argv);
 void		ft_unset_shell(t_env *env, char **argv, int argc);
-void		ft_cd_shell(char *argv);
+void		ft_cd_shell(char *argv, t_env *env);
 char		**rewrite_env_parse(t_env *env);
 t_env 		*ft_create_env(char **env, t_env *env_export);
 void		exec_run(char **argv, char **env);
