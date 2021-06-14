@@ -27,7 +27,8 @@ int		main(int argc, char **argv, char **env)
 		new_env = rewrite_env_parse(env_main);
 		parser(line, new_env, env_main);
 		write(1, "Minixshell-2.0$ ", 16);
-		//free(line); - утечек меньше, но программа ломается если > 1 аргумента
+		//free(line); 
+		//- утечек меньше, но программа ломается если > 1 аргумента
 	}
 	while (ptr)
 		ptr = free_t_env(ptr);
