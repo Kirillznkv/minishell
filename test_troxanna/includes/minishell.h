@@ -4,6 +4,7 @@
 # include "../../kshanti/includes_parser/structures.h"
 //# include "../../kshanti/includes_parser/parser.h"
 # include "../../kshanti/libft/libft.h"
+# include <dirent.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>

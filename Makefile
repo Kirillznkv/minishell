@@ -25,7 +25,7 @@ C_FILE =	$(SRCS)errors.c $(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
 			$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			./main.c\
 			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)utils_func.c\
-			$(SRCS2)parse_command.c $(SRCS3)build_in_command.c $(SRCS3)export.c
+			$(SRCS2)parse_command.c $(SRCS3)build_in_command.c $(SRCS3)export.c $(SRCS3)echo.c
 
 O_FILE = $(C_FILE:.c=.o)
 

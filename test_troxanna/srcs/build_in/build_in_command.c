@@ -32,31 +32,6 @@ static void		show_pwd(char *str)
 	}
 }
 
-void	ft_echo_shell(char **argv)
-{
-	int i;
-
-	i = 1;
-	if (!ft_strncmp(argv[i], "-n", 0))
-	{
-		while (argv[++i])
-		{
-			ft_putstr(argv[i]);
-			if (argv[i + 1])
-				ft_putchar(' ');
-		}
-	}
-	else 
-	{
-		while (argv[i])
-		{
-			ft_putstr(argv[i++]);
-			ft_putchar(' ');
-		}
-		ft_putchar('\n');
-	}
-}
-
 void	ft_pwd_shell()
 {
 	char *str;
@@ -82,9 +57,12 @@ void	ft_env_shell(t_env *env)
 
 void		ft_cd_shell(char *argv)
 {
-	char new_pwd[1024];
-	int	size = ft_strlen(getenv("PATH"));
-	char old_pwd[size];
+	//добавить обработку OLDPWD - если изменяется директория, то добавлять value к OLDPWD
+	// char new_pwd[1024];
+	// int	size = ft_strlen(getenv("PATH"));
+	// char old_pwd[size];
+	char *new_pwd;
+	char *old_pwd;
 
 	//HOME dir
 	getcwd(old_pwd, sizeof(old_pwd));
@@ -113,7 +91,7 @@ void	ft_unset_shell(t_env *env, char **argv, int argc)
 	{
 		i = 0;
 		args = 1;
-		while (args < (argc - 1))
+		while (args < (argc))
 		{
 			split_argv_unset(argv[args], &i);
 			if((!ft_strncmp(argv[args], ptr->content->key, i)))

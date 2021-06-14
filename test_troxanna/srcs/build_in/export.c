@@ -89,7 +89,7 @@ void		write_env(t_env *env_export, char *env)
 	int i;
 
 	i = write_env_key(env_export, env);
-	if (i > 0)
+	if (i > 0 && ft_strncmp(env, "OLDPWD", 6))
 		write_env_value(env_export, env, i);
 }
 
@@ -118,6 +118,8 @@ void			ft_env_sort(t_env *env_export, int i)
 
 void	ft_print_env(t_env *env_export, int ex)
 {
+	// if (ex == 1 && !ft_strncmp(env_export->content->key, "OLDPWD", 6))
+	// 	return ;
 	ft_putstr(env_export->content->key);
 	if (env_export->content->value)
 	{
