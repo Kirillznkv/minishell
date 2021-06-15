@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 22:43:46 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 23:32:32 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 		command_line[*i] == '<')
 	{
 		skip_spases_tabs(p_command_line, *i);
+		command_line = *p_command_line;
 		if (command_line[*i] == '>' || command_line[*i] == '<' || (*command)->fd_flag)
 		{
 			if ((*command)->fd_flag)
@@ -59,11 +60,12 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 			{
 				replace_redirect(*command, p_command_line, i);
 				save_command(p_command_line, i, *command);
-				skip_spases_tabs(p_command_line, *i);
 			}
 		}
 		else
+		{
 			save_command(p_command_line, i, *command);
+		}
 	}
 	else if (command_line[*i] == '|')
 	{

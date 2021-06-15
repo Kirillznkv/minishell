@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 22:30:12 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 22:51:07 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ void		check_fd_error(t_commands **p_command)
 		}
 	}
 	if (command->next)
-		check_fd_error(command->next);
+		check_fd_error(&(command->next));
 }
