@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 19:16:27 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 22:30:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,43 @@ void		delete_one_char(char **p_command_line, size_t i)
 	free(last_part);
 }
 
-void		free_command(t_commands *command)
+void		free_command(t_commands **p_command)
 {
+	t_commands	*command;
+
+	command = *p_command;
 	if (!command)
 		return ;
+	if (command->delete_fd)
+		free(command->delete_fd);
 	if (command->name)
+	{
+		while (command->colun_del_fd--)
+			close(command->delete_fd[command->colun_del_fd]);
 		free(command->name);
+	}
 	free_char_array(command->argv);
 	if (command->next)
-		free_command(command->next);
+		free_command(&(command->next));
 	free(command);
+	*p_command = NULL;
+}
+
+void		check_fd_error(t_commands **p_command)
+{
+	int		i;
+	t_commands	*command;
+
+	i = -1;
+	command = *p_command;
+	while (++i < command->colun_del_fd)
+	{
+		if (command->delete_fd[i] == -1)
+		{
+			free_command(p_command);
+			return ;
+		}
+	}
+	if (command->next)
+		check_fd_error(command->next);
 }

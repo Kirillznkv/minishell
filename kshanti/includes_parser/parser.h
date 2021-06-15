@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 19:15:58 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 22:29:14 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ char		**malloc_argv(int argc, char **argv);
 void		skip_spases_tabs(char **p_command_line, size_t begin);
 t_commands	*init_command(void);
 void		delete_one_char(char **p_command_line, size_t i);
-void		free_command(t_commands *command);
+void		free_command(t_commands **command);
+void		check_fd_error(t_commands **command);
 /*-----------------------------------Redirect---------------------------------*/
 void		replace_redirect(t_commands *command, char **p_command_line, size_t *i);
 void		redirect(t_commands *command, char **p_command_line, size_t *i);

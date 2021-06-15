@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 18:28:31 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 22:43:46 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,23 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 	command_line = *p_command_line;
 	if (command_line[*i] == ' ' || command_line[*i] == '\t' ||
 		command_line[*i] == ';' || command_line[*i] == '\n' ||
-		command_line[*i] == '\0')
+		command_line[*i] == '>' || command_line[*i] == '\0' ||
+		command_line[*i] == '<')
 	{
 		skip_spases_tabs(p_command_line, *i);
-		if ((command_line[*i] != '>' && command_line[*i] != '<') || (*command)->fd_flag)
-			save_command(p_command_line, i, *command);
+		if (command_line[*i] == '>' || command_line[*i] == '<' || (*command)->fd_flag)
+		{
+			if ((*command)->fd_flag)
+				replace_redirect(*command, p_command_line, i);
+			else
+			{
+				replace_redirect(*command, p_command_line, i);
+				save_command(p_command_line, i, *command);
+				skip_spases_tabs(p_command_line, *i);
+			}
+		}
 		else
-			replace_redirect(*command, p_command_line, i);
+			save_command(p_command_line, i, *command);
 	}
 	else if (command_line[*i] == '|')
 	{
@@ -117,6 +127,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	}
 	else
 		*p_commands_line = command_line;
+	check_fd_error(&first);
 	return (first);
 }
 
@@ -131,20 +142,20 @@ t_commands	*parser(char *commands_line, char ***env, t_env *env_main)//; в на
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, *env);
-		if (command && command->name)
-		{
-			parse_command(command, env, env_main);
-			free_command(command);
-		}
-		// while (command)
+		// if (command && command->name)
 		// {
-		// 	int i = -1;
-		// 	printf("command = |%s|\n", command->name);
-		// 	while (++i < command->argc)
-		// 		printf("argv[%d] = |%s|\n", i, command->argv[i]);
-		// 	//free_struct(command);
-		// 	command = command->next;
+		// 	parse_command(command, env, env_main);
+		// 	free_command(&command);
 		// }
+		while (command)
+		{
+			int i = -1;
+			printf("command = |%s|\n", command->name);
+			while (++i < command->argc)
+				printf("argv[%d] = |%s|\n", i, command->argv[i]);
+			//free_struct(command);
+			command = command->next;
+		}
 	}
 	free(commands_line);
 	return (NULL);

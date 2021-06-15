@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 19:18:30 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 22:48:11 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
 	if (command->fd_flag == 1)
 	{
 		command->fd_in = open(file_name, O_RDONLY, 0644);
+		if (command->fd_in == -1)
+		{
+			write(1, "bash: ", 7);
+			write(1, file_name, ft_strlen(file_name));
+			write(1, ": No such file or directory\n", 29);
+		}
 		add_fd(command, command->fd_in);
 		
 	}//если файл не открывается, то нужно вернуть нулевую структуру и позакрывать и поочищать все, как?
@@ -83,9 +89,9 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
 	char	*command_line;
 
 	command_line = *p_command_line;
-	if (command_line[*i] == '<')
+	if (!command->fd_flag)//Дописать препарсер на коррект ввод
 	{
-		if (!command->fd_flag)//Дописать препарсер на коррект ввод
+		if (command_line[*i] == '<')
 		{
 			command->fd_flag = 1;
 			delete_one_char(p_command_line, *i);
@@ -94,13 +100,8 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
 				delete_one_char(p_command_line, *i);
 				command->fd_flag = 2;
 			}
-			return ;
 		}
-		back_redirect(command, p_command_line, i);
-	}
-	else if (command_line[*i] == '>')
-	{
-		if (!command->fd_flag)//Дописать препарсер на коррект ввод
+		else
 		{
 			command->fd_flag = 3;
 			delete_one_char(p_command_line, *i);
@@ -109,8 +110,21 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
 				delete_one_char(p_command_line, *i);
 				command->fd_flag = 4;
 			}
-			return ;
 		}
+	}
+	else if (command->fd_flag == 1 || command->fd_flag == 2)
+	{
+		back_redirect(command, p_command_line, i);
+		if (command_line[*i] == '<' || command_line[*i] == '>')
+			replace_redirect(command, p_command_line, i);
+	}
+	else
+	{
 		redirect(command, p_command_line, i);
+		if (command_line[*i] == '<' || command_line[*i] == '>')
+		{
+			printf("#####\n");
+			replace_redirect(command, p_command_line, i);
+		}
 	}
 }
