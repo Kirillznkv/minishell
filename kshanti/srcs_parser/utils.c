@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/14 22:02:05 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 19:16:27 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_commands	*init_command(void)
 	command->fd_flag = 0;
 	command->fd_out = 1;
 	command->fd_in = 0;
+	command->colun_del_fd = 0;
 	command->argv = NULL;
 	command->next = NULL;
 	command->argv = NULL;

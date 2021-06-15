@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:22:18 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/14 22:01:50 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/15 19:09:37 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct			s_commands
 	char				*name;
 	char				**argv;
 	int					*delete_fd;
+	int					colun_del_fd;
 	struct s_commands	*next;
 }						t_commands;
 
