@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 15:03:09 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:44:57 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int		main(int argc, char **argv, char **env)
 	while (get_next_line(0, &line) == 1)
 	{
 		parser(line, &new_env, env_main);
-	write(1, ANSI_COLOR_RED "Minishell-2.🔞$ " ANSI_COLOR_RESET, 28);
-		write(1, "Minishell-2.0$ ", 16);
+		write(1, ANSI_COLOR_RED "Minishell-2.🔞$ " ANSI_COLOR_RESET, 28);
 	}
 	while (ptr)
 		ptr = free_t_env(ptr);
