@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 22:51:07 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:32:36 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,18 @@ void		free_command(t_commands **p_command)
 	command = *p_command;
 	if (!command)
 		return ;
+	while (command->colun_del_fd--)
+	{
+		if (command->delete_fd[command->colun_del_fd] != -1)
+		{
+			printf("closing %d\n", command->delete_fd[command->colun_del_fd]);
+			close(command->delete_fd[command->colun_del_fd]);
+		}
+	}
 	if (command->delete_fd)
 		free(command->delete_fd);
 	if (command->name)
-	{
-		while (command->colun_del_fd--)
-			close(command->delete_fd[command->colun_del_fd]);
 		free(command->name);
-	}
 	free_char_array(command->argv);
 	if (command->next)
 		free_command(&(command->next));
