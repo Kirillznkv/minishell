@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 14:28:55 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:04:19 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		replace_normal_char(char **p_command_line, size_t *i)
 	char	*command_line;
 
 	command_line = *p_command_line;
-	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&// < << > >>
+	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&
 		command_line[*i] != '$' && command_line[*i] != '\'' &&
 		command_line[*i] != '|' && command_line[*i] != '\t' &&
 		command_line[*i] != ';' && command_line[*i] != '\0' &&
@@ -144,27 +144,27 @@ t_commands	*parser(char *commands_line, char ***env, t_env *env_main)//; в на
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, *env);
-		// if (command && command->name)
-		// {
-		// 	parse_command(command, env, env_main);
-		// 	free_command(&command);
-		// }
-		t_commands *com_to_free = command;
-		while (command)
+		if (command && command->name)
 		{
-			int i = -1;
-			printf("command = |%s|\n", command->name);
-			while (++i < command->argc)
-				printf("argv[%d] = |%s|\n", i, command->argv[i]);
-			printf("fd_in = %d\nfd_out = %d\n", command->fd_in, command->fd_out);
-			i = -1;
-			printf("fd: ");
-			while (++i < command->colun_del_fd)
-				printf("%d ", command->delete_fd[i]);
-			printf("\n");
-			command = command->next;
+			parse_command(command, env, env_main);
+			free_command(&command);
 		}
-		free_command(&com_to_free);
+		// t_commands *com_to_free = command;
+		// while (command)
+		// {
+		// 	int i = -1;
+		// 	printf("command = |%s|\n", command->name);
+		// 	while (++i < command->argc)
+		// 		printf("argv[%d] = |%s|\n", i, command->argv[i]);
+		// 	printf("fd_in = %d\nfd_out = %d\n", command->fd_in, command->fd_out);
+		// 	i = -1;
+		// 	printf("fd: ");
+		// 	while (++i < command->colun_del_fd)
+		// 		printf("%d ", command->delete_fd[i]);
+		// 	printf("\n");
+		// 	command = command->next;
+		// }
+		// free_command(&com_to_free);
 	}
 	free(commands_line);
 	return (NULL);

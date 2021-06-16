@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 14:32:36 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 14:48:46 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ void		free_command(t_commands **p_command)
 	while (command->colun_del_fd--)
 	{
 		if (command->delete_fd[command->colun_del_fd] != -1)
-		{
-			printf("closing %d\n", command->delete_fd[command->colun_del_fd]);
 			close(command->delete_fd[command->colun_del_fd]);
-		}
 	}
 	if (command->delete_fd)
 		free(command->delete_fd);
