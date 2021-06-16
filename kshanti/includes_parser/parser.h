@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 14:57:23 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:35:43 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i);
 void		redirect(t_commands *command, char **p_command_line, size_t *i);
 void		back_redirect(t_commands *command, char **p_command_line, size_t *i);
 void		add_fd(t_commands *command, int new_fd);
+void		double_back_redirect(t_commands *command, char *name);
 
 #endif

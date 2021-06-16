@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 14:54:07 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:35:27 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,30 @@ void		add_fd(t_commands *command, int new_fd)
 	free(command->delete_fd);
 	command->delete_fd = new_fd_list;
 	command->colun_del_fd++;
+}
+
+void		double_back_redirect(t_commands *command, char *name)
+{
+	char	*line;
+	size_t	size_name;
+
+	command->fd_in = open("./.shell_file", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	add_fd(command, command->fd_in);
+	size_name = ft_strlen(name);
+	while (get_next_line(0, &line) == 1)
+	{
+		if (ft_strlen(line) != size_name || ft_strncmp(line, name, size_name))
+		{
+			write(command->fd_in, line, ft_strlen(line));
+			write(command->fd_in, "\n", 1);
+			free(line);
+		}
+		else
+		{
+			free(line);
+			break ;
+		}
+	}
 }
 
 void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
@@ -49,12 +73,14 @@ void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
 			write(1, ": No such file or directory\n", 29);
 		}
 		add_fd(command, command->fd_in);
-	}//если файл не открывается, то нужно вернуть нулевую структуру и позакрывать и поочищать все, как?
+	}
 	else if (command->fd_flag == 2)
 	{
-		;
-	}//fucking shit
+		double_back_redirect(command, file_name);
+	}
 	command->fd_flag = 0;
+	free(file_name);
+	free(save_to_free);
 }
 
 void		redirect(t_commands *command, char **p_command_line, size_t *i)
@@ -74,13 +100,15 @@ void		redirect(t_commands *command, char **p_command_line, size_t *i)
 		command->fd_out = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		add_fd(command, command->fd_out);
 		
-	}//если файл не открывается, то нужно вернуть нулевую структуру и позакрывать и поочищать все, как?
+	}
 	else if (command->fd_flag == 4)
 	{
 		command->fd_out = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		add_fd(command, command->fd_out);
-	}//fucking shit
+	}
 	command->fd_flag = 0;
+	free(file_name);
+	free(save_to_free);
 }
 
 void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
