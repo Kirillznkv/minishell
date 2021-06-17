@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/17 16:06:47 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 17:02:51 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
 	else if (command->fd_flag == 2)
 	{
 		double_back_redirect(command, file_name);
+		printf("d-->|%s|\n", *p_command_line);
 	}
 	command->fd_flag = 0;
 	free(file_name);
@@ -131,6 +132,7 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
 		{
 			command->fd_flag = 1;
 			delete_one_char(p_command_line, *i);
+			command_line = *p_command_line;
 			if (command_line[*i] == '<')
 			{
 				delete_one_char(p_command_line, *i);
@@ -141,6 +143,7 @@ void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
 		{
 			command->fd_flag = 3;
 			delete_one_char(p_command_line, *i);
+			command_line = *p_command_line;
 			if (command_line[*i] == '>')
 			{
 				delete_one_char(p_command_line, *i);
