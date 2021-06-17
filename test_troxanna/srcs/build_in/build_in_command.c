@@ -18,7 +18,7 @@
 // 	return (NULL);
 // }
 
-static void		show_pwd(char *str)
+static void		show_pwd(char *str, int fd)
 {
 	int i;
 
@@ -27,21 +27,21 @@ static void		show_pwd(char *str)
 		i++;
 	if (str[i] != '\0')
 	{
-		ft_putstr(str + i);
-		ft_putchar('\n');
+		ft_putstr_fd(str + i, fd);
+		ft_putchar_fd('\n', fd);
 	}
 }
 
-void	ft_pwd_shell()
+void	ft_pwd_shell(int fd)
 {
 	char *str;
 
 	str = getenv("PWD");
 	if (str)
-		show_pwd(str);
+		show_pwd(str, fd);
 }
 
-void	ft_env_shell(t_env *env)
+void	ft_env_shell(t_env *env, int fd)
 {
 	t_env *ptr;
 
@@ -50,7 +50,7 @@ void	ft_env_shell(t_env *env)
 	while (ptr)
 	{
 		if (ptr->content->value)
-			ft_print_env(ptr, 0);
+			ft_print_env(ptr, 0, fd);
 		ptr = ptr->next;
 	}
 }

@@ -33,18 +33,18 @@ void		free_char_array(char **env);
 void		delet_elem_env(t_env *env, t_env *env_unset);
 t_env		*free_t_env(t_env *env_t);
 void		ft_error(char *name, int n);
-void		ft_print_env(t_env *env_export, int ex);
-void		ft_env_shell(t_env *env);
+void		ft_print_env(t_env *env_export, int ex, int fd);//
+void		ft_env_shell(t_env *env, int fd);//
 void		ft_env_sort(t_env *env_export, int i);
-void		ft_export_shell(t_env *env_export, char **argv, int argc);
+void		ft_export_shell(t_env *env_export, char **argv, int argc, int fd);//
 char		*ft_strnstr(const char *s, const char *find, size_t slen);
-void		ft_pwd_shell();
-void		ft_echo_shell(char **argv);
+void		ft_pwd_shell(int fd);//
+void		ft_echo_shell(char **argv, int fd);//
 void		ft_unset_shell(t_env *env, char **argv, int argc);
 void		ft_cd_shell(char *argv, t_env *env);
 char		**rewrite_env_parse(t_env *env);
 t_env 		*ft_create_env(char **env, t_env *env_export);
-void		exec_run(char **argv, char **env);
+void		exec_run(t_commands *argv, char **env);//
 void		ft_exit_shell();
 char		**new_env_malloc(char **env);
 void		parse_command(t_commands *cmd, char ***env, t_env *env_main);

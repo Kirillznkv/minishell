@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void		print_echo_star(void)
+static void		print_echo_star(int fd)
 {
 	DIR *dir;
 	struct dirent *entry;
@@ -14,15 +14,15 @@ static void		print_echo_star(void)
 	{
 		if (entry->d_name[0] != '.')
 		{
-			ft_putstr(entry->d_name);
-			ft_putchar(' ');
+			ft_putstr_fd(entry->d_name, fd);
+			ft_putchar_fd(' ', fd);
 		}
 	}
-	ft_putchar('\n');
+	ft_putchar_fd('\n', fd);
 	closedir(dir);
 }
 
-void			ft_echo_shell(char **argv)
+void			ft_echo_shell(char **argv, int fd)
 {
 	int i;
 	i = 1;
@@ -30,20 +30,20 @@ void			ft_echo_shell(char **argv)
 	{
 		while (argv[++i])
 		{
-			ft_putstr(argv[i]);
+			ft_putstr_fd(argv[i], fd);
 			if (argv[i + 1])
-				ft_putchar(' ');
+				ft_putchar_fd(' ', fd);
 		}
 	}
 	else if (!ft_strncmp(argv[i], "*", 0))
-		print_echo_star();
+		print_echo_star(fd);
 	else 
 	{
 		while (argv[i])
 		{
-			ft_putstr(argv[i++]);
-			ft_putchar(' ');
+			ft_putstr_fd(argv[i++], fd);
+			ft_putchar_fd(' ', fd);
 		}
-		ft_putchar('\n');
+		ft_putchar_fd('\n', fd);
 	}
 }
