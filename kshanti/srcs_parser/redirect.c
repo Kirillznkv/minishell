@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/17 13:28:38 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 15:36:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void		double_back_redirect(t_commands *command, char *name)
 			break ;
 		}
 	}
+	command->argv = malloc_argv(command->argc, command->argv);
+	command->argv[command->argc++] = ft_strdup("./.shell_file");
 }
 
 void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
