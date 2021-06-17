@@ -58,6 +58,8 @@ void       exec_run(t_commands *cmd, char **env)
 			a = fork();
 			if (a == 0)
 			{
+				dup2(cmd->fd_out, 1);
+				dup2(cmd->fd_in, 0);
 				if (execve(bin, cmd->argv, env) == -1)
 					ft_error(cmd->argv[0], 1);
 			}

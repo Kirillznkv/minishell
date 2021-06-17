@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 15:35:27 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:28:38 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		double_back_redirect(t_commands *command, char *name)
 	char	*line;
 	size_t	size_name;
 
-	command->fd_in = open("./.shell_file", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	command->fd_in = open("./.shell_file", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	add_fd(command, command->fd_in);
 	size_name = ft_strlen(name);
 	while (get_next_line(0, &line) == 1)
