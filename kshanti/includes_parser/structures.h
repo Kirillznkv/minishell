@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:22:18 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 19:09:37 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 15:53:25 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct			s_commands
 	int					fd_flag;
 	int					fd_out;
 	int					fd_in;
+	char				*fd_in_name;
 	int					argc;
 	char				*name;
 	char				**argv;

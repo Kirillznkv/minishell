@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 15:04:19 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 16:15:15 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 			save_command(p_command_line, i, *command);
 		(*command)->pipe = 1;
 		(*command)->next = init_command();
+		fd_control(command);
 		*command = (*command)->next;
 		skip_spases_tabs(p_command_line, *i);
 	}
@@ -119,7 +120,6 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 		replace_dollar(&command_line, env, &i);//         $
 		replace_normal_char(&command_line, &i);//         word
 		check_end_word(&command_line, &i, &command);//     add || < > >>
-
 	}
 	command->argv = malloc_argv(command->argc, command->argv);
 	if (command_line[i] == ';')
@@ -129,7 +129,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	}
 	else
 		*p_commands_line = command_line;
-	check_fd_error(&first);
+	fd_control(&first);
 	return (first);
 }
 

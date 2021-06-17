@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/16 14:48:46 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/17 16:41:56 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char		**malloc_argv(int argc, char **argv)
 	char	**new_argv;
 
 	if (argv == NULL)
-		return ((char**)calloc(1, sizeof(char*)));
-	new_argv = (char**)calloc(argc + 1, sizeof(char*));
+		return ((char**)calloc(2, sizeof(char*)));
+	new_argv = (char**)calloc(argc + 2, sizeof(char*));
 	i = -1;
 	while (++i < argc)
 		new_argv[i] = argv[i];
@@ -66,6 +66,7 @@ t_commands	*init_command(void)
 	command->argv = NULL;
 	command->name = NULL;
 	command->delete_fd = NULL;
+	command->fd_in_name = NULL;
 	return (command);
 }
 
@@ -96,30 +97,43 @@ void		free_command(t_commands **p_command)
 	}
 	if (command->delete_fd)
 		free(command->delete_fd);
+	if (command->fd_in_name)
+		free(command->fd_in_name);
 	if (command->name)
 		free(command->name);
-	free_char_array(command->argv);
+	if (command->argv)
+		free_char_array(command->argv);
 	if (command->next)
 		free_command(&(command->next));
 	free(command);
 	*p_command = NULL;
 }
 
-void		check_fd_error(t_commands **p_command)
+void		fd_control(t_commands **p_command)
 {
 	int		i;
 	t_commands	*command;
 
 	i = -1;
 	command = *p_command;
-	while (++i < command->colun_del_fd)
+	while (command)
 	{
-		if (command->delete_fd[i] == -1)
+		while (++i < command->colun_del_fd)
 		{
-			free_command(p_command);
-			return ;
+			if (command->delete_fd[i] == -1)
+			{
+				free_command(p_command);
+				return ;
+			}
 		}
+		command = command->next;
 	}
-	if (command->next)
-		check_fd_error(&(command->next));
+	command = *p_command;
+	if (command->fd_in_name)
+	{
+		command->argv = malloc_argv(command->argc, command->argv);
+		command->argv[command->argc++] = ft_strjoin("./", command->fd_in_name);
+		free(command->fd_in_name);
+		command->fd_in_name = NULL;
+	}
 }

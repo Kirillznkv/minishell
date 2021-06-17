@@ -37,10 +37,38 @@ char		*add_slach_arg(char *str)
 	return (arg);
 }
 
+void		exec_fork(t_commands *cmd, char **env, char *bin)
+{
+	int			a;
+
+	a = fork();
+	if (a == 0)
+	{
+		if (cmd->fd_out != 1)
+		{
+			close(0);
+			dup2(cmd->fd_out, 1);
+		}
+		// if (cmd->fd_in != 0)
+		// {
+		// 	close(1);
+		// 	dup2(cmd->fd_in, 0);
+		// }
+		if (execve(bin, cmd->argv, env) == -1)
+			ft_error(cmd->argv[0], 1);
+	}
+	else if (a < 0)
+	{
+		ft_error(cmd->argv[0], 3);
+		return ;
+	}
+	wait(&a);
+}
+
 void       exec_run(t_commands *cmd, char **env)
 {
+	struct stat	buff[1];
     char    **path;
-	struct stat buff[1];
     char *bin;
     int i;
 	char *arg;
@@ -53,22 +81,7 @@ void       exec_run(t_commands *cmd, char **env)
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
-		{
-			int a;
-			a = fork();
-			if (a == 0)
-			{
-				close(0);
-				close(1);
-				dup2(cmd->fd_out, 1);
-				dup2(cmd->fd_in, 0);
-				if (execve(bin, cmd->argv, env) == -1)
-					ft_error(cmd->argv[0], 1);
-			}
-			else if (a < 0)
-				ft_error(cmd->argv[0], 3);
-			wait(&a);
-		}
+			exec_fork(cmd, env, bin);
 		free(bin);
 	}
 	//добавить обработку ошибки, что команла не найдена
