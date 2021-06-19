@@ -53,6 +53,7 @@ void		ft_error(char *name, int n)
 	{
 		ft_putstr(name);
 		write(1, ": permission denied\n", 20);
+		return ;
 	}
 	else if (n == 2)
 	{
@@ -68,6 +69,7 @@ void		ft_error(char *name, int n)
 		write(1, "no such file or directory: ", 27);
 		ft_putstr(name);
 		ft_putchar('\n');
+		return ;
 	}
 	exit(EXIT_FAILURE);
 }

@@ -1,22 +1,22 @@
 #include "../includes/minishell.h"
 
 
-// char         *find_path(char **env)
-// {
-//     char *p_str;
-//     int i;
+char         *find_path(char **env)
+{
+    char *p_str;
+    int i;
 
-//     i = 0;
-//     while (env[i])
-// 	{
-// 		p_str = ft_strnstr(env[i], "PATH", 4);
-// 		if (p_str)
-// 			return (p_str);
-// 		else
-// 			i++;
-// 	}
-//     return (NULL);
-// }
+    i = 0;
+    while (env[i])
+	{
+		p_str = ft_strnstr(env[i], "PATH", 4);
+		if (p_str)
+			return (p_str);
+		else
+			i++;
+	}
+    return (NULL);
+}
 
 char		*add_slach_arg(char *str)
 {
@@ -86,9 +86,13 @@ void       exec_run(t_commands *cmd, char **env)
     int i;
 	char *arg;
 
-	if(exec_case_handling(env, cmd))
+	if (exec_case_handling(env, cmd))
 		return ;
-    path = ft_split((getenv("PATH")), ':');
+    if (!(path = ft_split(find_path(env), ':')))
+	{
+		ft_error(cmd->argv[0], 5);
+		return ;
+	}
 	arg = add_slach_arg(cmd->argv[0]);
 	i = -1;
     while (path[++i])
