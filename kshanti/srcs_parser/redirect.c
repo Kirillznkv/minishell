@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/17 17:05:08 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/19 21:04:59 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void		double_back_redirect(t_commands *command, char *name)
 			break ;
 		}
 	}
-	command->argv = malloc_argv(command->argc, command->argv);
-	command->argv[command->argc++] = ft_strdup("./.shell_file");
+	if (command->fd_in_name)
+		free(command->fd_in_name);
+	command->fd_in_name = ft_strdup("./.shell_file");
 }
 
 void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
@@ -74,13 +75,9 @@ void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
 			write(1, file_name, ft_strlen(file_name));
 			write(1, ": No such file or directory\n", 29);
 		}
-		if (command->fd_in_name == NULL)
-			command->fd_in_name = ft_strdup(file_name);
-		else
-		{
+		if (command->fd_in_name)
 			free(command->fd_in_name);
-			command->fd_in_name = ft_strdup(file_name);
-		}
+		command->fd_in_name = ft_strdup(file_name);
 		add_fd(command, command->fd_in);
 	}
 	else if (command->fd_flag == 2)
