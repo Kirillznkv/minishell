@@ -10,6 +10,7 @@ void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 	char	**tmp;
 
 	//env_main = ft_create_env(env, new_elem_env());
+	//printf("%s\n", cmd->argv[1]);
 	if (!ft_strncmp(cmd->argv[0], "env", 3)) 
 		ft_env_shell(env_main, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "export", 6))
@@ -17,7 +18,7 @@ void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 	else if (!ft_strncmp(cmd->argv[0], "pwd", 3))
 		ft_pwd_shell(cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "echo", 4))
-		ft_echo_shell(cmd->argv, cmd->fd_out);
+		ft_echo_shell(cmd->argv, cmd->fd_out, env_main);
 	else if (!ft_strncmp(cmd->argv[0], "unset", 5))
 		ft_unset_shell(env_main, cmd->argv, cmd->argc);
 	else if (!ft_strncmp(cmd->argv[0], "cd", 2))
