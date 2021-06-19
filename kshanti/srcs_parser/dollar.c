@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/04 21:37:34 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/19 19:02:00 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,17 @@ void		replace_dollar_from_env(char **p_command_line, char **env, size_t *beg_dol
 		end_dollar_word++;
 	dollar_word = ft_substr(command_line, *beg_dollar + 1, end_dollar_word - *beg_dollar - 1);
 	new_dollar_word = get_new_dollar_word(env, dollar_word);
+	if (new_dollar_word)
+	{
+		replace_dollar_word(p_command_line, new_dollar_word, *beg_dollar, end_dollar_word);
+		*beg_dollar += ft_strlen(new_dollar_word);
+	}
+	else
+		*beg_dollar += ft_strlen(dollar_word);
 	if (dollar_word)
 		free(dollar_word);
-	replace_dollar_word(p_command_line, new_dollar_word, *beg_dollar, end_dollar_word);
 	if (new_dollar_word)
 		free(new_dollar_word);
-	*beg_dollar += ft_strlen(new_dollar_word);
 }
 
 void		replace_dollar(char **p_command_line, char **env, size_t *begin_dollar) // need $?
