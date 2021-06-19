@@ -58,11 +58,24 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 			ft_error(cmd->argv[0], 1);
 	}
 	else if (a < 0)
-	{
 		ft_error(cmd->argv[0], 3);
-		return ;
-	}
 	wait(&a);
+}
+
+static int		exec_case_handling(char **env, t_commands *cmd)
+{
+	struct stat	buff[1];
+	if (!ft_strncmp("./", cmd->argv[0], 2)
+			|| !ft_strncmp("../", cmd->argv[0], 3)
+			|| !ft_strncmp("/", cmd->argv[0], 1))
+	{
+		if ((lstat(cmd->argv[0], buff)) == 0)
+			exec_fork(cmd, env, cmd->argv[0]);
+		else
+			ft_error(cmd->argv[0], 5);
+		return (1);
+	}
+	return (0);
 }
 
 void       exec_run(t_commands *cmd, char **env)
@@ -73,6 +86,8 @@ void       exec_run(t_commands *cmd, char **env)
     int i;
 	char *arg;
 
+	if(exec_case_handling(env, cmd))
+		return ;
     path = ft_split((getenv("PATH")), ':');
 	arg = add_slach_arg(cmd->argv[0]);
 	i = -1;

@@ -63,6 +63,12 @@ void		ft_error(char *name, int n)
 		write(1, "failed to fork\n", 15);
 	else if (n == 4)
 		write(1, "mallock error\n", 14);
+	else if (n == 5)
+	{
+		write(1, "no such file or directory: ", 27);
+		ft_putstr(name);
+		ft_putchar('\n');
+	}
 	exit(EXIT_FAILURE);
 }
 
