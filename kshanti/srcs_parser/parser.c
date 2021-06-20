@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/19 21:07:00 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/20 20:43:02 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,17 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-t_commands	*parser(char *commands_line, char ***env, t_env *env_main)//; в начале
+void		parser(char *commands_line, char ***env, t_env *env_main)//; в начале
 {
 	t_commands		*command;
 
 	if (!commands_line)
 		error_control("Commands line is NULL");
-	preparser(commands_line);
+	if (preparser(commands_line))
+	{
+		free(commands_line);
+		return ;
+	}
 	command = NULL;
 	while (*commands_line)
 	{
@@ -167,5 +171,4 @@ t_commands	*parser(char *commands_line, char ***env, t_env *env_main)//; в на
 		// free_command(&com_to_free);
 	}
 	free(commands_line);
-	return (NULL);
 }

@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 19:33:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/06/14 21:58:51 by kshanti          ###   ########.fr        #
+#    Updated: 2021/06/20 18:55:34 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 C_FILE =	$(SRCS)errors.c $(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
 			$(SRCS)utils.c $(SRCS)dollar.c $(SRCS)dollar_utils.c $(SRCS)redirect.c\
+			$(SRCS)preparser_redirect.c\
 			$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			./main.c
 
