@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/20 20:43:12 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:27:56 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 # include "../../test_troxanna/includes/minishell.h"
+# include "readline/readline.h"
+# include "readline/history.h"
 # include "stdio.h"
 # include "stdlib.h"
 # include "errno.h"
