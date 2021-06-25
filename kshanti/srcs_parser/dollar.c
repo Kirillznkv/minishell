@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/22 14:18:16 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/25 19:21:39 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 	i = *beg_dollar + 1;
 	if (command_line[i] != '@' && command_line[i] != '*' &&
 		command_line[i] != '$' && command_line[i] != '!' &&
-		command_line[i] != '-' && command_line[i] != '_' &&
+		command_line[i] != '-' && !(command_line[i] == '_' && command_line[i + 1] == '=') && //_a
 		command_line[i] != '#' && !ft_isdigit(command_line[i]))
 		return (0);
 	delete_one_char(p_command_line, *beg_dollar);
