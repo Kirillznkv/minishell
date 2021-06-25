@@ -49,17 +49,49 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 			close(0);
 			dup2(cmd->fd_out, 1);
 		}
-		// if (cmd->fd_in != 0)
-		// {
-		// 	close(1);
-		// 	dup2(cmd->fd_in, 0);
-		// }
 		if (execve(bin, cmd->argv, env) == -1)
 			ft_error(cmd->argv[0], 1);
 	}
 	else if (a < 0)
 		ft_error(cmd->argv[0], 3);
 	wait(&a);
+}
+
+void	pipe_run(t_commands *cmd, char **env)
+{
+	int		fd[2];
+	pid_t	pid;
+	int tmp_fd = dup(0);
+
+
+	if (cmd->pipe)
+	{
+		pipe(fd);
+		pid = fork();
+		if (!pid)
+		{
+			dup2(fd[1], 1);
+			close(fd[0]);
+			execve(cmd->argv[0], cmd->argv, env);
+			close(fd[1]);
+		}
+		else
+		{
+			wait(&pid);
+			dup2(fd[0], 0);
+			close(fd[1]);
+			//execve(cmd->next->argv[0], cmd->next->argv, env);
+			//dup2(1, fd[1]);
+			exec_fork(cmd->next, env, cmd->next->argv[0]);
+			dup2(0, 0);
+			close(fd[0]);
+			dup2(tmp_fd, 0);
+			//close(fd[1]);
+
+		}
+	}
+	else
+		exec_fork(cmd, env, cmd->argv[0]);
 }
 
 static int		exec_case_handling(char **env, t_commands *cmd)
@@ -70,7 +102,7 @@ static int		exec_case_handling(char **env, t_commands *cmd)
 			|| !ft_strncmp("/", cmd->argv[0], 1))
 	{
 		if ((lstat(cmd->argv[0], buff)) == 0)
-			exec_fork(cmd, env, cmd->argv[0]);
+			pipe_run(cmd, env);
 		else
 			ft_error(cmd->argv[0], 5);
 		return (1);
@@ -86,6 +118,12 @@ void       exec_run(t_commands *cmd, char **env)
     int i;
 	char *arg;
 
+	// if (cmd->pipe)
+	// {
+	// 	pipe_run(cmd, env);
+	// 	return ;
+	// }
+
 	if (exec_case_handling(env, cmd))
 		return ;
     if (!(path = ft_split(find_path(env), ':')))
@@ -100,7 +138,11 @@ void       exec_run(t_commands *cmd, char **env)
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
+		{
 			exec_fork(cmd, env, bin);
+			free(bin);
+			break ;
+		}
 		free(bin);
 	}
 	//добавить обработку ошибки, что команла не найдена
