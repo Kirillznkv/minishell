@@ -53,7 +53,7 @@ void		write_env_value(t_env *env_export, char *env, int i)
 	tmp = i;
 	while (env[tmp++])
 		j++;
-	env_export->content->value = (char *)malloc(sizeof(char) * (j));
+	env_export->content->value = (char *)malloc(sizeof(char) * (j) + 1);
 	j = 0;
 	while (env[i])
 	{
