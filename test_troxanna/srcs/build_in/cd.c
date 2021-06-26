@@ -36,9 +36,14 @@ void			ft_cd_shell(char *argv, t_env *env)
 {
 	char	*new_pwd;
 	char	*old_pwd;
+	char	*tmp;
 
 	old_pwd = getcwd(NULL, 0);
-	chdir(argv);
+	tmp = argv;
+	if (!argv || !ft_strncmp(argv, "~", 0))
+		tmp = get_env(env, "HOME");
+	chdir(tmp);
+	//chdir("~");
 	if (check_pwd_and_home(env, "PWD"))
 		rewrite_env_pwd(env, "OLDPWD", old_pwd);
 	else
