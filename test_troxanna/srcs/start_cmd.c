@@ -2,12 +2,23 @@
 
 //execute_command
 
-void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
+int		count_pipe(t_commands *cmd)
 {
-	t_env	*ptr;
-	char	*line;
-	char	**tmp;
+	t_commands *ptr;
+	int			i;
 
+	i = 0;
+	ptr = cmd;
+	while(cmd->pipe)
+	{
+		i++;
+		cmd=cmd->next;
+	}
+	return (i);
+}
+
+int		parse_command(t_commands *cmd, char ***env, t_env *env_main)
+{
 	if (!ft_strncmp(cmd->argv[0], "env", 3)) 
 		ft_env_shell(env_main, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "export", 6))
@@ -23,18 +34,108 @@ void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 	else if (!ft_strncmp(cmd->argv[0], "exit", 4))
 		ft_exit_shell();
 	else
-		exec_run(cmd, *env);
-	free_char_array(*env);
-	*env = rewrite_env_parse(env_main);
+		return (0);
+	return (1);
 }
+
+void		execute_command(t_commands *cmd, char ***env, t_env *env_main)
+{
+	int pid;
+
+	if (!parse_command(cmd, env,env_main))
+	{
+		pid = fork();
+		if (!pid)
+		{
+			exec_run(cmd, *env);
+			//exit в случае если execve не отработал - чтобы завершить самостоятельно дочерний процесс
+			exit(1);
+		}
+		else
+			wait(&pid);
+	}
+}
+
+
+int		**create_pipe_fd(int count)
+{
+	int **fd;
+	int i;
+
+	i = 0;
+	fd = (int **)malloc(sizeof(int *) * count + 1);
+	fd[count + 1] = NULL;
+	while (i < count)
+		fd[i++] = (int *)malloc(sizeof(int) * 2);
+	return (fd);
+}
+
+void		pipe_child(int **fd, int i, int count)
+{
+
+	if (i == 0)
+	{
+		close(fd[i][0]);
+		dup2(fd[i][1], 1);
+	}
+	else if (i < count)
+	{
+		close(fd[i - 1][1]);
+		dup2(fd[i - 1][0], 0);
+		close(fd[i][0]);
+		dup2(fd[i][1], 1);
+	}
+	else
+	{
+		close(fd[i - 1][1]);
+		dup2(fd[i - 1][0], 0);
+	}
+	
+}
+
+void		execute_pipe(t_commands *cmd, char ***env, t_env *env_main)
+{
+	int			pid;
+	int			**fd;
+	t_commands	*ptr;
+	int			i;
+
+	fd = create_pipe_fd(count_pipe(cmd) + 1);
+	ptr = cmd;
+	i = -1;
+	while (++i < count_pipe(cmd))
+		pipe(fd[i]);
+	i = -1;
+	while (++i < count_pipe(cmd) + 1)
+	{
+		pid = fork();
+		if (pid != 0)
+			close(fd[i][1]);
+		if (!pid)
+		{
+			pipe_child(fd, i, count_pipe(cmd));
+			if (!parse_command(ptr, env, env_main))
+				exec_run(ptr, *env);
+			exit(0);
+		}
+		else
+			wait(0);
+		ptr = ptr->next;
+	}
+}
+
 
 void		start_cmd(t_commands *cmd, char ***env, t_env *env_main)
 {
-	int tmp_fd;
+	int		tmp_fd;
+	int		i;
 
 	tmp_fd = dup(0);
 	if (cmd->pipe)
-	{
-
-	}
+		execute_pipe(cmd, env, env_main);
+	else
+		execute_command(cmd, env, env_main);
+	free_char_array(*env);
+	*env = rewrite_env_parse(env_main);
+	dup2(tmp_fd, 0);
 }

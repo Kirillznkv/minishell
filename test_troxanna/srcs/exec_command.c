@@ -42,9 +42,9 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 	int			a;
 	int			xar_exec;
 
-	a = fork();
-	if (a == 0)
-	{
+	// a = fork();
+	// if (a == 0)
+	// {
 		if (cmd->fd_out != 1)
 		{
 			close(0);
@@ -54,47 +54,10 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 		error_code_dollar = xar_exec;
 		if (xar_exec == -1)
 			ft_error(cmd->argv[0], 1);
-	}
-	else if (a < 0)
-		ft_error(cmd->argv[0], 3);
-	wait(&a);
-}
-
-void	pipe_run(t_commands *cmd, char **env)
-{
-	int		fd[2];
-	pid_t	pid;
-	int tmp_fd = dup(0);
-
-
-	if (cmd->pipe)
-	{
-		pipe(fd);
-		pid = fork();
-		if (!pid)
-		{
-			dup2(fd[1], 1);
-			close(fd[0]);
-			execve(cmd->argv[0], cmd->argv, env);
-			close(fd[1]);
-		}
-		else
-		{
-			wait(&pid);
-			dup2(fd[0], 0);
-			close(fd[1]);
-			//execve(cmd->next->argv[0], cmd->next->argv, env);
-			//dup2(1, fd[1]);
-			exec_fork(cmd->next, env, cmd->next->argv[0]);
-			dup2(0, 0);
-			close(fd[0]);
-			dup2(tmp_fd, 0);
-			//close(fd[1]);
-
-		}
-	}
-	else
-		exec_fork(cmd, env, cmd->argv[0]);
+	// }
+	// else if (a < 0)
+	// 	ft_error(cmd->argv[0], 3);
+	// wait(&a);
 }
 
 static char		*exec_case_handling(char **env, t_commands *cmd)
@@ -126,11 +89,11 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 	i = -1;
 	while (path[++i])
     {
-		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
 			break ;
 		free(bin);
+		bin = NULL;
 	}
 	free_char_array(path);
 	free(arg);

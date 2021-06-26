@@ -148,7 +148,7 @@ void		parser(char *commands_line, char ***env, t_env *env_main)//; в начал
 		command = get_one_command(&commands_line, *env);
 		if (check_command(command))
 		{
-			parse_command(command, env, env_main);
+			start_cmd(command, env, env_main);
 			free_command(&command);
 		}
 		// t_commands *com_to_free = command;

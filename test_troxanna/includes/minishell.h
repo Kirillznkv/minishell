@@ -50,6 +50,6 @@ t_env 		*ft_create_env(char **env, t_env *env_export);
 void		exec_run(t_commands *argv, char **env);//
 void		ft_exit_shell();
 char		**new_env_malloc(char **env);
-void		parse_command(t_commands *cmd, char ***env, t_env *env_main);
+void		start_cmd(t_commands *cmd, char ***env, t_env *env_main);
 
 #endif
