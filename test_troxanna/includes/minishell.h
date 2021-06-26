@@ -40,7 +40,7 @@ void		ft_env_shell(t_env *env, int fd);//
 void		ft_env_sort(t_env *env_export, int i);
 void		ft_export_shell(t_env *env_export, char **argv, int argc, int fd);//
 char		*ft_strnstr(const char *s, const char *find, size_t slen);
-void		ft_pwd_shell(int fd);//
+void		ft_pwd_shell(int fd, char **env);//
 void		ft_echo_shell(char **argv, int fd, t_env *env);//
 void		ft_unset_shell(t_env *env, char **argv, int argc);
 void		ft_cd_shell(char *argv, t_env *env);

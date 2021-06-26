@@ -1,22 +1,22 @@
 #include "../../includes/minishell.h"
 
-// static char		*get_pwd(char **env)
-// {
-// 	int 		i;
-// 	char 		*p_str;
+static char		*get_pwd(char **env)
+{
+	int 		i;
+	char 		*p_str;
 
-// 	p_str = NULL;
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		p_str = ft_strnstr(env[i], "PWD", 3);
-// 		if (p_str)
-// 			return (p_str);
-// 		else
-// 			i++;
-// 	}
-// 	return (NULL);
-// }
+	p_str = NULL;
+	i = 0;
+	while (env[i])
+	{
+		p_str = ft_strnstr(env[i], "PWD", 3);
+		if (p_str)
+			return (p_str);
+		else
+			i++;
+	}
+	return (NULL);
+}
 
 static void		show_pwd(char *str, int fd)
 {
@@ -32,11 +32,11 @@ static void		show_pwd(char *str, int fd)
 	}
 }
 
-void	ft_pwd_shell(int fd)
+void	ft_pwd_shell(int fd, char **env)
 {
 	char *str;
 
-	str = getenv("PWD");
+	str = get_pwd(env);
 	if (str)
 		show_pwd(str, fd);
 }
