@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/26 13:50:29 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:45:48 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 	}
 	if (command_line[i] != '@' && command_line[i] != '*' &&
 		command_line[i] != '$' && command_line[i] != '!' &&
-		command_line[i] != '-' && !(command_line[i] == '_' && command_line[i + 1] == '=') && //_a
+		command_line[i] != '-' &&
 		command_line[i] != '#' && !ft_isdigit(command_line[i]))
 		return (0);
 	delete_one_char(p_command_line, *beg_dollar);
@@ -63,7 +63,7 @@ int			replace_only_one_dollar(char **p_command_line, size_t *beg_dollar)
 
 	command_line = *p_command_line;
 	i = *beg_dollar + 1;
-	if (ft_isalpha(command_line[i]))
+	if (ft_isalnum(command_line[i]) || command_line[i] == '_')
 		return (0);
 	(*beg_dollar)++;
 	return (1);
@@ -78,7 +78,7 @@ void		replace_dollar_from_env(char **p_command_line, char **env, size_t *beg_dol
 
 	command_line = *p_command_line;
 	end_dollar_word = *beg_dollar + 1;
-	while (command_line[end_dollar_word] == '_' || ft_isalpha(command_line[end_dollar_word]))
+	while (command_line[end_dollar_word] == '_' || ft_isalnum(command_line[end_dollar_word]))
 		end_dollar_word++;
 	dollar_word = ft_substr(command_line, *beg_dollar + 1, end_dollar_word - *beg_dollar - 1);
 	new_dollar_word = get_new_dollar_word(env, dollar_word);

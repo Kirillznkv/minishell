@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:52:01 by kshanti           #+#    #+#             */
-/*   Updated: 2021/05/23 21:34:20 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:51:57 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ char		*get_second_env_word(char *env_line)
 char		*get_new_dollar_word(char **env, char *dollar_word)
 {
 	char	*new_dollar_word;
+	int		i;
 
-	while (*env)
+	i = 0;
+	while (env[i])
 	{
-		if (ft_strnstr(*env, dollar_word, -1) &&
-			check_env_word(*env, dollar_word))
+		if (ft_strnstr(env[i], dollar_word, ft_strlen(dollar_word)) &&
+			check_env_word(env[i], dollar_word))
 		{
-			new_dollar_word = get_second_env_word(*env);
+			new_dollar_word = get_second_env_word(env[i]);
 			return (new_dollar_word);
 		}
-		env++;
+		i++;
 	}
 	return (NULL);
 }
