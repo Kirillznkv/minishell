@@ -59,6 +59,7 @@ void		ft_error(char *name, int n)
 	{
 		ft_putstr(name);
 		write(1, ": сommand not found\n", 21);
+		return ;
 	}
 	else if (n == 3)
 		write(1, "failed to fork\n", 15);

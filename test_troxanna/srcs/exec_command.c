@@ -97,58 +97,58 @@ void	pipe_run(t_commands *cmd, char **env)
 		exec_fork(cmd, env, cmd->argv[0]);
 }
 
-static int		exec_case_handling(char **env, t_commands *cmd)
+static char		*exec_case_handling(char **env, t_commands *cmd)
 {
-	struct stat	buff[1];
+	char		*bin;
+
+	bin = NULL;
 	if (!ft_strncmp("./", cmd->argv[0], 2)
 			|| !ft_strncmp("../", cmd->argv[0], 3)
 			|| !ft_strncmp("/", cmd->argv[0], 1))
-	{
-		if ((lstat(cmd->argv[0], buff)) == 0)
-			pipe_run(cmd, env);
-		else
-			ft_error(cmd->argv[0], 5);
-		return (1);
-	}
-	return (0);
+		bin = ft_strdup(cmd->argv[0]);
+	return (bin);
 }
 
-void       exec_run(t_commands *cmd, char **env)
+static char		*exec_find_handling(char **env, t_commands *cmd)
 {
 	struct stat	buff[1];
-    char    **path;
-    char *bin;
-    int i;
-	char *arg;
+    char    	**path;
+	int 		i;
+	char 		*arg;
+	char		*bin;
 
-	// if (cmd->pipe)
-	// {
-	// 	pipe_run(cmd, env);
-	// 	return ;
-	// }
-
-	if (exec_case_handling(env, cmd))
-		return ;
-    if (!(path = ft_split(find_path(env), ':')))
+	if (!(path = ft_split(find_path(env), ':')))
 	{
 		ft_error(cmd->argv[0], 5);
-		return ;
+		//обработать ошибку - либо сделать exit и выйти из дочернего процесса, либо ретерн
 	}
 	arg = add_slach_arg(cmd->argv[0]);
 	i = -1;
-    while (path[++i])
+	while (path[++i])
     {
 		bin = NULL;
         bin = ft_strjoin(path[i], arg);
 		if ((lstat(bin, buff)) == 0)
-		{
-			exec_fork(cmd, env, bin);
-			free(bin);
 			break ;
-		}
 		free(bin);
 	}
-	//добавить обработку ошибки, что команла не найдена
 	free_char_array(path);
 	free(arg);
+	return (bin);
+}
+
+void       exec_run(t_commands *cmd, char **env)
+{
+    char *bin;
+
+	bin = NULL;
+	if (!(bin = exec_case_handling(env, cmd)))
+		bin = exec_find_handling(env, cmd);
+	if (bin)
+	{
+		exec_fork(cmd, env, bin);
+		free(bin);
+	}
+	else
+		ft_error(cmd->argv[0], 2);
 }

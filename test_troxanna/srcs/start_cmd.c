@@ -1,16 +1,13 @@
 #include "../includes/minishell.h"
 
-
+//execute_command
 
 void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 {
-	//t_env	*env_main;
 	t_env	*ptr;
 	char	*line;
 	char	**tmp;
 
-	//env_main = ft_create_env(env, new_elem_env());
-	//printf("%s\n", cmd->argv[1]);
 	if (!ft_strncmp(cmd->argv[0], "env", 3)) 
 		ft_env_shell(env_main, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "export", 6))
@@ -29,4 +26,15 @@ void		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 		exec_run(cmd, *env);
 	free_char_array(*env);
 	*env = rewrite_env_parse(env_main);
+}
+
+void		start_cmd(t_commands *cmd, char ***env, t_env *env_main)
+{
+	int tmp_fd;
+
+	tmp_fd = dup(0);
+	if (cmd->pipe)
+	{
+
+	}
 }
