@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/22 14:00:58 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 15:31:07 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 	else if (command_line[*i] == '|')
 	{
 		delete_one_char(p_command_line, *i);
-		if (command_line[*i] == '|')
-			delete_one_char(p_command_line, *i);
 		if (command_line[*i] == '|')
 			error_control("syntax error near unexpected token '|'");
 		if (*i != 0)
@@ -148,7 +146,7 @@ void		parser(char *commands_line, char ***env, t_env *env_main)//; в начал
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, *env);
-		if (command && command->name)
+		if (check_command(command))
 		{
 			parse_command(command, env, env_main);
 			free_command(&command);

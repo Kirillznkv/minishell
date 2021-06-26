@@ -6,11 +6,27 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/19 21:06:11 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 15:29:59 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
+
+int			check_command(t_commands *command)
+{
+	t_commands *p;
+
+	if (!command || !(command->name))
+		return (0);
+	p = command;
+	while (p)
+	{
+		if (!(p->name))
+			return (0);
+		p = p->next;
+	}
+	return (1);
+}
 
 char		**malloc_argv(int argc, char **argv)
 {

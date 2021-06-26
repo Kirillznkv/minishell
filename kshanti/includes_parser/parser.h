@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/24 15:27:56 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 15:30:17 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes)
 void		replace_single_quotes(char **p_command_line, size_t *begin_quotes);
 void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quotes);
 /*-----------------------------------Dollar-----------------------------------*/
+void		past_error_code(char **p_command_line, size_t *i);
 void		replace_dollar(char **p_command_line, char **env, size_t *begin_dollar);
 void		replace_dollar_from_env(char **p_command_line, char **env, size_t *beg_dollar);
 int			replace_only_one_dollar(char **p_command_line, size_t *beg_dollar);
@@ -67,6 +68,7 @@ int			base_delimiter(char *str, int i);
 int			quotes_delimiter(char *str, int i);
 int			preparser_delimiter(char *str, int i);
 /*-----------------------------------Utils------------------------------------*/
+int			check_command(t_commands *command);
 char		**malloc_argv(int argc, char **argv);
 void		skip_spases_tabs(char **p_command_line, size_t begin);
 t_commands	*init_command(void);
