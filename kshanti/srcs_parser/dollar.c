@@ -6,21 +6,46 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/25 19:21:39 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 13:50:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
+void		past_error_code(char **p_command_line, size_t *i)
+{
+	char	*string_error_code;
+	char	*first_part;
+	char	*last_part;
+	char	*save_to_free;
+
+	string_error_code = ft_itoa(error_code_dollar);
+	first_part = ft_substr(*p_command_line, 0, *i);
+	last_part = ft_substr(*p_command_line, *i, -1);
+	free(*p_command_line);
+	*p_command_line = ft_strjoin(first_part, string_error_code);
+	save_to_free = *p_command_line;
+	*p_command_line = ft_strjoin(*p_command_line, last_part);
+	free(save_to_free);
+	free(first_part);
+	free(string_error_code);
+	free(last_part);
+}
+
 int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 {
 	size_t	i;
 	char	*command_line;
-	char	*first_part;
-	char	*second_part;
 
 	command_line = *p_command_line;
 	i = *beg_dollar + 1;
+	if (command_line[i] == '?')
+	{
+		delete_one_char(p_command_line, *beg_dollar);
+		delete_one_char(p_command_line, *beg_dollar);
+		past_error_code(p_command_line, beg_dollar);
+		return (1);
+	}
 	if (command_line[i] != '@' && command_line[i] != '*' &&
 		command_line[i] != '$' && command_line[i] != '!' &&
 		command_line[i] != '-' && !(command_line[i] == '_' && command_line[i + 1] == '=') && //_a

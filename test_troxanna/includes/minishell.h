@@ -10,6 +10,8 @@
 # include <stdio.h>
 # include <sys/stat.h>
 
+int			error_code_dollar;
+
 typedef	struct 				s_content
 {
 	char					*key;

@@ -40,6 +40,7 @@ char		*add_slach_arg(char *str)
 void		exec_fork(t_commands *cmd, char **env, char *bin)
 {
 	int			a;
+	int			xar_exec;
 
 	a = fork();
 	if (a == 0)
@@ -49,7 +50,9 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 			close(0);
 			dup2(cmd->fd_out, 1);
 		}
-		if (execve(bin, cmd->argv, env) == -1)
+		xar_exec = execve(bin, cmd->argv, env);
+		error_code_dollar = xar_exec;
+		if (xar_exec == -1)
 			ft_error(cmd->argv[0], 1);
 	}
 	else if (a < 0)
