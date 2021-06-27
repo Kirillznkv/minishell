@@ -47,8 +47,13 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 	// {
 		if (cmd->fd_out != 1)
 		{
-			close(0);
+			close(1);
 			dup2(cmd->fd_out, 1);
+		}
+		if (cmd->fd_in != 0)
+		{
+			close(0);
+			dup2(cmd->fd_in, 0);
 		}
 		xar_exec = execve(bin, cmd->argv, env);
 		error_code_dollar = xar_exec;
