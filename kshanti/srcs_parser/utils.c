@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/26 15:29:59 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/27 21:16:40 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,14 +142,15 @@ void		fd_control(t_commands **p_command)
 				return ;
 			}
 		}
+		if (command->fd_in_name && (command->argv[0] && !command->argv[1]))
+		{
+			command->argv = malloc_argv(command->argc, command->argv);
+			command->argv[command->argc++] = ft_strjoin("./", command->fd_in_name);
+			free(command->fd_in_name);
+			command->fd_in_name = NULL;
+		}
+		else
+			command->fd_in = 0;
 		command = command->next;
-	}
-	command = *p_command;
-	if (command->fd_in_name && (command->argv[0] && !command->argv[1]))
-	{
-		command->argv = malloc_argv(command->argc, command->argv);
-		command->argv[command->argc++] = ft_strjoin("./", command->fd_in_name);
-		free(command->fd_in_name);
-		command->fd_in_name = NULL;
 	}
 }
