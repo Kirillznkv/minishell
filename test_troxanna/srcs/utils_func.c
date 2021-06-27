@@ -26,15 +26,15 @@ int			ft_counter_lstenv(t_env *lst)
 }
 
 
-void	free_char_array(char **env)
+void	free_array(void **array)
 {
 	int i;
 
 	i = -1;
-	while (env[++i])
-		free(env[i]);
-	free(env);
-	env = NULL;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+	array = NULL;
 }
 
 void		ft_putchar(char c)

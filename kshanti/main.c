@@ -13,16 +13,16 @@
 #include "./includes_parser/parser.h"
 #include "fcntl.h"
 
-void	free_char_array(char **env)
-{
-	int i;
+// void	free_array(char **env)
+// {
+// 	int i;
 
-	i = -1;
-	while (env[++i])
-		free(env[i]);
-	free(env);
-	env = NULL;
-}
+// 	i = -1;
+// 	while (env[++i])
+// 		free(env[i]);
+// 	free(env);
+// 	env = NULL;
+// }
 
 int		main(int argc, char **argv, char **env)
 {

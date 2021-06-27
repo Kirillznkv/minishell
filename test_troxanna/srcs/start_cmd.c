@@ -122,6 +122,7 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env *env_main)
 			wait(0);
 		ptr = ptr->next;
 	}
+	free_array((void **)fd);
 }
 
 
@@ -132,10 +133,13 @@ void		start_cmd(t_commands *cmd, char ***env, t_env *env_main)
 
 	tmp_fd = dup(0);
 	if (cmd->pipe)
+	{
 		execute_pipe(cmd, env, env_main);
+	}
+		//execute_pipe(cmd, env, env_main);
 	else
 		execute_command(cmd, env, env_main);
-	free_char_array(*env);
+	free_array((void **)*env);
 	*env = rewrite_env_parse(env_main);
 	dup2(tmp_fd, 0);
 }

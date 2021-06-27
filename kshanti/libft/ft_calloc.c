@@ -16,8 +16,8 @@ void				*ft_calloc(size_t n, size_t size)
 {
 	unsigned char	*s;
 
-	if (n * size < 0)
-		return (NULL);
+	// if (n * size < 0)
+	// 	return (NULL);
 	s = (unsigned char*)malloc(n * size);
 	if (s != NULL)
 		ft_bzero(s, n * size);
