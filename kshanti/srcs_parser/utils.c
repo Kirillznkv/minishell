@@ -118,7 +118,7 @@ void		free_command(t_commands **p_command)
 	if (command->name)
 		free(command->name);
 	if (command->argv)
-		free_char_array(command->argv);
+		free_array((void **)command->argv);
 	if (command->next)
 		free_command(&(command->next));
 	free(command);

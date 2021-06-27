@@ -95,7 +95,7 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 		free(bin);
 		bin = NULL;
 	}
-	free_char_array(path);
+	free_array((void **)path);
 	free(arg);
 	return (bin);
 }

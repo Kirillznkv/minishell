@@ -33,7 +33,7 @@ void		ft_putstr(char *s);
 int			ft_counter_env(char **env);
 int			ft_counter_lstenv(t_env *lst);
 t_env		*new_elem_env(void);
-void		free_char_array(char **env);
+void		free_array(void **array);
 void		delet_elem_env(t_env *env, t_env *env_unset);
 t_env		*free_t_env(t_env *env_t);
 void		ft_error(char *name, int n);

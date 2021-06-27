@@ -15,7 +15,7 @@ int		main(int argc, char **argv, char **env)
 		i++;
 	}
 	//parse_command(&cmd, env);
-	free_char_array(cmd.argv);
+	free_array((void **)cmd.argv);
 	while (1)
 		;
 	return (0);

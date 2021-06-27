@@ -42,6 +42,6 @@ int		main(int argc, char **argv, char **env)
 	}
 	while (ptr)
 		ptr = free_t_env(ptr);
-	free_char_array(new_env);
+	free_array((void **)new_env);
 	return (0);
 }
