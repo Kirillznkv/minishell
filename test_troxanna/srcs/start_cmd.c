@@ -40,7 +40,8 @@ int		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 
 void		execute_command(t_commands *cmd, char ***env, t_env *env_main)
 {
-	int pid;
+	int		status;
+	pid_t	pid;
 
 	if (!parse_command(cmd, env,env_main))
 	{
@@ -52,7 +53,10 @@ void		execute_command(t_commands *cmd, char ***env, t_env *env_main)
 			exit(1);
 		}
 		else
-			wait(&pid);
+		{
+			waitpid(pid, &status, WUNTRACED | WCONTINUED);
+			error_code_dollar = WEXITSTATUS(status);
+		}
 	}
 }
 

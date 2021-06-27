@@ -9,6 +9,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 int			error_code_dollar;
 

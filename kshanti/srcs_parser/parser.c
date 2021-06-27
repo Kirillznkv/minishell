@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/26 15:31:07 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/27 16:39:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,26 +147,9 @@ void		parser(char *commands_line, char ***env, t_env *env_main)//; в начал
 	{
 		command = get_one_command(&commands_line, *env);
 		if (check_command(command))
-		{
 			start_cmd(command, env, env_main);
+		if (command)
 			free_command(&command);
-		}
-		// t_commands *com_to_free = command;
-		// while (command)
-		// {
-		// 	int i = -1;
-		// 	printf("command = |%s|\n", command->name);
-		// 	while (++i < command->argc)
-		// 		printf("argv[%d] = |%s|\n", i, command->argv[i]);
-		// 	printf("fd_in = %d\nfd_out = %d\n", command->fd_in, command->fd_out);
-		// 	i = -1;
-		// 	printf("fd: ");
-		// 	while (++i < command->colun_del_fd)
-		// 		printf("%d ", command->delete_fd[i]);
-		// 	printf("\n");
-		// 	command = command->next;
-		// }
-		// free_command(&com_to_free);
 	}
 	free(commands_line);
 }
