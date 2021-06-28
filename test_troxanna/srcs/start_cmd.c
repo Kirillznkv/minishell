@@ -50,7 +50,7 @@ void		execute_command(t_commands *cmd, char ***env, t_env *env_main)
 		{
 			exec_run(cmd, *env);
 			//exit в случае если execve не отработал - чтобы завершить самостоятельно дочерний процесс
-			exit(1);
+			//exit(1);
 		}
 		else
 		{
@@ -68,7 +68,7 @@ int		**create_pipe_fd(int count)
 
 	i = 0;
 	fd = (int **)malloc(sizeof(int *) * count + 1);
-	fd[count + 1] = NULL;
+	fd[count] = NULL;
 	while (i < count)
 		fd[i++] = (int *)malloc(sizeof(int) * 2);
 	return (fd);
@@ -121,7 +121,7 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env *env_main)
 			pipe_child(fd, i, count_pipe(cmd));
 			if (!parse_command(ptr, env, env_main))
 				exec_run(ptr, *env);
-			exit(0);
+			//exit(0);
 		}
 		else
 			waitpid(pid, &status, 0);
