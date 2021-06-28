@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/27 16:39:29 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/28 23:46:23 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		parser(char *commands_line, char ***env, t_env *env_main)//; в начал
 	t_commands		*command;
 
 	if (!commands_line)
-		error_control("Commands line is NULL");
+		return ;
 	if (preparser(commands_line))
 	{
 		free(commands_line);

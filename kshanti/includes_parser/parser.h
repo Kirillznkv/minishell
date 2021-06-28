@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/26 15:30:17 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/28 23:20:38 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "stdlib.h"
 # include "errno.h"
 # include "unistd.h"
+#include "termios.h" 
 
 # define ANSI_COLOR_RED "\x1b[31m"
 # define ANSI_COLOR_GREEN "\x1b[32m"
