@@ -90,7 +90,7 @@ void		write_env(t_env *env_export, char *env)
 	int i;
 
 	i = write_env_key(env_export, env);
-	if (i > 0 && ft_strncmp(env, "OLDPWD", 6))
+	if (i > 0 && ft_strncmp(env, "OLDPWD", 6)) //обработать добавление OLDPWD
 		write_env_value(env_export, env, i);
 }
 
@@ -145,8 +145,9 @@ void		check_repeat_export(t_env *env_export, char *key)
 	ptr = env_export;
 	while (ptr)
 	{
-		if (!ft_strncmp(ptr->content->key, key, i))
+		if (!ft_strncmp(ptr->content->key, key, ft_strlen(ptr->content->key)))
 		{
+			//printf ("test");
 			//обработать ситуацию export ll="value" -> export ll
 			//в таком случае переменная ll не должна заменяться
 			delet_elem_env(env_export, ptr);
@@ -177,7 +178,7 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
 	else if (argc > 1)
 	{
 		ptr_env = env_export;
-		while (args < (argc))
+		while (args < argc)
 		{
 			check_repeat_export(ptr_env, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
 			//write(1, "test", 4);

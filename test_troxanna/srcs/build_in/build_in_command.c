@@ -36,7 +36,7 @@ void	ft_pwd_shell(int fd, t_env *env)
 {
 	char *str;
 
-	str = get_env(env, "PWD");
+	str = getcwd(NULL, 0);
 	if (str)
 		show_pwd(str, fd);
 }
