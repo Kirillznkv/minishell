@@ -4,10 +4,11 @@ t_env			*new_elem_env(void)
 {
 	t_env		*new_elem;
 
+	//узнать, какой код ошибки у malloc
 	if (!(new_elem = (t_env *)malloc(sizeof(t_env))))
-		ft_error(NULL, 4);
+		ft_error(NULL, 4, 3);
 	if (!(new_elem->content = (t_content *)malloc(sizeof(t_content))))
-		ft_error(NULL, 4);
+		ft_error(NULL, 4, 3);
 	new_elem->next = NULL;
 	//new_elem->content = NULL;
 	new_elem->content->value = NULL;

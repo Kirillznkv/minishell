@@ -103,6 +103,7 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env *env_main)
 	int			**fd;
 	t_commands	*ptr;
 	int			i;
+	int			status;
 
 	fd = create_pipe_fd(count_pipe(cmd) + 1);
 	ptr = cmd;
@@ -123,7 +124,7 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env *env_main)
 			exit(0);
 		}
 		else
-			wait(0);
+			waitpid(pid, &status, 0);
 		ptr = ptr->next;
 	}
 	free_array((void **)fd);

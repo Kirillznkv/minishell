@@ -47,19 +47,19 @@ void		ft_putstr(char *s)
 	write(1, s, ft_strlen(s));
 }
 
-void		ft_error(char *name, int n)
+void		ft_error(char *name, int n, int err_code)
 {
 	if (n == 1)
 	{
 		ft_putstr(name);
 		write(1, ": permission denied\n", 20);
-		return ;
+		//return ;
 	}
 	else if (n == 2)
 	{
 		ft_putstr(name);
 		write(1, ": сommand not found\n", 21);
-		return ;
+		//return ;
 	}
 	else if (n == 3)
 		write(1, "failed to fork\n", 15);
@@ -70,9 +70,11 @@ void		ft_error(char *name, int n)
 		write(1, "no such file or directory: ", 27);
 		ft_putstr(name);
 		ft_putchar('\n');
-		return ;
+		//return ;
 	}
-	exit(EXIT_FAILURE);
+	//добавить обработку ошибки
+	error_code_dollar = err_code;
+	exit(error_code_dollar);
 }
 
 t_env	*free_t_env(t_env *env_t)

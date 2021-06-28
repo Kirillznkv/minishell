@@ -11,6 +11,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+#include  <errno.h>
 
 int			error_code_dollar;
 
@@ -36,7 +37,7 @@ t_env		*new_elem_env(void);
 void		free_array(void **array);
 void		delet_elem_env(t_env *env, t_env *env_unset);
 t_env		*free_t_env(t_env *env_t);
-void		ft_error(char *name, int n);
+void		ft_error(char *name, int n, int err_code);
 char		*get_env(t_env *env, char *str);
 void		ft_print_env(t_env *env_export, int ex, int fd);//
 void		ft_env_shell(t_env *env, int fd);//

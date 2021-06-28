@@ -23,7 +23,7 @@ int		main(int argc, char **argv, char **env)
 	char	*line;
 	t_env	*env_main;
 	t_env	*ptr;
-
+	
 	error_code_dollar = 0;
 	env_main = ft_create_env(env, new_elem_env());
 	new_env = rewrite_env_parse(env_main);

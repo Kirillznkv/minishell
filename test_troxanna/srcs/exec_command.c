@@ -56,9 +56,9 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 			dup2(cmd->fd_in, 0);
 		}
 		xar_exec = execve(bin, cmd->argv, env);
-		error_code_dollar = xar_exec;
+		//error_code_dollar = xar_exec;
 		if (xar_exec == -1)
-			ft_error(cmd->argv[0], 1);
+			ft_error(cmd->argv[0], 1, 126);
 	// }
 	// else if (a < 0)
 	// 	ft_error(cmd->argv[0], 3);
@@ -68,12 +68,14 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 static char		*exec_case_handling(char **env, t_commands *cmd)
 {
 	char		*bin;
+	struct stat	buff[1];
 
 	bin = NULL;
 	if (!ft_strncmp("./", cmd->argv[0], 2)
 			|| !ft_strncmp("../", cmd->argv[0], 3)
 			|| !ft_strncmp("/", cmd->argv[0], 1))
 		bin = ft_strdup(cmd->argv[0]);
+	error_code_dollar = lstat(bin, buff);
 	return (bin);
 }
 
@@ -86,16 +88,13 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 	char		*bin;
 
 	if (!(path = ft_split(find_path(env), ':')))
-	{
-		ft_error(cmd->argv[0], 5);
-		//обработать ошибку - либо сделать exit и выйти из дочернего процесса, либо ретерн
-	}
+		ft_error(cmd->argv[0], 5, 127);
 	arg = add_slach_arg(cmd->argv[0]);
 	i = -1;
 	while (path[++i])
     {
         bin = ft_strjoin(path[i], arg);
-		if ((lstat(bin, buff)) == 0)
+		if ((error_code_dollar = lstat(bin, buff)) == 0)
 			break ;
 		free(bin);
 		bin = NULL;
@@ -112,11 +111,14 @@ void       exec_run(t_commands *cmd, char **env)
 	bin = NULL;
 	if (!(bin = exec_case_handling(env, cmd)))
 		bin = exec_find_handling(env, cmd);
-	if (bin)
+	if (error_code_dollar)
+		ft_error(cmd->argv[0], 5, 127);
+	if (bin && !error_code_dollar)
 	{
 		exec_fork(cmd, env, bin);
 		free(bin);
 	}
-	else
-		ft_error(cmd->argv[0], 2);
+	// if (error_code_dollar == 126)
+	// 	ft_error(cmd->argv[0], 1, error_code_dollar);
+	// else if (error_code_dollar)
 }
