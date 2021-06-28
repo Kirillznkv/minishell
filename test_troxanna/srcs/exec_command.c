@@ -74,8 +74,12 @@ static char		*exec_case_handling(char **env, t_commands *cmd)
 	if (!ft_strncmp("./", cmd->argv[0], 2)
 			|| !ft_strncmp("../", cmd->argv[0], 3)
 			|| !ft_strncmp("/", cmd->argv[0], 1))
+	{
 		bin = ft_strdup(cmd->argv[0]);
-	error_code_dollar = lstat(bin, buff);
+		error_code_dollar = lstat(bin, buff);
+		if (error_code_dollar)
+			ft_error(cmd->argv[0], 5, 127);
+	}
 	return (bin);
 }
 
@@ -101,6 +105,8 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 	}
 	free_array((void **)path);
 	free(arg);
+	if (error_code_dollar)
+		ft_error(cmd->argv[0], 2, 127);
 	return (bin);
 }
 
@@ -110,9 +116,7 @@ void       exec_run(t_commands *cmd, char **env)
 
 	bin = NULL;
 	if (!(bin = exec_case_handling(env, cmd)))
-		bin = exec_find_handling(env, cmd);
-	if (error_code_dollar)
-		ft_error(cmd->argv[0], 5, 127);
+			bin = exec_find_handling(env, cmd);	
 	if (bin && !error_code_dollar)
 	{
 		exec_fork(cmd, env, bin);
