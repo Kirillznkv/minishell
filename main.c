@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/29 00:15:44 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/29 06:25:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void func()
 {
+	error_code_dollar = CONTROL_C;
 	rl_on_new_line();
-	rl_redisplay();
-	write(1, "\n", 2);
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_replace_line();
 }
 
 int		main(int argc, char **argv, char **env)
@@ -38,6 +35,12 @@ int		main(int argc, char **argv, char **env)
 	signal(SIGINT, func);
 	while ((line = readline("Minishell-2.🔞 ⌲ ")))
 	{
+		if (error_code_dollar == CONTROL_C && line)
+		{
+			free(line);
+			line = NULL;
+			error_code_dollar = 0;//?
+;		}
 		if (line && *line)
 			add_history(line);
 		write(1, "\033[0m" ANSI_COLOR_GREEN "", 10);
@@ -45,6 +48,7 @@ int		main(int argc, char **argv, char **env)
 		write(1, "\033[1m" ANSI_COLOR_CYAN "", 10);
 		rl_on_new_line();
 	}
+	write(1, "\033[2D\033[0K" "exit\n", 14);
 	while (ptr)
 		ptr = free_t_env(ptr);
 	free_array((void **)new_env);
