@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/29 15:04:09 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/29 23:20:15 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 void func()
 {
 	// error_code_dollar = CONTROL_C;
-	// rl_on_new_line();
-	// rl_replace_line();
+	rl_on_new_line();
+	rl_redisplay();
+	write(1, "\e[0K\n", 6);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 int		main(int argc, char **argv, char **env)
@@ -49,6 +53,7 @@ int		main(int argc, char **argv, char **env)
 		rl_on_new_line();
 	}
 	write(1, "\e[1A\e[17C" "exit\n", 15);//exit build in
+	// write(1, "\b\bexit\n", 8);//exit build in
 	while (ptr)
 		ptr = free_t_env(ptr);
 	free_array((void **)new_env);

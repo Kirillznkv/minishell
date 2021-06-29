@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/29 05:42:46 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/29 23:17:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 # define ANSI_COLOR_MAGENTA "\x1b[35m"
 # define ANSI_COLOR_CYAN "\x1b[36m"
 # define ANSI_COLOR_RESET "\x1b[0m"
-# define CONTROL_C -2142
+// # define CONTROL_C -2142
+
+void rl_replace_line();
 
 /*-----------------------------------Errors-----------------------------------*/
 void		error_control(char *str);

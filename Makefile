@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/01 19:12:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/06/29 14:59:07 by kshanti          ###   ########.fr        #
+#    Updated: 2021/06/29 23:06:15 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = ./kshanti/srcs_parser/
 SRCS2 = ./test_troxanna/srcs/
 SRCS3 = $(SRCS2)build_in/
 GNL = ./kshanti/get_next_line/
-RL = -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include/readline/ -lreadline
+RL = -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include -lreadline
 
 CFLAGS = -Wall -Wextra -Werror
 
