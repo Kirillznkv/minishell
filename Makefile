@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/01 19:12:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/06/29 23:06:15 by kshanti          ###   ########.fr        #
+#    Updated: 2021/06/30 18:55:30 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,14 @@ SRCS = ./kshanti/srcs_parser/
 SRCS2 = ./test_troxanna/srcs/
 SRCS3 = $(SRCS2)build_in/
 GNL = ./kshanti/get_next_line/
-RL = -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include -lreadline
+#RL = -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include -lreadline
+RL = -L/usr/local/Cellar/readline/8.1/lib/ -I/usr/local/Cellar/readline/8.1/include -lreadline
 
 CFLAGS = -Wall -Wextra -Werror
 
 C_FILE =	$(SRCS)errors.c $(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
 			$(SRCS)utils.c $(SRCS)dollar.c $(SRCS)dollar_utils.c $(SRCS)redirect.c\
-			$(SRCS)preparser_redirect.c\
+			$(SRCS)preparser_redirect.c $(SRCS)signal.c\
 			$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			./main.c\
 			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)utils_func.c\

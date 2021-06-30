@@ -6,21 +6,11 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 00:05:58 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 18:54:41 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "./kshanti/includes_parser/parser.h"
-
-void func()
-{
-	rl_on_new_line();
-	rl_redisplay();
-	write(1, "\e[0K\n", 6);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
 
 int		main(int argc, char **argv, char **env)
 {
@@ -30,12 +20,12 @@ int		main(int argc, char **argv, char **env)
 	t_env	*ptr;
 	
 	error_code_dollar = 0;
+	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, ctrl_slash);
 	env_main = ft_create_env(env, new_elem_env());
 	new_env = rewrite_env_parse(env_main);
 	ptr = env_main;
 	write(1, "\033[1m" ANSI_COLOR_CYAN "", 10);
-	rl_on_new_line();
-	signal(SIGINT, func);
 	while ((line = readline("Minishell-2.🔞 ⌲ ")))
 	{
 		if (line && *line)
@@ -43,9 +33,8 @@ int		main(int argc, char **argv, char **env)
 		write(1, "\033[0m" ANSI_COLOR_GREEN "", 10);
 		parser(line, &new_env, env_main);
 		write(1, "\033[1m" ANSI_COLOR_CYAN "", 10);
-		rl_on_new_line();
 	}
-	write(1, "\e[1A\e[17C" "exit\n", 15);//exit build in
+	ctrl_d();//exit build in
 	while (ptr)
 		ptr = free_t_env(ptr);
 	free_array((void **)new_env);

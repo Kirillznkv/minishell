@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 19:48:55 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/15 19:57:57 by kshanti          ###   ########.fr       */
+/*   Created: 2021/06/30 18:19:22 by kshanti           #+#    #+#             */
+/*   Updated: 2021/06/30 19:02:14 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes_parser/parser.h"
-#include "fcntl.h"
+#include "../includes_parser/parser.h"
 
-// void	free_array(char **env)
-// {
-// 	int i;
-
-// 	i = -1;
-// 	while (env[++i])
-// 		free(env[i]);
-// 	free(env);
-// 	env = NULL;
-// }
-
-int		main(int argc, char **argv, char **env)
+void	ctrl_c(int c)
 {
-	char	*line;
+	rl_on_new_line();
+	rl_redisplay();
+	write(1, "\e[0K\n", 6);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	while (get_next_line(0, &line) == 1)
-	{
-		parser(line, &env, NULL);
-	}
-	// while (1)
-	// 	;
-	return (0);
+void	ctrl_slash(int c)
+{
+	rl_on_new_line();
+	rl_redisplay();
+	write(1, "\e[0K", 5);
+}
+
+void	ctrl_d(void)
+{
+	write(1, "\e[1A\e[17C" "exit\n", 15);
 }

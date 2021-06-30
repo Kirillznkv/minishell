@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/29 23:17:58 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 18:53:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,9 @@ void		redirect(t_commands *command, char **p_command_line, size_t *i);
 void		back_redirect(t_commands *command, char **p_command_line, size_t *i);
 void		add_fd(t_commands *command, int new_fd);
 void		double_back_redirect(t_commands *command, char *name);
+/*-----------------------------------Signals----------------------------------*/
+void		ctrl_c(int c);
+void		ctrl_slash(int c);
+void		ctrl_d(void);
 
 #endif
