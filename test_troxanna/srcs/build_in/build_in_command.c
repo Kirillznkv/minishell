@@ -39,6 +39,7 @@ void	ft_pwd_shell(int fd, t_env *env)
 	str = getcwd(NULL, 0);
 	if (str)
 		show_pwd(str, fd);
+	free(str);
 }
 
 void	ft_env_shell(t_env *env, int fd)
