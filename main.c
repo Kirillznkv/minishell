@@ -30,7 +30,7 @@ int		main(int argc, char **argv, char **env)
 	t_env	*ptr;
 	
 	error_code_dollar = 0;
-	env_main = ft_create_env(env, new_elem_env());
+	env_main = ft_create_env(env);
 	new_env = rewrite_env_parse(env_main);
 	ptr = env_main;
 	write(1, "\033[1m" ANSI_COLOR_CYAN "", 10);

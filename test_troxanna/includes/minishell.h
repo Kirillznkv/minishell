@@ -49,7 +49,7 @@ void		ft_echo_shell(char **argv, int fd, t_env *env);//
 void		ft_unset_shell(t_env *env, char **argv, int argc);
 void		ft_cd_shell(char *argv, t_env *env);
 char		**rewrite_env_parse(t_env *env);
-t_env 		*ft_create_env(char **env, t_env *env_export);
+t_env 		*ft_create_env(char **env);
 void		exec_run(t_commands *argv, char **env);//
 void		ft_exit_shell();
 char		**new_env_malloc(char **env);

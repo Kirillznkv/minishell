@@ -16,10 +16,11 @@ t_env			*new_elem_env(void)
 	return (new_elem);
 }
 
-void				add_elem_env(t_env *env, t_env *new_env)
+void				add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s)
 {
 	t_env		*ptr;
 
+	wrt(new_env, s);
 	ptr = env;
 	if (env == NULL)
 		env = new_env;
@@ -36,12 +37,11 @@ void				delet_elem_env(t_env *env, t_env *env_unset)
 	t_env *ptr;
 
 	ptr = env;
-	while (ptr->next != env_unset) 
+	while (ptr->next && ptr->next != env_unset) 
 	{ 
 	  ptr = ptr->next;
 	}
-	ptr->next = env_unset->next; // переставляем указатель
-	free_t_env(env_unset);
+	ptr->next = free_t_env(env_unset); 
 	//free(env_unset); // освобождаем память удаляемого узла
 }
 
@@ -160,54 +160,46 @@ void		check_repeat_export(t_env *env_export, char *key)
 void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
 {
 	t_env *new_env;
-	t_env *ptr_env;
+	t_env *ptr;
 	int		args;
 
 	args = 1;
-	ptr_env = env_export;
+	ptr = env_export;
 	if (argc < 2)
 	{
-		ft_env_sort(ptr_env, ft_counter_lstenv(env_export));
-		while (ptr_env)
+		ft_env_sort(ptr, ft_counter_lstenv(env_export));
+		while (ptr)
 		{
 			ft_putstr_fd("declare -x ", fd);
-			ft_print_env(ptr_env, 1, fd);
-			ptr_env = ptr_env->next;
+			ft_print_env(ptr, 1, fd);
+			ptr = ptr->next;
 		}
 	}
 	else if (argc > 1)
 	{
-		ptr_env = env_export;
+		ptr = env_export;
 		while (args < argc)
 		{
-			check_repeat_export(ptr_env, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
-			//write(1, "test", 4);
-			new_env = new_elem_env();
-			write_env(new_env, argv[args]);
-			add_elem_env(ptr_env, new_env);
-			new_env = new_env->next;
+			check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+			add_elem_env(env_export, new_elem_env(), write_env, argv[args]);
+			ptr = ptr->next;
 			args++;
 		}
 	}
 }
 
 
-t_env 	*ft_create_env(char **env, t_env *env_export)
+t_env 	*ft_create_env(char **env)
 {
 	t_env	*ptr;
-	t_env	*new_env;
+	t_env	*env_export;
 	int i;
 
-	//ptr = new_elem_env();
+	env_export = new_elem_env();
 	ptr = env_export;
 	i = 0;
 	write_env(ptr, env[i]);
 	while (env[++i])
-	{
-		new_env = new_elem_env();
-		write_env(new_env, env[i]);
-		add_elem_env(ptr, new_env);
-		new_env = new_env->next;
-	}
+		add_elem_env(ptr, new_elem_env(), write_env, env[i]);
 	return (env_export);
 }
