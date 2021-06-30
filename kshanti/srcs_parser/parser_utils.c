@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 21:15:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 21:47:37 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 21:51:52 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,12 @@ void		check_end_word(char **p_command_line, size_t *i,
 		if (command_line[*i] == '>' || command_line[*i] == '<' ||
 			(*command)->fd_flag)
 		{
-			if ((*command)->fd_flag || *i == 0)
-				replace_redirect(*command, p_command_line, i);
-			else
-			{
-				replace_redirect(*command, p_command_line, i);
+			replace_redirect(*command, p_command_line, i);
+			if (!((*command)->fd_flag || *i == 0))
 				save_command(p_command_line, i, *command);
-			}
 		}
 		else
-		{
 			save_command(p_command_line, i, *command);
-		}
 	}
 	else if (command_line[*i] == '|')
 	{
