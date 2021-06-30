@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:54:41 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/22 13:58:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 21:46:56 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@ int		base_delimiter(char *str, int i)
 	if (ch == '\0')
 	{
 		write(1, "bash: syntax error near unexpected token `newline'\n", 52);
+		error_code_dollar = 258;
 		return (1);
 	}
 	if (ch == '|')
 	{
 		write(1, "bash: syntax error near unexpected token `|'\n", 46);
+		error_code_dollar = 258;
 		return (1);
 	}
 	if (ch == ';')
 	{
 		write(1, "bash: syntax error near unexpected token `;'\n", 46);
+		error_code_dollar = 258;
 		return (1);
 	}
 	if (ch == '<' || ch == '>')
 	{
 		write(1, "bash: syntax error near unexpected token `<'\n", 46);
+		error_code_dollar = 258;
 		return (1);
 	}
 	return (0);
@@ -72,6 +76,7 @@ int		quotes_delimiter(char *str, int i)
 		ch == ';')
 	{
 		write(1, "bash: : No such file or directory\n", 35);
+		error_code_dollar = 1;
 		return (1);
 	}
 	return (0);

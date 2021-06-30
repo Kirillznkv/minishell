@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/20 20:48:33 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 21:43:24 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ int		preparser(char *commands_line)
 			return (1);
 		if (check_double_quotes(commands_line, &i))
 			return (1);
+		if (commands_line[i] == '|' && commands_line[i + 1] == '|')
+		{
+			write(1, "syntax error near unexpected token '|'\n", 40);
+			error_code_dollar = 258;
+			return (1);
+		}
 	}
 	return (0);
 }
