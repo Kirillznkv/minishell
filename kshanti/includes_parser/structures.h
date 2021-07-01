@@ -6,14 +6,14 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:22:18 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/17 15:53:25 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:46:09 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-typedef struct			s_commands
+typedef struct s_commands
 {
 	int					pipe;
 	int					fd_flag;
