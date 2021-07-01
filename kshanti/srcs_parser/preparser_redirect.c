@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:54:41 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:05:55 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:30:16 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,18 @@ int	quotes_delimiter(char *str, int i)
 		return (0);
 	while (str[i] == '\'' || str[i] == '"')
 	{
-		while (str[i] == '\'')
-		{
+		while (str[i] == '\'' && ++i)
 			col++;
-			i++;
-		}
 		if (col % 2)
 			return (0);
-		while (str[i] == '\"')
-		{
+		while (str[i] == '\"' && ++i)
 			col++;
-			i++;
-		}
 		if (col % 2)
 			return (0);
 	}
 	ch = str[i];
-	if (ch == ' ' || ch == '|' || \
-		ch == '<' || ch == '>' || \
-		ch == '\t' || ch == '\0' || \
-		ch == ';')
+	if (ch == ' ' || ch == '|' || ch == '<' || ch == '>' || \
+		ch == '\t' || ch == '\0' || ch == ';')
 		return (wr_er("bash: : No such file or directory\n", 1));
 	return (0);
 }
