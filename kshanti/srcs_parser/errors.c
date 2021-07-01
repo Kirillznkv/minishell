@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/30 18:19:22 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 16:27:35 by kshanti          ###   ########.fr       */
+/*   Created: 2021/05/14 18:59:03 by kshanti           #+#    #+#             */
+/*   Updated: 2021/06/14 21:35:47 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-void	ctrl_c(int c)
+void			error_control(char *str)
 {
-	rl_on_new_line();
-	rl_redisplay();
-	write(1, "\e[0K\n", 6);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	ft_putstr_fd("Error: ", 1);
+	ft_putstr_fd(str, 1);
+	ft_putchar_fd('\n', 1);
+	exit(1);
 }
 
-void	ctrl_slash(int c)
+void			error_system(int error)
 {
-	rl_on_new_line();
-	rl_redisplay();
-	write(1, "\e[0K", 5);
-}
-
-void	ctrl_d(void)
-{
-	write(1, "\e[1A\e[17C" "exit\n", 15);
+	perror("Error");
+	exit(error);
 }

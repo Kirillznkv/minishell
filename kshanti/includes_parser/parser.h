@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 21:48:39 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/30 18:53:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 
 void rl_replace_line();
 
+/*-----------------------------------Errors-----------------------------------*/
+void		error_control(char *str);
+void		error_system(int error);
 /*-----------------------------------Quotes-----------------------------------*/
 void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes);
 void		replace_single_quotes(char **p_command_line, size_t *begin_quotes);
@@ -51,7 +54,6 @@ char		*get_new_dollar_word(char **env, char *dollar_word);
 char		*get_second_env_word(char *env_line);
 int			check_env_word(char *env_line, char *dollar_word);
 /*-----------------------------------Parser-----------------------------------*/
-int			check_command(t_commands *command);
 void		parser(char *commands_line, char ***env, t_env *env_main);
 t_commands	*get_one_command(char **p_commands_line, char **env);
 void		save_command(char **p_command_line, size_t *i, t_commands *command);
@@ -70,6 +72,7 @@ int			base_delimiter(char *str, int i);
 int			quotes_delimiter(char *str, int i);
 int			preparser_delimiter(char *str, int i);
 /*-----------------------------------Utils------------------------------------*/
+int			check_command(t_commands *command);
 char		**malloc_argv(int argc, char **argv);
 void		skip_spases_tabs(char **p_command_line, size_t begin);
 t_commands	*init_command(void);

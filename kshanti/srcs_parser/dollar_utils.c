@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:52:01 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 21:20:46 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:51:57 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ char		*get_new_dollar_word(char **env, char *dollar_word)
 	return (NULL);
 }
 
-void		replace_dollar_word(char **p_command_line, char *new_dollar_word,
-								int beg_dollar, int end_dollar_word)
+void		replace_dollar_word(char **p_command_line, char *new_dollar_word, int beg_dollar, int end_dollar_word)
 {
 	char	*first_part;
 	char	*last_part;

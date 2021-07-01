@@ -6,14 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 21:26:02 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/06/04 21:28:24 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-void		delete_quotes(char **p_command_line, size_t beg_quotes,
-							size_t end_quotes)
+void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes)
 {
 	char	*first_part;
 	char	*second_part;
@@ -21,8 +20,7 @@ void		delete_quotes(char **p_command_line, size_t beg_quotes,
 	char	*save_to_free;
 
 	first_part = ft_substr(*p_command_line, 0, beg_quotes);
-	second_part = ft_substr(*p_command_line, beg_quotes + 1,
-							end_quotes - beg_quotes - 1);
+	second_part = ft_substr(*p_command_line, beg_quotes + 1, end_quotes - beg_quotes - 1);
 	third_part = ft_substr(*p_command_line, end_quotes + 1, -1);
 	free(*p_command_line);
 	*p_command_line = ft_strjoin(first_part, second_part);
@@ -49,8 +47,7 @@ void		replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 	*begin_quotes = end_quotes - 1;
 }
 
-void		replace_double_quotes(char **p_command_line, char **env,
-									size_t *begin_quotes)
+void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quotes)
 {
 	size_t	end_quotes;
 	char	*command_line;
@@ -61,10 +58,9 @@ void		replace_double_quotes(char **p_command_line, char **env,
 		return ;
 	while (command_line[end_quotes] != '\"')
 	{
-		if (command_line[end_quotes] == '\\' &&
-			command_line[end_quotes + 1] != '\"' &&
-			command_line[end_quotes + 1] != '\\' &&
-			command_line[end_quotes + 1] != '$')
+		if (command_line[end_quotes] == '\\' && command_line[end_quotes + 1] != '\"' &&
+												command_line[end_quotes + 1] != '\\' &&
+												command_line[end_quotes + 1] != '$')
 			end_quotes++;
 		else if (command_line[end_quotes] == '$')
 		{;
