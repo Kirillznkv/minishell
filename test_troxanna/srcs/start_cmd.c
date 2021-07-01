@@ -19,6 +19,7 @@ int		count_pipe(t_commands *cmd)
 
 int		parse_command(t_commands *cmd, char ***env, t_env *env_main)
 {
+	error_code_dollar = 0;
 	if (!ft_strncmp(cmd->argv[0], "env", 0)) 
 		ft_env_shell(env_main, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "export", 0))

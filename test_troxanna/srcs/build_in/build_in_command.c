@@ -94,5 +94,5 @@ void	ft_unset_shell(t_env *env, char **argv, int argc)
 
 void	ft_exit_shell()
 {
-	exit(EXIT_SUCCESS);
+	exit(error_code_dollar);
 }
