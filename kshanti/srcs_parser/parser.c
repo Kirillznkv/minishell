@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/28 23:46:23 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:31:18 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void		save_command(char **p_command_line, size_t *i, t_commands *command)
 	free(save_to_free);
 }
 
-void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
+void		check_end_word(char **p_command_line, size_t *i,
+							t_commands **command)
 {
 	char	*command_line;
 
@@ -52,7 +53,8 @@ void		check_end_word(char **p_command_line, size_t *i, t_commands **command)
 	{
 		skip_spases_tabs(p_command_line, *i);
 		command_line = *p_command_line;
-		if (command_line[*i] == '>' || command_line[*i] == '<' || (*command)->fd_flag)
+		if (command_line[*i] == '>' || command_line[*i] == '<' ||
+			(*command)->fd_flag)
 		{
 			if ((*command)->fd_flag || *i == 0)
 				replace_redirect(*command, p_command_line, i);
@@ -108,16 +110,16 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	command_line = *p_commands_line;
 	while (command_line[i] && command_line[i] != '\n' && command_line[i] != ';')
 	{
-		if (replace_back_slash(&command_line, &i))//      /
+		if (replace_back_slash(&command_line, &i))
 		{
 			check_end_word(&command_line, &i, &command);
 			continue ;
 		}
-		replace_single_quotes(&command_line, &i);//       '
-		replace_double_quotes(&command_line, env, &i);//  "
-		replace_dollar(&command_line, env, &i);//         $
-		replace_normal_char(&command_line, &i);//         word
-		check_end_word(&command_line, &i, &command);//     add || < > >>
+		replace_single_quotes(&command_line, &i);
+		replace_double_quotes(&command_line, env, &i);
+		replace_dollar(&command_line, env, &i);
+		replace_normal_char(&command_line, &i);
+		check_end_word(&command_line, &i, &command);
 	}
 	command->argv = malloc_argv(command->argc, command->argv);
 	if (command_line[i] == ';')
@@ -131,7 +133,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-void		parser(char *commands_line, char ***env, t_env *env_main)//; в начале
+void		parser(char *commands_line, char ***env, t_env *env_main)
 {
 	t_commands		*command;
 

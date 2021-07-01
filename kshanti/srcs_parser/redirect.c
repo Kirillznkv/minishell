@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/29 19:43:05 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:32:56 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ void		redirect(t_commands *command, char **p_command_line, size_t *i)
 	free(save_to_free);
 }
 
-void		replace_redirect(t_commands *command, char **p_command_line, size_t *i)
+void		replace_redirect(t_commands *command, char **p_command_line,
+								size_t *i)
 {
 	char	*command_line;
 
 	command_line = *p_command_line;
-	if (!command->fd_flag)//Дописать препарсер на коррект ввод
+	if (!command->fd_flag)
 	{
 		if (command_line[*i] == '<')
 		{
