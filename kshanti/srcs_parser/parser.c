@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:04:57 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 23:54:17 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ void	save_command(char **p_command_line, size_t *i, t_commands *command)
 	free(save_to_free);
 }
 
+void	find_delimiter_word(char **p_com_ln, size_t *i, t_commands **command)
+{
+	char	*command_line;
+
+	skip_spases_tabs(p_com_ln, *i);
+	command_line = *p_com_ln;
+	if (command_line[*i] == '>' || command_line[*i] == '<' || \
+		(*command)->fd_flag)
+	{
+		if ((*command)->fd_flag || *i == 0)
+			replace_redirect(*command, p_com_ln, i);
+		else
+		{
+			replace_redirect(*command, p_com_ln, i);
+			save_command(p_com_ln, i, *command);
+		}
+	}
+	else
+		save_command(p_com_ln, i, *command);
+}
+
 void	check_end_word(char **p_command_line, size_t *i, t_commands **command)
 {
 	char	*command_line;
@@ -50,21 +71,7 @@ void	check_end_word(char **p_command_line, size_t *i, t_commands **command)
 		command_line[*i] == '>' || command_line[*i] == '\0' || \
 		command_line[*i] == '<')
 	{
-		skip_spases_tabs(p_command_line, *i);
-		command_line = *p_command_line;
-		if (command_line[*i] == '>' || command_line[*i] == '<' || \
-			(*command)->fd_flag)
-		{
-			if ((*command)->fd_flag || *i == 0)
-				replace_redirect(*command, p_command_line, i);
-			else
-			{
-				replace_redirect(*command, p_command_line, i);
-				save_command(p_command_line, i, *command);
-			}
-		}
-		else
-			save_command(p_command_line, i, *command);
+		find_delimiter_word(p_command_line, i, command);
 	}
 	else if (command_line[*i] == '|')
 	{
@@ -93,11 +100,21 @@ int	replace_back_slash(char **p_command_line, size_t *i)
 	return (1);
 }
 
+void	replacing_line_part(char **p_com_ln, char **env, \
+							t_commands **command, size_t *i)
+{
+	replace_single_quotes(p_com_ln, i);
+	replace_double_quotes(p_com_ln, env, i);
+	replace_dollar(p_com_ln, env, i);
+	replace_normal_char(p_com_ln, i);
+	check_end_word(p_com_ln, i, command);
+}
+
 t_commands	*get_one_command(char **p_commands_line, char **env)
 {
 	size_t		i;
-	t_commands	*command;
 	t_commands	*first;
+	t_commands	*command;
 	char		*command_line;
 
 	i = 0;
@@ -112,20 +129,11 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 			check_end_word(&command_line, &i, &command);
 			continue ;
 		}
-		replace_single_quotes(&command_line, &i);
-		replace_double_quotes(&command_line, env, &i);
-		replace_dollar(&command_line, env, &i);
-		replace_normal_char(&command_line, &i);
-		check_end_word(&command_line, &i, &command);
+		replacing_line_part(&command_line, env, &command, &i);
 	}
 	command->argv = malloc_argv(command->argc, command->argv);
-	if (command_line[i] == ';')
-	{
-		*p_commands_line = ft_substr(command_line, 1, -1);
-		free(command_line);
-	}
-	else
-		*p_commands_line = command_line;
+	*p_commands_line = ft_substr(command_line, command_line[i] == ';', -1);
+	free(command_line);
 	fd_control(&first);
 	return (first);
 }

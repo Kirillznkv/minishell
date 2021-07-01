@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 22:22:18 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 23:55:35 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ char		*get_new_dollar_word(char **env, char *dollar_word);
 char		*get_second_env_word(char *env_line);
 int			check_env_word(char *env_line, char *dollar_word);
 /*-----------------------------------Parser-----------------------------------*/
+void		find_delimiter_word(char **p_com, size_t *i, t_commands **command);
 void		parser(char *commands_line, char ***env, t_env *env_main);
 t_commands	*get_one_command(char **p_commands_line, char **env);
 void		save_command(char **p_command_line, size_t *i, t_commands *command);
 void		check_end_word(char **p_command_line, size_t *i, \
 														t_commands **command);
+void		replacing_line_part(char **p_com_ln, char **env, \
+											t_commands **command, size_t *i);
 void		replace_normal_char(char **p_command_line, size_t *i);
 int			replace_back_slash(char **p_command_line, size_t *i);
 /*-----------------------------------Preparser--------------------------------*/
