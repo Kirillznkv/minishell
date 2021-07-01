@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:31:18 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:50:50 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		check_end_word(char **p_command_line, size_t *i,
 	{
 		delete_one_char(p_command_line, *i);
 		if (command_line[*i] == '|')
-			error_control("syntax error near unexpected token '|'");
+			wr_er("syntax error near unexpected token '|'\n", 258);
 		if (*i != 0)
 			save_command(p_command_line, i, *command);
 		(*command)->pipe = 1;

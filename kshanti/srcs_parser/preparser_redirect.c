@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:54:41 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/22 13:58:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:51:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,14 @@ int		base_delimiter(char *str, int i)
 
 	ch = str[i];
 	if (ch == '\0')
-	{
-		write(1, "bash: syntax error near unexpected token `newline'\n", 52);
-		return (1);
-	}
+		return (wr_er("bash: syntax error near unexpected token `newline'\n",
+																		258));
 	if (ch == '|')
-	{
-		write(1, "bash: syntax error near unexpected token `|'\n", 46);
-		return (1);
-	}
+		return (wr_er("bash: syntax error near unexpected token `|'\n", 258));
 	if (ch == ';')
-	{
-		write(1, "bash: syntax error near unexpected token `;'\n", 46);
-		return (1);
-	}
+		return (wr_er("bash: syntax error near unexpected token `;'\n", 258));
 	if (ch == '<' || ch == '>')
-	{
-		write(1, "bash: syntax error near unexpected token `<'\n", 46);
-		return (1);
-	}
+		return (wr_er("bash: syntax error near unexpected token `<'\n", 258));
 	return (0);
 }
 
@@ -70,10 +59,7 @@ int		quotes_delimiter(char *str, int i)
 		ch == '<' || ch == '>' ||
 		ch == '\t' || ch == '\0' ||
 		ch == ';')
-	{
-		write(1, "bash: : No such file or directory\n", 35);
-		return (1);
-	}
+		return (wr_er("bash: : No such file or directory\n", 1));
 	return (0);
 }
 

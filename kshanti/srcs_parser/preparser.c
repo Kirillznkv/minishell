@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/20 20:48:33 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:53:00 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int		check_single_quotes(char *str, int *i)
 	while (str[*i] && !(str[*i] == '\'' && str[*i - 1] != '\\'))
 		(*i)++;
 	if (!str[*i])
-	{
-		write(1, "Error: Single quote not closed\n", 32);
-		return (1);
-	}
+		return (wr_er("Error: Single quote not closed\n", 1));
 	return (0);
 }
 
@@ -35,10 +32,7 @@ int		check_double_quotes(char *str, int *i)
 	while (str[*i] && !(str[*i] == '\"' && str[*i - 1] != '\\'))
 		(*i)++;
 	if (!str[*i])
-	{
-		write(1, "Error: Double quote not closed\n", 32);
-		return (1);
-	}
+		return (wr_er("Error: Double quote not closed\n", 1));
 	return (0);
 }
 
@@ -62,10 +56,7 @@ int		check_back_slash_at_the_end(char *commands_line)
 	while (i && commands_line[i--] == '\\')
 		column_back_slash++;
 	if (column_back_slash % 2)
-	{
-		write(1, "Error: Back slash at the end of the line\n", 42);
-		return (1);
-	}
+		return (wr_er("Error: Back slash at the end of the line\n", 1));
 	return (0);
 }
 

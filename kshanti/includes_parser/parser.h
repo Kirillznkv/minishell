@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:38:10 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:50:44 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@
 
 void rl_replace_line();
 
-/*-----------------------------------Errors-----------------------------------*/
-void		error_control(char *str);
-void		error_system(int error);
 /*-----------------------------------Quotes-----------------------------------*/
 void		delete_quotes(char **p_command_line, size_t beg_quotes,
 							size_t end_quotes);
@@ -78,6 +75,7 @@ int			base_delimiter(char *str, int i);
 int			quotes_delimiter(char *str, int i);
 int			preparser_delimiter(char *str, int i);
 /*-----------------------------------Utils------------------------------------*/
+int			wr_er(char *s, int error_code);
 int			check_command(t_commands *command);
 char		**malloc_argv(int argc, char **argv);
 void		skip_spases_tabs(char **p_command_line, size_t begin);

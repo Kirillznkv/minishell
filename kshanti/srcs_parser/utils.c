@@ -6,11 +6,18 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:33:19 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:54:30 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
+
+int			wr_er(char *s, int error_code)
+{
+	write(1, s, ft_strlen(s));
+	error_code_dollar = error_code;
+	return (1);
+}
 
 int			check_command(t_commands *command)
 {

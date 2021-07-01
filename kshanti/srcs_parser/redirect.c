@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:32:56 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:54:15 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void		back_redirect(t_commands *command, char **p_command_line, size_t *i)
 			write(1, "bash: ", 7);
 			write(1, file_name, ft_strlen(file_name));
 			write(1, ": No such file or directory\n", 29);
+			error_code_dollar = 1;
 		}
 		if (command->fd_in_name)
 			free(command->fd_in_name);

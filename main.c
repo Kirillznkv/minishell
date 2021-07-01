@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 19:06:38 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:42:52 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int		main(int argc, char **argv, char **env)
 		parser(line, &new_env, env_main);
 		write(1, "\033[1m" ANSI_COLOR_CYAN "", 10);
 	}
-	ctrl_d();//exit build in
+	ctrl_d();
 	while (ptr)
 		ptr = free_t_env(ptr);
 	free_array((void **)new_env);
-	return (0);
+	return (error_code_dollar);
 }
