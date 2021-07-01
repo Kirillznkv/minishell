@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:12:55 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 22:23:02 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ void	delete_one_char(char **p_command_line, size_t i)
 	free(last_part);
 }
 
-void	free_command(t_commands **p_command)
+int	free_command(t_commands **p_command)
 {
 	t_commands	*command;
 
 	command = *p_command;
 	if (!command)
-		return ;
+		return (1);
 	while (command->colun_del_fd--)
 	{
 		if (command->delete_fd[command->colun_del_fd] != -1)
@@ -130,9 +130,10 @@ void	free_command(t_commands **p_command)
 		free_command(&(command->next));
 	free(command);
 	*p_command = NULL;
+	return (1);
 }
 
-void	fd_control(t_commands **p_command)
+int	fd_control(t_commands **p_command)
 {
 	t_commands	*command;
 	int			i;
@@ -144,10 +145,7 @@ void	fd_control(t_commands **p_command)
 		while (++i < command->colun_del_fd)
 		{
 			if (command->delete_fd[i] == -1)
-			{
-				free_command(p_command);
-				return ;
-			}
+				return (free_command(p_command));
 		}
 		if (command->fd_in_name && (command->argv[0] && !command->argv[1]))
 		{
@@ -161,4 +159,5 @@ void	fd_control(t_commands **p_command)
 			command->fd_in = 0;
 		command = command->next;
 	}
+	return (0);
 }
