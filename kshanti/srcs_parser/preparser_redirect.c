@@ -6,19 +6,19 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 18:54:41 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:51:29 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:05:55 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-int		base_delimiter(char *str, int i)
+int	base_delimiter(char *str, int i)
 {
 	int		ch;
 
 	ch = str[i];
 	if (ch == '\0')
-		return (wr_er("bash: syntax error near unexpected token `newline'\n",
+		return (wr_er("bash: syntax error near unexpected token `newline'\n", \
 																		258));
 	if (ch == '|')
 		return (wr_er("bash: syntax error near unexpected token `|'\n", 258));
@@ -29,7 +29,7 @@ int		base_delimiter(char *str, int i)
 	return (0);
 }
 
-int		quotes_delimiter(char *str, int i)
+int	quotes_delimiter(char *str, int i)
 {
 	int		ch;
 	int		col;
@@ -55,15 +55,15 @@ int		quotes_delimiter(char *str, int i)
 			return (0);
 	}
 	ch = str[i];
-	if (ch == ' ' || ch == '|' ||
-		ch == '<' || ch == '>' ||
-		ch == '\t' || ch == '\0' ||
+	if (ch == ' ' || ch == '|' || \
+		ch == '<' || ch == '>' || \
+		ch == '\t' || ch == '\0' || \
 		ch == ';')
 		return (wr_er("bash: : No such file or directory\n", 1));
 	return (0);
 }
 
-int		preparser_delimiter(char *str, int i)
+int	preparser_delimiter(char *str, int i)
 {
 	if (base_delimiter(str, i))
 		return (1);
@@ -72,7 +72,7 @@ int		preparser_delimiter(char *str, int i)
 	return (0);
 }
 
-int		precheck_redirect(char *str, int *i)
+int	precheck_redirect(char *str, int *i)
 {
 	if (str[*i] != '>' && str[*i] != '<')
 		return (0);

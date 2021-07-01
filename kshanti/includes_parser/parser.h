@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 19:45:50 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:17:36 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ANSI_COLOR_CYAN "\x1b[36m"
 # define ANSI_COLOR_RESET "\x1b[0m"
 
-void		rl_replace_line(void);
+void		rl_replace_line(const char *str, int a);
 /*-----------------------------------Quotes-----------------------------------*/
 void		delete_quotes(char **p_command_line, size_t beg_quotes, \
 							size_t end_quotes);

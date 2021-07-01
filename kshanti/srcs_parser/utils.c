@@ -6,22 +6,22 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:54:30 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:12:55 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-int			wr_er(char *s, int error_code)
+int	wr_er(char *s, int error_code)
 {
 	write(1, s, ft_strlen(s));
 	error_code_dollar = error_code;
 	return (1);
 }
 
-int			check_command(t_commands *command)
+int	check_command(t_commands *command)
 {
-	t_commands *p;
+	t_commands	*p;
 
 	if (!command || !(command->name))
 		return (0);
@@ -35,14 +35,14 @@ int			check_command(t_commands *command)
 	return (1);
 }
 
-char		**malloc_argv(int argc, char **argv)
+char	**malloc_argv(int argc, char **argv)
 {
 	int		i;
 	char	**new_argv;
 
 	if (argv == NULL)
-		return ((char**)calloc(2, sizeof(char*)));
-	new_argv = (char**)calloc(argc + 2, sizeof(char*));
+		return ((char **)calloc(2, sizeof(char *)));
+	new_argv = (char **)calloc(argc + 2, sizeof(char *));
 	i = -1;
 	while (++i < argc)
 		new_argv[i] = argv[i];
@@ -50,7 +50,7 @@ char		**malloc_argv(int argc, char **argv)
 	return (new_argv);
 }
 
-void		skip_spases_tabs(char **p_command_line, size_t begin)
+void	skip_spases_tabs(char **p_command_line, size_t begin)
 {
 	size_t	end;
 	char	*command_line;
@@ -77,7 +77,7 @@ t_commands	*init_command(void)
 {
 	t_commands	*command;
 
-	command = (t_commands*)malloc(sizeof(t_commands));
+	command = (t_commands *)malloc(sizeof(t_commands));
 	command->argc = 0;
 	command->pipe = 0;
 	command->fd_flag = 0;
@@ -93,7 +93,7 @@ t_commands	*init_command(void)
 	return (command);
 }
 
-void		delete_one_char(char **p_command_line, size_t i)
+void	delete_one_char(char **p_command_line, size_t i)
 {
 	char	*first_part;
 	char	*last_part;
@@ -106,7 +106,7 @@ void		delete_one_char(char **p_command_line, size_t i)
 	free(last_part);
 }
 
-void		free_command(t_commands **p_command)
+void	free_command(t_commands **p_command)
 {
 	t_commands	*command;
 
@@ -132,10 +132,10 @@ void		free_command(t_commands **p_command)
 	*p_command = NULL;
 }
 
-void		fd_control(t_commands **p_command)
+void	fd_control(t_commands **p_command)
 {
-	int		i;
 	t_commands	*command;
+	int			i;
 
 	i = -1;
 	command = *p_command;
@@ -152,7 +152,7 @@ void		fd_control(t_commands **p_command)
 		if (command->fd_in_name && (command->argv[0] && !command->argv[1]))
 		{
 			command->argv = malloc_argv(command->argc, command->argv);
-			command->argv[command->argc++] = ft_strjoin("./",
+			command->argv[command->argc++] = ft_strjoin("./", \
 														command->fd_in_name);
 			free(command->fd_in_name);
 			command->fd_in_name = NULL;

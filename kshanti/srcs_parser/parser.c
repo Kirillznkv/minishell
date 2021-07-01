@@ -6,27 +6,27 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:50:50 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:04:57 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-void		replace_normal_char(char **p_command_line, size_t *i)
+void	replace_normal_char(char **p_command_line, size_t *i)
 {
 	char	*command_line;
 
 	command_line = *p_command_line;
-	while (command_line[*i] != ' ' && command_line[*i] != '\"' &&
-		command_line[*i] != '$' && command_line[*i] != '\'' &&
-		command_line[*i] != '|' && command_line[*i] != '\t' &&
-		command_line[*i] != ';' && command_line[*i] != '\0' &&
-		command_line[*i] != '<' && command_line[*i] != '\n' &&
+	while (command_line[*i] != ' ' && command_line[*i] != '\"' && \
+		command_line[*i] != '$' && command_line[*i] != '\'' && \
+		command_line[*i] != '|' && command_line[*i] != '\t' && \
+		command_line[*i] != ';' && command_line[*i] != '\0' && \
+		command_line[*i] != '<' && command_line[*i] != '\n' && \
 		command_line[*i] != '>')
 		(*i)++;
 }
 
-void		save_command(char **p_command_line, size_t *i, t_commands *command)
+void	save_command(char **p_command_line, size_t *i, t_commands *command)
 {
 	char	*save_to_free;
 
@@ -40,20 +40,19 @@ void		save_command(char **p_command_line, size_t *i, t_commands *command)
 	free(save_to_free);
 }
 
-void		check_end_word(char **p_command_line, size_t *i,
-							t_commands **command)
+void	check_end_word(char **p_command_line, size_t *i, t_commands **command)
 {
 	char	*command_line;
 
 	command_line = *p_command_line;
-	if (command_line[*i] == ' ' || command_line[*i] == '\t' ||
-		command_line[*i] == ';' || command_line[*i] == '\n' ||
-		command_line[*i] == '>' || command_line[*i] == '\0' ||
+	if (command_line[*i] == ' ' || command_line[*i] == '\t' || \
+		command_line[*i] == ';' || command_line[*i] == '\n' || \
+		command_line[*i] == '>' || command_line[*i] == '\0' || \
 		command_line[*i] == '<')
 	{
 		skip_spases_tabs(p_command_line, *i);
 		command_line = *p_command_line;
-		if (command_line[*i] == '>' || command_line[*i] == '<' ||
+		if (command_line[*i] == '>' || command_line[*i] == '<' || \
 			(*command)->fd_flag)
 		{
 			if ((*command)->fd_flag || *i == 0)
@@ -65,9 +64,7 @@ void		check_end_word(char **p_command_line, size_t *i,
 			}
 		}
 		else
-		{
 			save_command(p_command_line, i, *command);
-		}
 	}
 	else if (command_line[*i] == '|')
 	{
@@ -84,7 +81,7 @@ void		check_end_word(char **p_command_line, size_t *i,
 	}
 }
 
-int		replace_back_slash(char **p_command_line, size_t *i)
+int	replace_back_slash(char **p_command_line, size_t *i)
 {
 	char	*command_line;
 
@@ -133,7 +130,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-void		parser(char *commands_line, char ***env, t_env *env_main)
+void	parser(char *commands_line, char ***env, t_env *env_main)
 {
 	t_commands		*command;
 

@@ -6,13 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:53:00 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:06:34 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-int		check_single_quotes(char *str, int *i)
+int	check_single_quotes(char *str, int *i)
 {
 	if (str[*i] != '\'')
 		return (0);
@@ -24,7 +24,7 @@ int		check_single_quotes(char *str, int *i)
 	return (0);
 }
 
-int		check_double_quotes(char *str, int *i)
+int	check_double_quotes(char *str, int *i)
 {
 	if (str[*i] != '\"')
 		return (0);
@@ -36,7 +36,7 @@ int		check_double_quotes(char *str, int *i)
 	return (0);
 }
 
-int			check_back_slash(char *str, int *i)
+int	check_back_slash(char *str, int *i)
 {
 	if (str[*i] != '\\')
 		return (0);
@@ -44,7 +44,7 @@ int			check_back_slash(char *str, int *i)
 	return (1);
 }
 
-int		check_back_slash_at_the_end(char *commands_line)
+int	check_back_slash_at_the_end(char *commands_line)
 {
 	size_t	i;
 	size_t	column_back_slash;
@@ -60,7 +60,7 @@ int		check_back_slash_at_the_end(char *commands_line)
 	return (0);
 }
 
-int		preparser(char *commands_line)
+int	preparser(char *commands_line)
 {
 	int		i;
 
