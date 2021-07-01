@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:07:44 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:24:40 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,28 @@ void	replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 void	replace_double_quotes(char **p_command_line, char **env, \
 									size_t *begin_quotes)
 {
-	size_t	end_quotes;
+	size_t	end_q;
 	char	*command_line;
 
-	end_quotes = *begin_quotes + 1;
+	end_q = *begin_quotes + 1;
 	command_line = *p_command_line;
 	if (command_line[*begin_quotes] != '\"')
 		return ;
-	while (command_line[end_quotes] != '\"')
+	while (command_line[end_q] != '\"')
 	{
-		if (command_line[end_quotes] == '\\' && \
-			command_line[end_quotes + 1] != '\"' && \
-			command_line[end_quotes + 1] != '\\' && \
-			command_line[end_quotes + 1] != '$')
-			end_quotes++;
-		else if (command_line[end_quotes] == '$')
+		if (command_line[end_q] == '\\' && command_line[end_q + 1] != '\"' && \
+			command_line[end_q + 1] != '\\' && command_line[end_q + 1] != '$')
+			end_q++;
+		else if (command_line[end_q] == '$')
 		{
-			replace_dollar(p_command_line, env, &end_quotes);
-			end_quotes--;
+			replace_dollar(p_command_line, env, &end_q);
+			end_q--;
 		}
-		else if (command_line[end_quotes] == '\\')
-			delete_one_char(p_command_line, end_quotes);
+		else if (command_line[end_q] == '\\')
+			delete_one_char(p_command_line, end_q);
 		command_line = *p_command_line;
-		end_quotes++;
+		end_q++;
 	}
-	delete_quotes(p_command_line, *begin_quotes, end_quotes);
-	*begin_quotes = end_quotes - 1;
+	delete_quotes(p_command_line, *begin_quotes, end_q);
+	*begin_quotes = end_q - 1;
 }
