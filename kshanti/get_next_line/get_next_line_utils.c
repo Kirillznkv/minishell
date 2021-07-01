@@ -6,40 +6,42 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:26:17 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/15 18:00:42 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:00:39 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "stdio.h"
 
-size_t		ft_strlen(const char *str)
+char	*func(char **buf)
 {
-	size_t		res;
-
-	res = 0;
-	while (str[res])
-		res++;
-	return (res);
+	*buf = (char *)malloc(BUFFER_SIZE + 1);
+	return (*buf);
 }
 
-char		*ft_strdup(const char *s)
+int	func2(int *res, char **static_buff, char **line)
+{
+	*res = maybe_line(static_buff, line);
+	return (*res);
+}
+
+char	*ft_strdup(const char *s)
 {
 	char	*str;
 	int		i;
 
 	i = -1;
-	str = (char*)malloc(ft_strlen((char*)s) + 1);
+	str = (char *)malloc(ft_strlen((char *)s) + 1);
 	if (str)
 	{
 		while (s[++i])
 			str[i] = s[i];
-		str[ft_strlen((char*)s)] = '\0';
+		str[ft_strlen((char *)s)] = '\0';
 	}
 	return (str);
 }
 
-size_t		ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t		len;
 	size_t		i;
@@ -56,13 +58,13 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size)
 	return (len);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	str = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (str)
 	{
 		str[0] = '\0';

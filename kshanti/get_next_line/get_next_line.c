@@ -6,14 +6,14 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:14:54 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/15 19:52:24 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:01:05 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "stdio.h"
 
-char		*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	int		i;
 	char	*ps;
@@ -27,7 +27,7 @@ char		*ft_strchr(const char *s, int c)
 	return (&ps[i]);
 }
 
-int			maybe_line(char **static_buff, char **line)
+int	maybe_line(char **static_buff, char **line)
 {
 	char	*p_endline;
 	char	*str;
@@ -35,7 +35,8 @@ int			maybe_line(char **static_buff, char **line)
 	str = *static_buff;
 	if (str)
 	{
-		if ((p_endline = ft_strchr(str, '\n')))
+		p_endline = ft_strchr(str, '\n');
+		if (p_endline)
 		{
 			*p_endline = '\0';
 			*line = ft_strdup(str);
@@ -53,7 +54,7 @@ int			maybe_line(char **static_buff, char **line)
 	return (0);
 }
 
-int			add_to_static(int fd, int *size_buff, char *buff, char **st_buff)
+int	add_to_static(int fd, int *size_buff, char *buff, char **st_buff)
 {
 	char	*p_for_st_buff;
 
@@ -70,7 +71,7 @@ int			add_to_static(int fd, int *size_buff, char *buff, char **st_buff)
 	return (1);
 }
 
-char		*return_last_line_and_free(char **st_buff)
+char	*return_last_line_and_free(char **st_buff)
 {
 	char	*line;
 
@@ -83,14 +84,14 @@ char		*return_last_line_and_free(char **st_buff)
 	return (line);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*st_buff;
 	char		*buff;
 	int			size_buff;
 	int			res;
 
-	if (!(buff = (char*)malloc(BUFFER_SIZE + 1)))
+	if (!func(&buff))
 		return (-1);
 	if (line == NULL || BUFFER_SIZE < 1 || read(fd, buff, 0) < 0)
 	{
@@ -101,7 +102,7 @@ int			get_next_line(int fd, char **line)
 		st_buff = ft_strdup("");
 	*line = NULL;
 	size_buff = BUFFER_SIZE;
-	while (size_buff && !(res = maybe_line(&st_buff, line)))
+	while (size_buff && !func2(&res, &st_buff, line))
 		res = add_to_static(fd, &size_buff, buff, &st_buff);
 	if (!size_buff && res != -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:06:46 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/15 19:58:28 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:00:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strchr(const char *s, int c);
 int			maybe_line(char **static_buff, char **line);
 int			get_next_line(int fd, char **line);
+char		*func(char **buf);
+int			func2(int *res, char **static_buff, char **line);
 
 #endif
