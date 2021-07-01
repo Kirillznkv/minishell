@@ -6,13 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:32:41 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/03 16:33:03 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:06:37 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	t_list	*beg;
 	int		size;

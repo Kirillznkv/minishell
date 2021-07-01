@@ -6,13 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:48:34 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/02 18:07:24 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:15:43 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			size_finder(int n)
+static int	size_finder(int n)
 {
 	unsigned int	ln;
 	int				res;
@@ -21,7 +21,10 @@ static int			size_finder(int n)
 	res = 0;
 	if (n < 0)
 		res++;
-	ln = n > 0 ? n : -n;
+	if (n > 0)
+		ln = n;
+	else
+		ln = -n;
 	if (n == 0)
 		res++;
 	while (ln > 0)
@@ -32,7 +35,7 @@ static int			size_finder(int n)
 	return (res);
 }
 
-char				*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	unsigned int	ln;
 	int				size;
@@ -40,14 +43,17 @@ char				*ft_itoa(int n)
 
 	ln = 0;
 	size = size_finder(n);
-	str = (char*)ft_calloc(size + 1, sizeof(char));
+	str = (char *)ft_calloc(size + 1, sizeof(char));
 	if (str)
 	{
 		if (n == 0)
 			str[0] = '0';
 		if (n < 0)
 			str[0] = '-';
-		ln = n > 0 ? n : -n;
+		if (n > 0)
+			ln = n;
+		else
+			ln = -n;
 		while (ln > 0)
 		{
 			str[--size] = ln % 10 + '0';

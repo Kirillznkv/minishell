@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 19:29:56 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/01 19:09:23 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:24:38 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 # include "stdlib.h"
 # include "../includes_parser/structures.h"
 
-typedef struct		s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}					t_list;
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
-void (*del)(void *));
+}	t_list;
+
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
+								void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
@@ -55,7 +56,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 size_t				ft_strlcpy (char *dst, const char *src, size_t size);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
-char				*ft_strnstr(const char *big, const char *little,
+char				*ft_strnstr(const char *big, const char *little, \
 size_t len);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);

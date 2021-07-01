@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 16:49:10 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/26 16:50:10 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:19:53 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strnstr(const char *s, const char *find, size_t slen)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	if (find[i] == '\0')

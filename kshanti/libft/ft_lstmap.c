@@ -6,13 +6,19 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:13:46 by kshanti           #+#    #+#             */
-/*   Updated: 2020/11/05 12:49:25 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:19:07 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*func(t_list *lst, void *(*f)(void *), t_list	**tmp)
+{
+	*tmp = ft_lstnew(f(lst->content));
+	return (*tmp);
+}
+
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	int		size;
 	t_list	*tmp;
@@ -20,7 +26,7 @@ t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*beg_lst;
 
 	size = ft_lstsize(lst);
-	if (lst == NULL || (tmp = ft_lstnew(f(lst->content))) == NULL)
+	if (lst == NULL || func(lst, f, &tmp) == NULL)
 		return (NULL);
 	beg_tmp = tmp;
 	beg_lst = lst;
