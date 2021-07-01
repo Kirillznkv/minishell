@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/06/30 18:53:58 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 17:38:10 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,21 @@ void rl_replace_line();
 void		error_control(char *str);
 void		error_system(int error);
 /*-----------------------------------Quotes-----------------------------------*/
-void		delete_quotes(char **p_command_line, size_t beg_quotes, size_t end_quotes);
+void		delete_quotes(char **p_command_line, size_t beg_quotes,
+							size_t end_quotes);
 void		replace_single_quotes(char **p_command_line, size_t *begin_quotes);
-void		replace_double_quotes(char **p_command_line, char **env, size_t *begin_quotes);
+void		replace_double_quotes(char **p_command_line, char **env,
+									size_t *begin_quotes);
 /*-----------------------------------Dollar-----------------------------------*/
 void		past_error_code(char **p_command_line, size_t *i);
-void		replace_dollar(char **p_command_line, char **env, size_t *begin_dollar);
-void		replace_dollar_from_env(char **p_command_line, char **env, size_t *beg_dollar);
+void		replace_dollar(char **p_command_line, char **env,
+							size_t *begin_dollar);
+void		replace_dollar_from_env(char **p_command_line, char **env,
+									size_t *beg_dollar);
 int			replace_only_one_dollar(char **p_command_line, size_t *beg_dollar);
 int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar);
-void		replace_dollar_word(char **p_command_line, char *new_dollar_word, int beg_dollar, int end_dollar_word);
+void		replace_dollar_word(char **p_command_line, char *new_dollar_word,
+								int beg_dollar, int end_dollar_word);
 char		*get_new_dollar_word(char **env, char *dollar_word);
 char		*get_second_env_word(char *env_line);
 int			check_env_word(char *env_line, char *dollar_word);
@@ -57,7 +62,8 @@ int			check_env_word(char *env_line, char *dollar_word);
 void		parser(char *commands_line, char ***env, t_env *env_main);
 t_commands	*get_one_command(char **p_commands_line, char **env);
 void		save_command(char **p_command_line, size_t *i, t_commands *command);
-void		check_end_word(char **p_command_line, size_t *i, t_commands **command);
+void		check_end_word(char **p_command_line, size_t *i,
+							t_commands **command);
 void		replace_normal_char(char **p_command_line, size_t *i);
 int			replace_back_slash(char **p_command_line, size_t *i);
 /*-----------------------------------Preparser--------------------------------*/
@@ -80,9 +86,11 @@ void		delete_one_char(char **p_command_line, size_t i);
 void		free_command(t_commands **command);
 void		fd_control(t_commands **command);
 /*-----------------------------------Redirect---------------------------------*/
-void		replace_redirect(t_commands *command, char **p_command_line, size_t *i);
+void		replace_redirect(t_commands *command, char **p_command_line,
+							size_t *i);
 void		redirect(t_commands *command, char **p_command_line, size_t *i);
-void		back_redirect(t_commands *command, char **p_command_line, size_t *i);
+void		back_redirect(t_commands *command, char **p_command_line,
+							size_t *i);
 void		add_fd(t_commands *command, int new_fd);
 void		double_back_redirect(t_commands *command, char *name);
 /*-----------------------------------Signals----------------------------------*/
