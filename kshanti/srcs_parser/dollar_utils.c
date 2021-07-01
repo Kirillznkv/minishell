@@ -6,20 +6,20 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:52:01 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:29:43 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 20:54:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-int			check_env_word(char *env_line, char *dollar_word)
+int	check_env_word(char *env_line, char *dollar_word)
 {
 	if (env_line[ft_strlen(dollar_word)] == '=')
 		return (1);
 	return (0);
 }
 
-char		*get_second_env_word(char *env_line)
+char	*get_second_env_word(char *env_line)
 {
 	size_t	i;
 	char	*second_env_word;
@@ -31,7 +31,7 @@ char		*get_second_env_word(char *env_line)
 	return (second_env_word);
 }
 
-char		*get_new_dollar_word(char **env, char *dollar_word)
+char	*get_new_dollar_word(char **env, char *dollar_word)
 {
 	char	*new_dollar_word;
 	int		i;
@@ -39,7 +39,7 @@ char		*get_new_dollar_word(char **env, char *dollar_word)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strnstr(env[i], dollar_word, ft_strlen(dollar_word)) &&
+		if (ft_strnstr(env[i], dollar_word, ft_strlen(dollar_word)) && \
 			check_env_word(env[i], dollar_word))
 		{
 			new_dollar_word = get_second_env_word(env[i]);
@@ -50,7 +50,7 @@ char		*get_new_dollar_word(char **env, char *dollar_word)
 	return (NULL);
 }
 
-void		replace_dollar_word(char **p_command_line, char *new_dollar_word,
+void	replace_dollar_word(char **p_command_line, char *new_dollar_word, \
 								int beg_dollar, int end_dollar_word)
 {
 	char	*first_part;

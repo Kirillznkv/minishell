@@ -6,13 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 17:40:00 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/01 20:56:14 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-void		past_error_code(char **p_command_line, size_t *i)
+void	past_error_code(char **p_command_line, size_t *i)
 {
 	char	*string_error_code;
 	char	*first_part;
@@ -32,7 +32,7 @@ void		past_error_code(char **p_command_line, size_t *i)
 	free(last_part);
 }
 
-int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
+int	replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 {
 	size_t	i;
 	char	*command_line;
@@ -46,9 +46,9 @@ int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 		past_error_code(p_command_line, beg_dollar);
 		return (1);
 	}
-	if (command_line[i] != '@' && command_line[i] != '*' &&
-		command_line[i] != '$' && command_line[i] != '!' &&
-		command_line[i] != '-' &&
+	if (command_line[i] != '@' && command_line[i] != '*' && \
+		command_line[i] != '$' && command_line[i] != '!' && \
+		command_line[i] != '-' && \
 		command_line[i] != '#' && !ft_isdigit(command_line[i]))
 		return (0);
 	delete_one_char(p_command_line, *beg_dollar);
@@ -56,7 +56,7 @@ int			replace_undefine_dollar(char **p_command_line, size_t *beg_dollar)
 	return (1);
 }
 
-int			replace_only_one_dollar(char **p_command_line, size_t *beg_dollar)
+int	replace_only_one_dollar(char **p_command_line, size_t *beg_dollar)
 {
 	size_t	i;
 	char	*command_line;
@@ -69,8 +69,8 @@ int			replace_only_one_dollar(char **p_command_line, size_t *beg_dollar)
 	return (1);
 }
 
-void		replace_dollar_from_env(char **p_command_line, char **env,
-									size_t *beg_dollar)
+void	replace_dollar_from_env(char **p_command_line, char **env, \
+								size_t *beg_dollar)
 {
 	size_t	end_dollar_word;
 	char	*command_line;
@@ -79,15 +79,15 @@ void		replace_dollar_from_env(char **p_command_line, char **env,
 
 	command_line = *p_command_line;
 	end_dollar_word = *beg_dollar + 1;
-	while (command_line[end_dollar_word] == '_' ||
+	while (command_line[end_dollar_word] == '_' || \
 			ft_isalnum(command_line[end_dollar_word]))
 		end_dollar_word++;
-	dollar_word = ft_substr(command_line, *beg_dollar + 1,
+	dollar_word = ft_substr(command_line, *beg_dollar + 1, \
 							end_dollar_word - *beg_dollar - 1);
 	new_dollar_word = get_new_dollar_word(env, dollar_word);
 	if (new_dollar_word)
 	{
-		replace_dollar_word(p_command_line, new_dollar_word,
+		replace_dollar_word(p_command_line, new_dollar_word, \
 							*beg_dollar, end_dollar_word);
 		*beg_dollar += ft_strlen(new_dollar_word);
 	}
@@ -99,8 +99,7 @@ void		replace_dollar_from_env(char **p_command_line, char **env,
 		free(new_dollar_word);
 }
 
-void		replace_dollar(char **p_command_line, char **env,
-							size_t *begin_dollar)
+void	replace_dollar(char **p_command_line, char **env, size_t *begin_dollar)
 {
 	char	*command_line;
 
