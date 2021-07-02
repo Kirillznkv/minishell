@@ -6,7 +6,7 @@
 #    By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/01 19:12:24 by kshanti           #+#    #+#              #
-#    Updated: 2021/07/01 17:40:22 by kshanti          ###   ########.fr        #
+#    Updated: 2021/07/02 19:48:22 by kshanti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,13 @@ RL = -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cell
 
 CFLAGS = -Wall -Wextra -Werror
 
-C_FILE =	$(SRCS)parser.c $(SRCS)preparser.c $(SRCS)quotes.c\
-			$(SRCS)utils.c $(SRCS)dollar.c $(SRCS)dollar_utils.c $(SRCS)redirect.c\
-			$(SRCS)preparser_redirect.c $(SRCS)signal.c\
+C_FILE =	$(SRCS)parser.c $(SRCS)parser_utils.c $(SRCS)preparser.c $(SRCS)quotes.c\
+			$(SRCS)utils.c $(SRCS)utils2.c $(SRCS)dollar.c $(SRCS)dollar_utils.c\
+			$(SRCS)preparser_redirect.c $(SRCS)signal.c $(SRCS)redirect.c\
 			$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			./main.c\
-			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)utils_func.c\
-			$(SRCS2)start_cmd.c $(SRCS3)build_in_command.c $(SRCS3)export.c $(SRCS3)echo.c $(SRCS3)cd.c
+			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)utils_func.c $(SRCS2)start_cmd.c\
+			$(SRCS3)build_in_command.c $(SRCS3)export.c $(SRCS3)echo.c $(SRCS3)cd.c
 
 O_FILE = $(C_FILE:.c=.o)
 

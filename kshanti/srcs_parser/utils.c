@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 21:15:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 22:23:02 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:46:29 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@ int	wr_er(char *s, int error_code)
 {
 	write(1, s, ft_strlen(s));
 	error_code_dollar = error_code;
-	return (1);
-}
-
-int	check_command(t_commands *command)
-{
-	t_commands	*p;
-
-	if (!command || !(command->name))
-		return (0);
-	p = command;
-	while (p)
-	{
-		if (!(p->name))
-			return (0);
-		p = p->next;
-	}
 	return (1);
 }
 
@@ -93,19 +77,6 @@ t_commands	*init_command(void)
 	return (command);
 }
 
-void	delete_one_char(char **p_command_line, size_t i)
-{
-	char	*first_part;
-	char	*last_part;
-
-	first_part = ft_substr(*p_command_line, 0, i);
-	last_part = ft_substr(*p_command_line, i + 1, -1);
-	free(*p_command_line);
-	*p_command_line = ft_strjoin(first_part, last_part);
-	free(first_part);
-	free(last_part);
-}
-
 int	free_command(t_commands **p_command)
 {
 	t_commands	*command;
@@ -131,33 +102,4 @@ int	free_command(t_commands **p_command)
 	free(command);
 	*p_command = NULL;
 	return (1);
-}
-
-int	fd_control(t_commands **p_command)
-{
-	t_commands	*command;
-	int			i;
-
-	i = -1;
-	command = *p_command;
-	while (command)
-	{
-		while (++i < command->colun_del_fd)
-		{
-			if (command->delete_fd[i] == -1)
-				return (free_command(p_command));
-		}
-		if (command->fd_in_name && (command->argv[0] && !command->argv[1]))
-		{
-			command->argv = malloc_argv(command->argc, command->argv);
-			command->argv[command->argc++] = ft_strjoin("./", \
-														command->fd_in_name);
-			free(command->fd_in_name);
-			command->fd_in_name = NULL;
-		}
-		else
-			command->fd_in = 0;
-		command = command->next;
-	}
-	return (0);
 }

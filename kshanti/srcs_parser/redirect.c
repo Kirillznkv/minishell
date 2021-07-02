@@ -6,26 +6,11 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 21:56:48 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:53:21 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:47:11 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
-
-void	add_fd(t_commands *command, int new_fd)
-{
-	int		*new_fd_list;
-	int		i;
-
-	i = -1;
-	new_fd_list = (int *)calloc(command->colun_del_fd + 1, sizeof(int));
-	while (++i < command->colun_del_fd)
-		new_fd_list[i] = command->delete_fd[i];
-	new_fd_list[command->colun_del_fd] = new_fd;
-	free(command->delete_fd);
-	command->delete_fd = new_fd_list;
-	command->colun_del_fd++;
-}
 
 void	double_back_redirect(t_commands *command, char *name)
 {
@@ -52,14 +37,6 @@ void	double_back_redirect(t_commands *command, char *name)
 	if (command->fd_in_name)
 		free(command->fd_in_name);
 	command->fd_in_name = ft_strdup("./.shell_file");
-}
-
-void	redirect_error_openfile(char *file_name)
-{
-	write(1, "bash: ", 7);
-	write(1, file_name, ft_strlen(file_name));
-	write(1, ": No such file or directory\n", 29);
-	error_code_dollar = 1;
 }
 
 void	back_redirect(t_commands *command, char **p_command_line, size_t *i)
@@ -116,35 +93,6 @@ void	redirect(t_commands *command, char **p_command_line, size_t *i)
 	command->fd_flag = 0;
 	free(file_name);
 	free(save_to_free);
-}
-
-void	find_redirect(t_commands *command, char **p_command_line, size_t *i)
-{
-	char	*command_line;
-
-	command_line = *p_command_line;
-	if (command_line[*i] == '<')
-	{
-		command->fd_flag = 1;
-		delete_one_char(p_command_line, *i);
-		command_line = *p_command_line;
-		if (command_line[*i] == '<')
-		{
-			delete_one_char(p_command_line, *i);
-			command->fd_flag = 2;
-		}
-	}
-	else
-	{
-		command->fd_flag = 3;
-		delete_one_char(p_command_line, *i);
-		if ((*p_command_line)[*i] == '>')
-		{
-			delete_one_char(p_command_line, *i);
-			command->fd_flag = 4;
-		}
-	}
-	skip_spases_tabs(p_command_line, *i);
 }
 
 void	find_filename_redirect(t_commands *command, char **p_com_ln, size_t *i)

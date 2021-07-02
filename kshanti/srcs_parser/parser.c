@@ -6,39 +6,11 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 23:54:17 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:24:58 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
-
-void	replace_normal_char(char **p_command_line, size_t *i)
-{
-	char	*command_line;
-
-	command_line = *p_command_line;
-	while (command_line[*i] != ' ' && command_line[*i] != '\"' && \
-		command_line[*i] != '$' && command_line[*i] != '\'' && \
-		command_line[*i] != '|' && command_line[*i] != '\t' && \
-		command_line[*i] != ';' && command_line[*i] != '\0' && \
-		command_line[*i] != '<' && command_line[*i] != '\n' && \
-		command_line[*i] != '>')
-		(*i)++;
-}
-
-void	save_command(char **p_command_line, size_t *i, t_commands *command)
-{
-	char	*save_to_free;
-
-	if (command->name == NULL)
-		command->name = ft_substr(*p_command_line, 0, *i);
-	command->argv = malloc_argv(command->argc, command->argv);
-	command->argv[command->argc++] = ft_substr(*p_command_line, 0, *i);
-	save_to_free = *p_command_line;
-	*p_command_line = ft_substr(*p_command_line, *i, -1);
-	*i = 0;
-	free(save_to_free);
-}
 
 void	find_delimiter_word(char **p_com_ln, size_t *i, t_commands **command)
 {
@@ -86,18 +58,6 @@ void	check_end_word(char **p_command_line, size_t *i, t_commands **command)
 		*command = (*command)->next;
 		skip_spases_tabs(p_command_line, *i);
 	}
-}
-
-int	replace_back_slash(char **p_command_line, size_t *i)
-{
-	char	*command_line;
-
-	command_line = *p_command_line;
-	if (command_line[*i] != '\\')
-		return (0);
-	delete_one_char(p_command_line, *i);
-	(*i)++;
-	return (1);
 }
 
 void	replacing_line_part(char **p_com_ln, char **env, \
