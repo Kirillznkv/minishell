@@ -20,3 +20,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 		free(lst);
 	}
 }
+
+void	clear(void *smt)
+{
+	free(smt);
+}

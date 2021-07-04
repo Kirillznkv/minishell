@@ -55,7 +55,7 @@ char		*get_second_env_word(char *env_line);
 int			check_env_word(char *env_line, char *dollar_word);
 /*-----------------------------------Parser-----------------------------------*/
 void		find_delimiter_word(char **p_com, size_t *i, t_commands **command);
-void		parser(char *commands_line, char ***env, t_env *env_main);
+void		parser(char *commands_line, char ***env, t_env **env_main);
 t_commands	*get_one_command(char **p_commands_line, char **env);
 void		save_command(char **p_command_line, size_t *i, t_commands *command);
 void		check_end_word(char **p_command_line, size_t *i, \

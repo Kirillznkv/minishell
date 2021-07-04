@@ -41,7 +41,7 @@ void				delet_elem_env(t_env *env, t_env *env_unset)
 	{ 
 	  ptr = ptr->next;
 	}
-	ptr->next = free_t_env(env_unset); 
+	//ptr->next = free_t_env(env_unset); 
 	//free(env_unset); // освобождаем память удаляемого узла
 }
 
@@ -134,27 +134,56 @@ void	ft_print_env(t_env *env_export, int ex, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
-void		check_repeat_export(t_env *env_export, char *key)
+// void	delone(t_env *lst, void (*del)(void *))
+// {
+// 	if (lst)
+// 	{
+// 		del(lst->content);
+// 		free(lst);
+// 	}
+// }
+
+// void	clear(void *smt)
+// {
+// 	free(smt);
+// }
+
+t_env			*check_repeat_export(t_env *env_export, char *key)
 {
 	t_env *ptr;
+	t_env *tmp;
 	int i;
 
 	i = 0;
 	while (key[i] != '=' && key[i] != '\0')
 		i++;
 	ptr = env_export;
-	while (ptr)
+	if (!ft_strncmp(ptr->content->key, key, ft_strlen(ptr->content->key) >
+				i ? ft_strlen(ptr->next->content->key) : i))
 	{
-		if (!ft_strncmp(ptr->content->key, key, ft_strlen(ptr->content->key)))
+		write(1, ptr->content->key, ft_strlen(ptr->content->key));
+		printf("%p\n", env_export);
+		ptr = delete_head(ptr);
+		//env_export = ptr;
+		//printf("%p ***\n", env_export);
+		printf("%p\n", ptr);
+		return (ptr);
+	}
+	while (ptr->next)
+	{
+		if (!ft_strncmp(ptr->next->content->key, key, ft_strlen(ptr->next->content->key) >
+				i ? ft_strlen(ptr->next->content->key) : i))
 		{
+			write(1, ptr->next->content->key, ft_strlen(ptr->next->content->key));
 			//printf ("test");
 			//обработать ситуацию export ll="value" -> export ll
 			//в таком случае переменная ll не должна заменяться
-			delet_elem_env(env_export, ptr);
-			return ;
+			ptr = delet_elem(ptr->next, env_export);
+			return (env_export);
 		}
 		ptr = ptr->next;
 	}
+	return (env_export);
 }
 
 void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
@@ -180,13 +209,16 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
 		ptr = env_export;
 		while (args < argc)
 		{
-			check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+			env_export = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
 			add_elem_env(env_export, new_elem_env(), write_env, argv[args]);
-			ptr = ptr->next;
+			printf("%p\n", env_export);
+			//ptr = ptr->next;
 			args++;
 		}
 	}
 }
+
+
 
 
 t_env 	*ft_create_env(char **env)

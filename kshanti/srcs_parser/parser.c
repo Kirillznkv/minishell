@@ -98,7 +98,7 @@ t_commands	*get_one_command(char **p_commands_line, char **env)
 	return (first);
 }
 
-void	parser(char *commands_line, char ***env, t_env *env_main)
+void	parser(char *commands_line, char ***env, t_env **env_main)
 {
 	t_commands		*command;
 

@@ -12,7 +12,7 @@
 
 #include "./kshanti/includes_parser/parser.h"
 
-void	process_the_line(char *line, char ***new_env, t_env *env_main)
+void	process_the_line(char *line, char ***new_env, t_env **env_main)
 {
 	if (line && *line)
 		add_history(line);
@@ -30,7 +30,8 @@ int	main(int argc, char **argv, char **env)
 
 	error_code_dollar = 0;
 	env_main = ft_create_env(env);
-	new_env = rewrite_env_parse(env_main);
+	new_env = NULL;
+	new_env = rewrite_env_parse(env_main, new_env, env);
 	ptr = env_main;
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, ctrl_slash);
@@ -38,12 +39,12 @@ int	main(int argc, char **argv, char **env)
 	line = readline("Minishell-2.🔞 ⌲ ");
 	while (line)
 	{
-		process_the_line(line, &new_env, env_main);
+		process_the_line(line, &new_env, &env_main);
 		line = readline("Minishell-2.🔞 ⌲ ");
 	}
 	ctrl_d();
-	while (ptr)
-		ptr = free_t_env(ptr);
+	// while (ptr)
+	// 	ptr = free_t_env(ptr);
 	free_array((void **)new_env);
 	return (error_code_dollar);
 }

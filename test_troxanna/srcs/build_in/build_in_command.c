@@ -42,18 +42,26 @@ void	ft_pwd_shell(int fd, t_env *env)
 	free(str);
 }
 
-void	ft_env_shell(t_env *env, int fd)
+void	ft_env_shell(char **env, int fd)
 {
-	t_env *ptr;
+	int i;
 
-	ptr = env;
-
-	while (ptr)
+	i = -1;
+	while (env[++i])
 	{
-		if (ptr->content->value)
-			ft_print_env(ptr, 0, fd);
-		ptr = ptr->next;
+		ft_putstr_fd(env[i], fd);
+		ft_putchar_fd('\n', 1);
 	}
+	// t_env *ptr;
+
+	// ptr = env;
+
+	// while (ptr)
+	// {
+	// 	if (ptr->content->value)
+	// 		ft_print_env(ptr, 0, fd);
+	// 	ptr = ptr->next;
+	// }
 }
 
 void	split_argv_unset(char *argv, int *i)
@@ -80,8 +88,8 @@ void	ft_unset_shell(t_env *env, char **argv, int argc)
 		while (args < (argc))
 		{
 			split_argv_unset(argv[args], &i);
-			if((!ft_strncmp(argv[args], ptr->content->key, i)))
-				delet_elem_env(env, ptr);
+			// if((!ft_strncmp(argv[args], ptr->content->key, i)))
+			// 	delet_elem_env(env, ptr);
 			args++;
 		}
 		ptr = ptr->next;

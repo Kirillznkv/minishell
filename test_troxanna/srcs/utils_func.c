@@ -77,71 +77,104 @@ void		ft_error(char *name, int n, int err_code)
 	exit(error_code_dollar);
 }
 
-t_env	*free_t_env(t_env *env_t)
+t_env		*delete_head(t_env *root)
 {
-	t_env	*env_next;
+  t_env		*temp;
+  temp = root->next;
+  free_t_env(root); // освобождение памяти текущего корня
+  return(temp); // новый корень списка
+}
 
-	env_next = env_t->next;
+t_env		*delet_elem(t_env *lst, t_env *root)
+{
+  t_env *temp;
+  temp = root;
+  while (temp->next != lst) // просматриваем список начиная с корня
+  { // пока не найдем узел, предшествующий lst
+    temp = temp->next;
+  }
+  temp->next = lst->next; // переставляем указатель
+  free_t_env(lst); // освобождаем память удаляемого узла
+  return(temp);
+}
+
+void		free_t_env(t_env *env_t)
+{
+	//t_env	*env_next;
+//
+	//env_next = env_t->next;
 	if (env_t->content->key)
 		free(env_t->content->key);
 	if (env_t->content->value)
 		free(env_t->content->value);
 	free(env_t->content);
 	free(env_t);
-	return (env_next);
+	//env_t = NULL;
+	//return (env_next);
 }
 
-char	**rewrite_env_parse(t_env *env)
-{
-	t_env	*ptr;
-	char	*tmp;
-	char 	**env_parse;
-	int i;
-
-	ptr = env;
-	i = 0;
-	while (ptr)
-	{
-		if (ptr->content->value != NULL)
-			i++;
-		ptr = ptr->next;
-	}
-	//printf("%d\n", i);
-	//i = ft_counter_lstenv(env);
-	env_parse = malloc(sizeof(char *) * i + 1);
-	env_parse[i] = NULL;
-	ptr = env;
-	i = 0;
-	while (ptr)
-	{
-		//проверка на запись в env из env_export только значений со знаком '='
-		if (ptr->content->value != NULL)
-		{
-			tmp = ft_strjoin(ptr->content->key, "=");
-			env_parse[i] = ft_strjoin(tmp, ptr->content->value);
-			free(tmp);
-			//printf("%s\n", env_parse[i]);
-			i++;
-		}
-		ptr = ptr->next;
-		//ptr = free_t_env(ptr);
-	}
-	//printf("%d\n", i);
-	return (env_parse);
-}
-
-char	**new_env_malloc(char **env)
+char	**new_env_malloc(char **env, int len)
 {
 	int		i;
 	int		j;
 	char	**new_env;
+	char	*tmp;
 
 	i = 0;
-	while (env[i])
-		i++;
-	new_env = malloc(i * sizeof(char*));
+	new_env = malloc((len + 1) * sizeof(char *));
+	new_env[len] = NULL;
 	j = -1;
-	while (++j < i)
+	while (++j < ft_counter_env(env))
 		new_env[j] = ft_strdup(env[j]);
+	return (new_env);
+}
+
+int		check_env_line(char **env, char *key)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] != '=')
+			j++;
+		if (!ft_strncmp(env[i], key, j))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**rewrite_env_parse(t_env *env_export, char **new_env, char **env)
+{
+	t_env	*ptr;
+	char	*tmp;
+	char	**rewrite_env;
+	int		len;
+
+	if (!new_env)
+	{
+		new_env = new_env_malloc(env, ft_counter_env(env));
+		return (new_env);
+	}
+	ptr = env_export;
+	len = ft_counter_env(new_env);
+	while (ptr)
+	{
+		if (ptr->content->value && !check_env_line(new_env, ptr->content->key))
+		{
+			rewrite_env = new_env_malloc(new_env, len + 1);
+			tmp = ft_strjoin(ptr->content->key, "=");
+			rewrite_env[len] = ft_strjoin(tmp, ptr->content->value);
+			free(tmp);
+			free_array((void **)new_env);
+			new_env = NULL;
+			return (rewrite_env);
+		}
+		ptr = ptr->next;
+	}
 	return (new_env);
 }
