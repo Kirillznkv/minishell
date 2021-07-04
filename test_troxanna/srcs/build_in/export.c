@@ -186,17 +186,17 @@ t_env			*check_repeat_export(t_env *env_export, char *key)
 	return (env_export);
 }
 
-void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
+void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 {
 	t_env *new_env;
 	t_env *ptr;
 	int		args;
 
 	args = 1;
-	ptr = env_export;
+	ptr = *env_export;
 	if (argc < 2)
 	{
-		ft_env_sort(ptr, ft_counter_lstenv(env_export));
+		ft_env_sort(ptr, ft_counter_lstenv(ptr));
 		while (ptr)
 		{
 			ft_putstr_fd("declare -x ", fd);
@@ -206,12 +206,12 @@ void	ft_export_shell(t_env *env_export, char **argv, int argc, int fd)
 	}
 	else if (argc > 1)
 	{
-		ptr = env_export;
+		ptr = *env_export;
 		while (args < argc)
 		{
-			env_export = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
-			add_elem_env(env_export, new_elem_env(), write_env, argv[args]);
-			printf("%p\n", env_export);
+			*env_export = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+			add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
+			printf("%p\n", *env_export);
 			//ptr = ptr->next;
 			args++;
 		}

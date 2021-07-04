@@ -23,7 +23,7 @@ int		parse_command(t_commands *cmd, char ***env, t_env **env_main)
 	if (!ft_strncmp(cmd->argv[0], "env", 0)) 
 		ft_env_shell(*env, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "export", 0))
-		ft_export_shell(*env_main, cmd->argv, cmd->argc, cmd->fd_out);
+		ft_export_shell(env_main, cmd->argv, cmd->argc, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "pwd", 0))
 		ft_pwd_shell(cmd->fd_out, *env_main);
 	else if (!ft_strncmp(cmd->argv[0], "echo", 0))
@@ -150,6 +150,7 @@ void		start_cmd(t_commands *cmd, char ***env, t_env **env_main)
 	else
 		execute_command(cmd, env, env_main);
 	printf("final %p\n", *env_main);
+	printf("final %s\n", (*env_main)->content->key);
 	*env = rewrite_env_parse(*env_main, *env, NULL);
 	dup2(tmp_fd, 0);
 }
