@@ -71,7 +71,7 @@ void	split_argv_unset(char *argv, int *i)
 }
 
 
-void	ft_unset_shell(t_env *env, char **argv, int argc)
+void	ft_unset_shell(t_env **env, char **argv, int argc)
 {
 	int 	i;
 	int 	args;
@@ -79,25 +79,30 @@ void	ft_unset_shell(t_env *env, char **argv, int argc)
 	t_env	*ptr;
 	int counter;
 
-	ptr = env;
-	//if argc == 3
-	while(ptr)
+	ptr = *env;
+	args = 1;
+	while (args < argc)
 	{
-		i = 0;
-		args = 1;
-		while (args < (argc))
-		{
-			split_argv_unset(argv[args], &i);
-			// if((!ft_strncmp(argv[args], ptr->content->key, i)))
-			// 	delet_elem_env(env, ptr);
-			args++;
-		}
-		ptr = ptr->next;
+		*env = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+		args++;
 	}
-	// counter = ft_counter_lstenv(env);
-	// ft_env_shell(env, counter + 2);
-	// получить удаляемый элемент списка
-	// delet_elem_env(env, env_unset);
+	//if argc == 3
+
+	// while(ptr->next)
+	// {
+	// 	i = 0;
+	// 	args = 1;
+	// 	while (args < (argc))
+	// 	{
+	// 		split_argv_unset(argv[args], &i);
+	// 		if((!ft_strncmp(argv[args], ptr->next->content->key, ft_strlen(argv[args]) >
+	// 			i ? ft_strlen(ptr->next->content->key) : i)))
+	// 			ptr = delet_elem(ptr->next, *env);
+	// 		args++;
+	// 	}
+	// 	ptr = ptr->next;
+	// }
+
 }
 
 void	ft_exit_shell()
