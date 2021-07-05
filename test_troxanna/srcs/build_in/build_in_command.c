@@ -42,26 +42,38 @@ void	ft_pwd_shell(int fd, t_env *env)
 	free(str);
 }
 
-void	ft_env_shell(char **env, int fd)
+// int		env_check_oldpwd(t_env *env_export)
+// {
+// 	t_env	*ptr;
+
+// 	ptr = env_export;
+// 	while (ptr)
+// 	{
+// 		if (!ft_strncmp(ptr->content->key, str, 0))
+// 		ptr = ptr->next;
+// 	}
+// }
+
+void	ft_env_shell(char **env, int fd, t_env *env_export)
 {
 	int i;
+	char *tmp;
+	int op;
 
 	i = -1;
+	op = 1;
+	tmp = get_env(env_export, "OLDPWD");
+	if (!tmp)
+		op = 0;
 	while (env[++i])
 	{
-		ft_putstr_fd(env[i], fd);
-		ft_putchar_fd('\n', 1);
+		if (!(!op && !ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
+				6 ? check_equals_sign(env[i]) : 6)))
+		{
+			ft_putstr_fd(env[i], fd);
+			ft_putchar_fd('\n', 1);
+		}
 	}
-	// t_env *ptr;
-
-	// ptr = env;
-
-	// while (ptr)
-	// {
-	// 	if (ptr->content->value)
-	// 		ft_print_env(ptr, 0, fd);
-	// 	ptr = ptr->next;
-	// }
 }
 
 int		check_equals_sign(char *argv)
@@ -77,36 +89,21 @@ int		check_equals_sign(char *argv)
 
 void	ft_unset_shell(t_env **env, char **argv, int argc)
 {
-	int 	i;
 	int 	args;
-	//t_env	*env_unset;
 	t_env	*ptr;
-	int counter;
+	t_env	*tmp;
 
 	ptr = *env;
 	args = 1;
 	while (args < argc)
 	{
-		*env = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - заменить
+		tmp = check_repeat_export(ptr, argv[args]);
+		if (tmp && *env == tmp)
+			*env = delete_head(tmp);
+		else if (tmp)
+			ptr = delet_elem(tmp, *env);
 		args++;
 	}
-	//if argc == 3
-
-	// while(ptr->next)
-	// {
-	// 	i = 0;
-	// 	args = 1;
-	// 	while (args < (argc))
-	// 	{
-	// 		split_argv_unset(argv[args], &i);
-	// 		if((!ft_strncmp(argv[args], ptr->next->content->key, ft_strlen(argv[args]) >
-	// 			i ? ft_strlen(ptr->next->content->key) : i)))
-	// 			ptr = delet_elem(ptr->next, *env);
-	// 		args++;
-	// 	}
-	// 	ptr = ptr->next;
-	// }
-
 }
 
 void	ft_exit_shell()

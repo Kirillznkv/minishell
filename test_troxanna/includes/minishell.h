@@ -42,8 +42,8 @@ int			check_equals_sign(char *argv);
 void		ft_error(char *name, int n, int err_code);
 t_env		*check_repeat_export(t_env *env_export, char *key);
 char		*get_env(t_env *env, char *str);
-void		ft_print_env(t_env *env_export, int ex, int fd);//
-void		ft_env_shell(char **env, int fd);//
+void		ft_print_env(t_env *env_export, int fd);//
+void		ft_env_shell(char **env, int fd, t_env *env_main);//
 void		ft_env_sort(t_env *env_export, int i);
 void		ft_export_shell(t_env **env_export, char **argv, int argc, int fd);//
 char		*ft_strnstr(const char *s, const char *find, size_t slen);

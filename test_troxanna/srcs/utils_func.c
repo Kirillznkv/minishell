@@ -115,16 +115,14 @@ void		free_t_env(t_env *env_t)
 
 char	**new_env_malloc(char **env, int len)
 {
-	int		i;
 	int		j;
 	char	**new_env;
 	char	*tmp;
 
-	i = 0;
 	new_env = malloc((len + 1) * sizeof(char *));
 	new_env[len] = NULL;
 	j = -1;
-	while (++j < ft_counter_env(env))
+	while (++j < len)
 		new_env[j] = ft_strdup(env[j]);
 	return (new_env);
 }

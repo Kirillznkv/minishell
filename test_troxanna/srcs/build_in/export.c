@@ -90,7 +90,8 @@ void		write_env(t_env *env_export, char *env)
 	int i;
 
 	i = write_env_key(env_export, env);
-	if (i > 0 && ft_strncmp(env, "OLDPWD", 6)) //обработать добавление OLDPWD
+	if (i > 0 && ft_strncmp(env, "OLDPWD", check_equals_sign(env) >
+				6 ? check_equals_sign(env) : 6)) //обработать добавление OLDPWD
 		write_env_value(env_export, env, i);
 }
 
@@ -117,21 +118,28 @@ void			ft_env_sort(t_env *env_export, int i)
 	}
 }
 
-void	ft_print_env(t_env *env_export, int ex, int fd)
+void	ft_print_env(t_env *env_export, int fd)
 {
 	// if (ex == 1 && !ft_strncmp(env_export->content->key, "OLDPWD", 6))
 	// 	return ;
-	ft_putstr(env_export->content->key);
-	if (env_export->content->value)
+	t_env	*ptr;
+
+	ptr = env_export;
+	ft_env_sort(ptr, ft_counter_lstenv(ptr));
+	while (ptr)
 	{
-		ft_putchar_fd('=', fd);
-		if (ex == 1)
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr(ptr->content->key);
+		if (ptr->content->value)
+		{
+			ft_putchar_fd('=', fd);
 			ft_putchar_fd('"', fd);
-		ft_putstr_fd(env_export->content->value, fd);
-		if (ex == 1)
+			ft_putstr_fd(ptr->content->value, fd);
 			ft_putchar_fd('"', fd);
+		}
+		ft_putchar_fd('\n', fd);
+		ptr = ptr->next;
 	}
-	ft_putchar_fd('\n', fd);
 }
 
 t_env			*check_repeat_export(t_env *env_export, char *key)
@@ -144,58 +152,45 @@ t_env			*check_repeat_export(t_env *env_export, char *key)
 	ptr = env_export;
 	if (!ft_strncmp(ptr->content->key, key, ft_strlen(ptr->content->key) >
 				i ? ft_strlen(ptr->next->content->key) : i))
-		return (ptr = delete_head(ptr));
+		return (ptr);
 	while (ptr->next)
 	{
 		if (!ft_strncmp(ptr->next->content->key, key, ft_strlen(ptr->next->content->key) >
 				i ? ft_strlen(ptr->next->content->key) : i))
-		{
-			ptr = delet_elem(ptr->next, env_export);
-			return (env_export);
-		}
+			return (ptr->next);
 		ptr = ptr->next;
 	}
-	return (env_export);
+	return (NULL);
 }
 
 void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 {
-	t_env *new_env;
+	t_env *tmp;
 	t_env *ptr;
 	int		args;
-	int		i;;
 
 	args = 1;
-	i = 0;
-	ptr = *env_export;
 	if (argc < 2)
-	{
-		ft_env_sort(ptr, ft_counter_lstenv(ptr));
-		while (ptr)
-		{
-			ft_putstr_fd("declare -x ", fd);
-			ft_print_env(ptr, 1, fd);
-			ptr = ptr->next;
-		}
-	}
+		ft_print_env(*env_export, fd);
 	else if (argc > 1)
 	{
 		ptr = *env_export;
-		i = 0;
 		while (args < argc)
 		{
-			// if (argv[args][check_equals_sign(argv[args])] == '=')
-			// {
-				*env_export = check_repeat_export(ptr, argv[args]);
-				add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
-			//}
+				tmp = check_repeat_export(ptr, argv[args]);
+				if (argv[args][check_equals_sign(argv[args])] == '=')
+				{
+					if (tmp && *env_export == tmp)
+						*env_export = delete_head(tmp);
+					else if (tmp)
+						ptr = delet_elem(tmp, *env_export);
+				}
+				if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
+					add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
 			args++;
 		}
 	}
 }
-
-
-
 
 t_env 	*ft_create_env(char **env)
 {
