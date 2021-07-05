@@ -129,6 +129,7 @@ char	**new_env_malloc(char **env, int len)
 		if (!ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
 				6 ? check_equals_sign(env[i]) : 6))
 		{
+			//write(1, "test\n", 5);
 			new_env[j++] = ft_strdup("OLDPWD");
 			i++;	
 		}

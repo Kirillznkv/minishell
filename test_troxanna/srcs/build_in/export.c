@@ -163,6 +163,21 @@ t_env			*check_repeat_export(t_env *env_export, char *key)
 	return (NULL);
 }
 
+int		check_valid_identifier(char *id, int fd)
+{
+	int i;
+
+	i = 0;
+	if (id[0] == '=' || ft_isdigit(id[0]))
+	{
+		write(fd, id, ft_strlen(id));
+		write(fd, ": not a valid identifier\n", 25);
+		error_code_dollar = 1;
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 {
 	t_env *tmp;
@@ -174,20 +189,22 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 		ft_print_env(env_export, fd);
 	else if (argc > 1)
 	{
-		//обработать если перед = ничег нет
 		while (args < argc)
 		{
 			ptr = *env_export;
-			tmp = check_repeat_export(ptr, argv[args]);
-			if (argv[args][check_equals_sign(argv[args])] == '=')
+			if (check_valid_identifier(argv[args], fd))
 			{
-				if (tmp && *env_export == tmp)
-					*env_export = delete_head(tmp);
-				else if (tmp)
-					ptr = delet_elem(tmp, *env_export);
+				tmp = check_repeat_export(ptr, argv[args]);
+				if (argv[args][check_equals_sign(argv[args])] == '=')
+				{
+					if (tmp && *env_export == tmp)
+						*env_export = delete_head(tmp);
+					else if (tmp)
+						ptr = delet_elem(tmp, *env_export);
+				}
+				if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
+					add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
 			}
-			if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
-				add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
 			args++;
 		}
 	}
