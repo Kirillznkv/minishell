@@ -58,5 +58,7 @@ void		ft_exit_shell();
 char		**new_env_malloc(char **env, int len);
 void		start_cmd(t_commands *cmd, char ***env, t_env **env_main);
 t_env		*check_export_line(t_env *env, char *str);
+void		add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s);
+void		write_env(t_env *env_export, char *env);
 
 #endif

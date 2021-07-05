@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:40:49 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 20:57:02 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 23:09:38 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	replace_dollar_from_env(char **p_command_line, char **env, \
 		*beg_dollar += ft_strlen(new_dollar_word);
 	}
 	else
-		*beg_dollar += ft_strlen(dollar_word);
+		replace_dollar_word(p_command_line, "", (int)*beg_dollar, (int)end_dollar_word);
 	if (dollar_word)
 		free(dollar_word);
 	if (new_dollar_word)

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 19:23:29 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/02 19:29:07 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 22:53:22 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_command(t_commands *command)
 
 	if (!command || !(command->name))
 		return (0);
-	p = command;
+	p = command->next;
 	while (p)
 	{
 		if (!(p->name))
