@@ -113,6 +113,7 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 void       exec_run(t_commands *cmd, char **env)
 {
     char *bin;
+	char **test;
 
 	bin = NULL;
 	if (!(bin = exec_case_handling(env, cmd)))
