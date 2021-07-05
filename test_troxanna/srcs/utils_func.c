@@ -139,6 +139,7 @@ int		check_env_line(char **env, char *key)
 	while (env[i])
 	{
 		j = 0;
+		//проверить
 		while (env[i][j] != '=')
 			j++;
 		if (!ft_strncmp(env[i], key, j))

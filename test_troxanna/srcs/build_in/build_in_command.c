@@ -64,10 +64,14 @@ void	ft_env_shell(char **env, int fd)
 	// }
 }
 
-void	split_argv_unset(char *argv, int *i)
+int		check_equals_sign(char *argv)
 {
-	while (argv[*i] != '=' && argv[*i] != '\0')
-			(*i)++;
+	int i;
+
+	i = 0;
+	while (argv[i] != '=' && argv[i] != '\0')
+		i++;
+	return (i);
 }
 
 

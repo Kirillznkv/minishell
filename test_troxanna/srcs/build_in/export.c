@@ -140,9 +140,7 @@ t_env			*check_repeat_export(t_env *env_export, char *key)
 	t_env *tmp;
 	int i;
 
-	i = 0;
-	while (key[i] != '=' && key[i] != '\0')
-		i++;
+	i = check_equals_sign(key);
 	ptr = env_export;
 	if (!ft_strncmp(ptr->content->key, key, ft_strlen(ptr->content->key) >
 				i ? ft_strlen(ptr->next->content->key) : i))
@@ -152,8 +150,6 @@ t_env			*check_repeat_export(t_env *env_export, char *key)
 		if (!ft_strncmp(ptr->next->content->key, key, ft_strlen(ptr->next->content->key) >
 				i ? ft_strlen(ptr->next->content->key) : i))
 		{
-			//обработать ситуацию export ll="value" -> export ll
-			//в таком случае переменная ll не должна заменяться
 			ptr = delet_elem(ptr->next, env_export);
 			return (env_export);
 		}
@@ -167,8 +163,10 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 	t_env *new_env;
 	t_env *ptr;
 	int		args;
+	int		i;;
 
 	args = 1;
+	i = 0;
 	ptr = *env_export;
 	if (argc < 2)
 	{
@@ -183,10 +181,14 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 	else if (argc > 1)
 	{
 		ptr = *env_export;
+		i = 0;
 		while (args < argc)
 		{
-			*env_export = check_repeat_export(ptr, argv[args]); //проверить, нет ли в списке такого ключа. если есть - удвлить
-			add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
+			// if (argv[args][check_equals_sign(argv[args])] == '=')
+			// {
+				*env_export = check_repeat_export(ptr, argv[args]);
+				add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
+			//}
 			args++;
 		}
 	}

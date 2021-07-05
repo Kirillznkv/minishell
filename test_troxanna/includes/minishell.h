@@ -38,6 +38,7 @@ void		free_array(void **array);
 t_env		*delete_head(t_env *root);
 t_env		*delet_elem(t_env *lst, t_env *root);
 void		free_t_env(t_env *env_t);
+int			check_equals_sign(char *argv);
 void		ft_error(char *name, int n, int err_code);
 t_env		*check_repeat_export(t_env *env_export, char *key);
 char		*get_env(t_env *env, char *str);
