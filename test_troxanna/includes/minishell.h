@@ -57,5 +57,6 @@ void		exec_run(t_commands *argv, char **env);//
 void		ft_exit_shell();
 char		**new_env_malloc(char **env, int len);
 void		start_cmd(t_commands *cmd, char ***env, t_env **env_main);
+t_env		*check_export_line(t_env *env, char *str);
 
 #endif
