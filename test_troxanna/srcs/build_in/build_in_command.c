@@ -87,7 +87,7 @@ int		check_equals_sign(char *argv)
 }
 
 
-void	ft_unset_shell(t_env **env, char **argv, int argc)
+void	ft_unset_shell(t_env **env, char **argv, int argc, int fd)
 {
 	int 	args;
 	t_env	*ptr;
@@ -97,11 +97,14 @@ void	ft_unset_shell(t_env **env, char **argv, int argc)
 	args = 1;
 	while (args < argc)
 	{
-		tmp = check_repeat_export(ptr, argv[args]);
-		if (tmp && *env == tmp)
-			*env = delete_head(tmp);
-		else if (tmp)
-			ptr = delet_elem(tmp, *env);
+		if (check_valid_identifier(argv[args], fd))
+		{
+			tmp = check_repeat_export(ptr, argv[args]);
+			if (tmp && *env == tmp)
+				*env = delete_head(tmp);
+			else if (tmp)
+				ptr = delet_elem(tmp, *env);
+		}
 		args++;
 	}
 }

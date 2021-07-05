@@ -29,7 +29,7 @@ int		parse_command(t_commands *cmd, char ***env, t_env **env_main)
 	else if (!ft_strncmp(cmd->argv[0], "echo", 0))
 		ft_echo_shell(cmd->argv, cmd->fd_out, *env_main);
 	else if (!ft_strncmp(cmd->argv[0], "unset", 0))
-		ft_unset_shell(env_main, cmd->argv, cmd->argc);
+		ft_unset_shell(env_main, cmd->argv, cmd->argc, cmd->fd_out);
 	else if (!ft_strncmp(cmd->argv[0], "cd", 0))
 		ft_cd_shell(cmd->argv[1], *env_main);
 	else if (!ft_strncmp(cmd->argv[0], "exit", 0))
