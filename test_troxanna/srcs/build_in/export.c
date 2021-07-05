@@ -174,6 +174,7 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 		ft_print_env(env_export, fd);
 	else if (argc > 1)
 	{
+		//обработать если перед = ничег нет
 		while (args < argc)
 		{
 			ptr = *env_export;

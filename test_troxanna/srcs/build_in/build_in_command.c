@@ -58,12 +58,21 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 {
 	int i;
 	char *tmp;
+	int op;
 
 	i = -1;
+	op = 1;
+	tmp = get_env(env_export, "OLDPWD");
+	if (!tmp)
+		op = 0;
 	while (env[++i])
 	{
-		ft_putstr_fd(env[i], fd);
-		ft_putchar_fd('\n', 1);
+		if (!(!op && !ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
+				6 ? check_equals_sign(env[i]) : 6)))
+		{
+			ft_putstr_fd(env[i], fd);
+			ft_putchar_fd('\n', 1);
+		}
 	}
 }
 
