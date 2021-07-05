@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:56:35 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 20:45:51 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 21:07:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,7 @@ void	parser(char *commands_line, char ***env, t_env **env_main)
 	while (*commands_line)
 	{
 		command = get_one_command(&commands_line, *env);
-		if (is_bash(command))
-		{
-			inc_shlvl(*env_main);
-			*env = rewrite_env_parse(env_main, *env);
-			start_cmd(command, env, env_main);
-			dec_shlvl(*env_main);
-		}
-		else if (check_command(command))
+		if (check_command(command))
 			start_cmd(command, env, env_main);
 		if (command)
 			free_command(&command);

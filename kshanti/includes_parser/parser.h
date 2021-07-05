@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 20:41:11 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 21:11:19 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,5 @@ int			is_bash(t_commands *command);
 int			is_bash_name(t_commands *command, char *name);
 void		replace_shlvl(t_env *env, int value);
 void		inc_shlvl(t_env *env);
-void		dec_shlvl(t_env *env);
 
 #endif
