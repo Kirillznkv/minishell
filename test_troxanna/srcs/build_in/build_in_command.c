@@ -58,21 +58,12 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 {
 	int i;
 	char *tmp;
-	int op;
 
 	i = -1;
-	op = 1;
-	tmp = get_env(env_export, "OLDPWD");
-	if (!tmp)
-		op = 0;
 	while (env[++i])
 	{
-		if (!(!op && !ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
-				6 ? check_equals_sign(env[i]) : 6)))
-		{
-			ft_putstr_fd(env[i], fd);
-			ft_putchar_fd('\n', 1);
-		}
+		ft_putstr_fd(env[i], fd);
+		ft_putchar_fd('\n', 1);
 	}
 }
 
@@ -106,7 +97,20 @@ void	ft_unset_shell(t_env **env, char **argv, int argc)
 	}
 }
 
-void	ft_exit_shell()
+void	ft_exit_shell(int fd, char **argv, int argc)
 {
+	//too many arguments 
+	if (argc > 2)
+	{
+		write(fd, "exit\n", 5);
+		write(1, "too many arguments\n", 19);
+		error_code_dollar = 1;
+		return ;
+	}
+	else if (argc == 2)
+		error_code_dollar = ft_atoi(argv[1]);
+	else
+		error_code_dollar = 0;
+	write(fd, "exit\n", 5);
 	exit(error_code_dollar);
 }

@@ -33,7 +33,7 @@ int		parse_command(t_commands *cmd, char ***env, t_env **env_main)
 	else if (!ft_strncmp(cmd->argv[0], "cd", 0))
 		ft_cd_shell(cmd->argv[1], *env_main);
 	else if (!ft_strncmp(cmd->argv[0], "exit", 0))
-		ft_exit_shell();
+		ft_exit_shell(cmd->fd_out, cmd->argv, cmd->argc);
 	else
 		return (0);
 	return (1);
@@ -114,7 +114,9 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env **env_main)
 		if (!pid)
 		{
 			pipe_child(fd, i, count_pipe(cmd));
-			if (!parse_command(ptr, env, env_main))
+			if (parse_command(ptr, env, env_main))
+				exit(error_code_dollar);
+			else
 				exec_run(ptr, *env);
 		}
 		ptr = ptr->next;
@@ -128,12 +130,13 @@ void		execute_pipe(t_commands *cmd, char ***env, t_env **env_main)
 void		start_cmd(t_commands *cmd, char ***env, t_env **env_main)
 {
 	int		tmp_fd;
+	char	**tmp;
 
 	tmp_fd = dup(0);
 	if (cmd->pipe)
 		execute_pipe(cmd, env, env_main);
 	else
 		execute_command(cmd, env, env_main);
-	*env = rewrite_env_parse(*env_main, *env, NULL);
+	*env = rewrite_env_parse(env_main, *env);
 	dup2(tmp_fd, 0);
 }

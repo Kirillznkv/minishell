@@ -30,8 +30,8 @@ int	main(int argc, char **argv, char **env)
 
 	error_code_dollar = 0;
 	env_main = ft_create_env(env);
-	new_env = NULL;
-	new_env = rewrite_env_parse(env_main, new_env, env);
+	//new_env = NULL;
+	new_env = new_env_malloc(env, ft_counter_env(env));
 	ptr = env_main;
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, ctrl_slash);
@@ -45,6 +45,6 @@ int	main(int argc, char **argv, char **env)
 	ctrl_d();
 	// while (ptr)
 	// 	ptr = free_t_env(ptr);
-	free_array((void **)new_env);
+	//free_array((void **)new_env);
 	return (error_code_dollar);
 }

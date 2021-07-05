@@ -95,14 +95,14 @@ void		write_env(t_env *env_export, char *env)
 		write_env_value(env_export, env, i);
 }
 
-void			ft_env_sort(t_env *env_export, int i)
+void			ft_env_sort(t_env **env_export, int i)
 {
 	t_content		*tmp;
 	t_env			*ptr;
 
 	while (i--)
 	{
-		ptr = env_export;
+		ptr = *env_export;
 		while (ptr->next)
 		{
 			if (ft_strncmp(ptr->content->key, ptr->next->content->key,
@@ -118,14 +118,14 @@ void			ft_env_sort(t_env *env_export, int i)
 	}
 }
 
-void	ft_print_env(t_env *env_export, int fd)
+void	ft_print_env(t_env **env_export, int fd)
 {
 	// if (ex == 1 && !ft_strncmp(env_export->content->key, "OLDPWD", 6))
 	// 	return ;
 	t_env	*ptr;
 
-	ptr = env_export;
-	ft_env_sort(ptr, ft_counter_lstenv(ptr));
+	ptr = *env_export;
+	ft_env_sort(env_export, ft_counter_lstenv(*env_export));
 	while (ptr)
 	{
 		ft_putstr_fd("declare -x ", fd);
@@ -171,22 +171,22 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 
 	args = 1;
 	if (argc < 2)
-		ft_print_env(*env_export, fd);
+		ft_print_env(env_export, fd);
 	else if (argc > 1)
 	{
-		ptr = *env_export;
 		while (args < argc)
 		{
-				tmp = check_repeat_export(ptr, argv[args]);
-				if (argv[args][check_equals_sign(argv[args])] == '=')
-				{
-					if (tmp && *env_export == tmp)
-						*env_export = delete_head(tmp);
-					else if (tmp)
-						ptr = delet_elem(tmp, *env_export);
-				}
-				if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
-					add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
+			ptr = *env_export;
+			tmp = check_repeat_export(ptr, argv[args]);
+			if (argv[args][check_equals_sign(argv[args])] == '=')
+			{
+				if (tmp && *env_export == tmp)
+					*env_export = delete_head(tmp);
+				else if (tmp)
+					ptr = delet_elem(tmp, *env_export);
+			}
+			if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
+				add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
 			args++;
 		}
 	}
