@@ -6,11 +6,24 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:52:01 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 23:09:24 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 23:45:01 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
+
+void	no_dollar_word(char **p_c_l, size_t i, size_t j)
+{
+	int		k;
+	char	*s;
+
+	replace_dollar_word(p_c_l, "", (int)i, (int)j);
+	s = *p_c_l;
+	k = (int)i;
+	k--;
+	if (k < 0 || s[k] == ' ' || s[k] == '\t' || s[k] == ';' || s[k] == '|')
+		skip_spases_tabs(p_c_l, ++k);
+}
 
 int	check_env_word(char *env_line, char *dollar_word)
 {

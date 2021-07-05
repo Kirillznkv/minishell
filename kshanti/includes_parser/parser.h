@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 21:40:05 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/05 23:48:52 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 void		rl_replace_line(const char *str, int a);
 /*-----------------------------------Quotes-----------------------------------*/
+void		no_quotest(char **p_c_l, size_t i, size_t j);
 void		delete_quotes(char **p_command_line, size_t beg_quotes, \
 														size_t end_quotes);
 void		replace_single_quotes(char **p_command_line, size_t *begin_quotes);
@@ -53,6 +54,7 @@ void		replace_dollar_word(char **p_command_line, char *new_dollar_word, \
 char		*get_new_dollar_word(char **env, char *dollar_word);
 char		*get_second_env_word(char *env_line);
 int			check_env_word(char *env_line, char *dollar_word);
+void		no_dollar_word(char **p_c_l, size_t i, size_t j);
 /*-----------------------------------Parser-----------------------------------*/
 void		find_delimiter_word(char **p_com, size_t *i, t_commands **command);
 void		parser(char *commands_line, char ***env, t_env **env_main);
