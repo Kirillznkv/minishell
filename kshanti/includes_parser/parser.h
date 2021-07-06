@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/06 16:50:15 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/06 19:17:22 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,9 @@ void		double_back_redirect(t_commands *command, char *name);
 /*-----------------------------------Signals----------------------------------*/
 void		ctrl_c(int c);
 void		ctrl_slash(int c);
+void		ctrl_slash_cat(int c);
 void		ctrl_d(void);
 /*-----------------------------------shlvl------------------------------------*/
-int			is_bash(t_commands *command);
-int			is_bash_name(t_commands *command, char *name);
 void		replace_shlvl(t_env *tmp, t_env *env, int value);
 void		inc_shlvl(t_env *env);
 

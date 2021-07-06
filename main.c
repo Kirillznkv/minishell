@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:21:27 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 21:33:32 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/06 19:17:26 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	main(int argc, char **argv, char **env)
 	line = readline("Minishell-2.🔞 ⌲ ");
 	while (line)
 	{
+		signal(SIGQUIT, ctrl_slash_cat);
 		process_the_line(line, &new_env, &env_main);
 		line = readline("Minishell-2.🔞 ⌲ ");
+		signal(SIGQUIT, ctrl_slash);
 	}
 	ctrl_d();
 	return (error_code_dollar);
