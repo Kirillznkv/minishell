@@ -6,13 +6,13 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 18:53:13 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 21:43:27 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/06 16:51:16 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
 
-int		is_bash_name(t_commands *command, char *name)
+int	is_bash_name(t_commands *command, char *name)
 {
 	int		i;
 
@@ -30,14 +30,14 @@ int		is_bash_name(t_commands *command, char *name)
 	return (0);
 }
 
-int		is_bash(t_commands *command)
+int	is_bash(t_commands *command)
 {
 	if (is_bash_name(command, "minishell"))
 		return (1);
 	return (0);
 }
 
-void	replace_shlvl(t_env *tmp, t_env *env , int value)
+void	replace_shlvl(t_env *tmp, t_env *env, int value)
 {
 	if (tmp)
 	{
@@ -50,7 +50,8 @@ void	replace_shlvl(t_env *tmp, t_env *env , int value)
 
 void	inc_shlvl(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
+
 	tmp = check_export_line(env, "SHLVL");
 	if (tmp)
 		replace_shlvl(tmp, env, ft_atoi(tmp->content->value) + 1);

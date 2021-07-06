@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/05 23:51:12 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/06 16:50:40 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	no_quotest(char **p_c_l, size_t i, size_t j)
 {
-	int	k;
+	int		k;
 	char	*s;
 
 	if (i + 1 == j)
