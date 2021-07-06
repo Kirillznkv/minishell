@@ -100,17 +100,12 @@ t_env		*delet_elem(t_env *lst, t_env *root)
 
 void		free_t_env(t_env *env_t)
 {
-	//t_env	*env_next;
-//
-	//env_next = env_t->next;
 	if (env_t->content->key)
 		free(env_t->content->key);
 	if (env_t->content->value)
 		free(env_t->content->value);
 	free(env_t->content);
 	free(env_t);
-	//env_t = NULL;
-	//return (env_next);
 }
 
 char	**new_env_malloc(char **env, int len)
@@ -120,16 +115,16 @@ char	**new_env_malloc(char **env, int len)
 	char	**new_env;
 	char	*tmp;
 
-	new_env = malloc((len + 1) * sizeof(char *));
+
+	new_env = (char **)malloc((len + 1) * sizeof(char *));
 	new_env[len] = NULL;
 	j = 0;
 	i = 0;
-	while (j < len)
+	while (j < len && env[i])
 	{
 		if (!ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
 				6 ? check_equals_sign(env[i]) : 6))
 		{
-			//write(1, "test\n", 5);
 			new_env[j++] = ft_strdup("OLDPWD");
 			i++;	
 		}
@@ -150,9 +145,9 @@ int		check_env_line(char **env, char *key)
 	{
 		j = 0;
 		//проверить
-		while (env[i][j] != '=')
+		while (env[i][j] && env[i][j] != '=')
 			j++;
-		if (!ft_strncmp(env[i], key, j))
+		if (!ft_strncmp(env[i], key, j > ft_strlen(key) ? j : ft_strlen(key)))
 			return (1);
 		i++;
 	}
@@ -165,13 +160,14 @@ t_env		*check_export_line(t_env *env, char *str)
 	int len;
 
 	ptr = env;
+	int i = 0;
 	len = check_equals_sign(str);
 	while (ptr)
 	{
 		if (ptr->content->value && !ft_strncmp(ptr->content->key, str, ft_strlen(ptr->content->key) >
 				len ? ft_strlen(ptr->content->key) : len))
 		{
-			if (!ft_strncmp(ptr->content->value, str + len, 0))
+			if (!ft_strncmp(ptr->content->value, str + (len + 1), 0))
 				return (env);
 			return (ptr);
 		}
@@ -189,6 +185,7 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 	int		len;
 	int i;
 	int j;
+	int i_safe;
 
 	ptr = *env_export;
 	len = 0;
@@ -207,27 +204,31 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 	while (new_env[++j] && i < len)
 	{
 		test = check_export_line(ptr, new_env[j]);
-		if (test == *env_export)
+		if (test && test == ptr)
 			rewrite_env[i++] = ft_strdup(new_env[j]);
-		else if (test && test != *env_export)
+		else if (test && test != ptr)
 		{
 			tmp = ft_strjoin(test->content->key, "=");
 			rewrite_env[i++] = ft_strjoin(tmp, test->content->value);
 			free(tmp);
 		}
 	}
+	printf("%d\n", i);
+	i_safe = i;
+	while (i_safe < len)
+        rewrite_env[i_safe++] = NULL;
 	ptr = *env_export;
 	while (ptr && i < len)
 	{
 		if (ptr->content->value && !check_env_line(rewrite_env, ptr->content->key))
 		{
-			write(1, "test\n", 5);
 			tmp = ft_strjoin(ptr->content->key, "=");
 			rewrite_env[i++] = ft_strjoin(tmp, ptr->content->value);
 			free(tmp);
 		}
 		ptr = ptr->next;
 	}
+	printf("%d\n", len);
 	if (new_env)
 		free_array((void **)new_env);
 	//write(1, ptr->content->key, ft_strlen(ptr->content->key));
