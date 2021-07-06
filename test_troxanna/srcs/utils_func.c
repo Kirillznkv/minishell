@@ -67,7 +67,7 @@ void		ft_error(char *name, int n, int err_code)
 		write(1, "mallock error\n", 14);
 	else if (n == 5)
 	{
-		write(1, "no such file or directory: ", 27);
+		write(1, "no such file or directory: ", 28);
 		ft_putstr(name);
 		ft_putchar('\n');
 		//return ;
@@ -150,7 +150,7 @@ int		check_env_line(char **env, char *key)
 	{
 		j = 0;
 		//проверить
-		while (env[i][j] != '=' && env[i][j] != '\0')
+		while (env[i][j] != '=')
 			j++;
 		if (!ft_strncmp(env[i], key, j))
 			return (1);
@@ -209,7 +209,7 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 		test = check_export_line(ptr, new_env[j]);
 		if (test == *env_export)
 			rewrite_env[i++] = ft_strdup(new_env[j]);
-		else if (test != *env_export && test)
+		else if (test && test != *env_export)
 		{
 			tmp = ft_strjoin(test->content->key, "=");
 			rewrite_env[i++] = ft_strjoin(tmp, test->content->value);
@@ -219,10 +219,9 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 	ptr = *env_export;
 	while (ptr && i < len)
 	{
-		if (ptr->content->value && !check_env_line(rewrite_env, ptr->content->key) && ft_strncmp(ptr->content->key, "OLDPWD", ft_strlen(ptr->content->key) >
-				6 ? ft_strlen(ptr->content->key) : 6))
+		if (ptr->content->value && !check_env_line(rewrite_env, ptr->content->key))
 		{
-			write(1, ptr->content->key, ft_strlen(ptr->content->key));
+			write(1, "test\n", 5);
 			tmp = ft_strjoin(ptr->content->key, "=");
 			rewrite_env[i++] = ft_strjoin(tmp, ptr->content->value);
 			free(tmp);

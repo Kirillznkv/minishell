@@ -22,8 +22,6 @@ static void		print_echo_star(int fd)
 	closedir(dir);
 }
 
-//проверка, существует ли переменная окружения
-
 static int		echo_case_handling(t_env *env, char *argv)
 {
 	t_env *ptr;

@@ -1,22 +1,24 @@
 #include "../includes/minishell.h"
 
 
-char         *find_path(char **env)
+char		*get_env_char(char **env, char *str)
 {
-    char *p_str;
-    int i;
+	int i;
+	char *ptr;
 
-    i = 0;
-    while (env[i])
+	i = -1;
+	while (env[++i])
 	{
-		p_str = ft_strnstr(env[i], "PATH", 4);
-		if (p_str)
-			return (p_str);
-		else
-			i++;
+		if (!ft_strncmp(env[i], str, ft_strlen(str) > check_equals_sign(env[i])
+									? ft_strlen(str) : check_equals_sign(env[i])))
+		{
+			ptr = env[i];
+			return (ptr + (ft_strlen(str) + 1));
+		}
 	}
-    return (NULL);
+	return (NULL);
 }
+
 
 char		*add_slach_arg(char *str)
 {
@@ -41,7 +43,6 @@ void		exec_fork(t_commands *cmd, char **env, char *bin)
 {
 	int			a;
 	int			xar_exec;
-
 	// a = fork();
 	// if (a == 0)
 	// {
@@ -71,9 +72,9 @@ static char		*exec_case_handling(char **env, t_commands *cmd)
 	struct stat	buff[1];
 
 	bin = NULL;
-	if (!ft_strncmp("./", cmd->argv[0], 2)
-			|| !ft_strncmp("../", cmd->argv[0], 3)
-			|| !ft_strncmp("/", cmd->argv[0], 1))
+	if (!ft_strncmp("./", cmd->argv[0], 0)
+			|| !ft_strncmp("../", cmd->argv[0], 0)
+			|| !ft_strncmp("/", cmd->argv[0], 0))
 	{
 		bin = ft_strdup(cmd->argv[0]);
 		error_code_dollar = lstat(bin, buff);
@@ -90,8 +91,10 @@ static char		*exec_find_handling(char **env, t_commands *cmd)
 	int 		i;
 	char 		*arg;
 	char		*bin;
-
-	if (!(path = ft_split(find_path(env), ':')))
+	char		*ptr;
+	
+	ptr = get_env_char(env, "PATH");
+	if (!ptr || !(path = ft_split(ptr, ':')))
 		ft_error(cmd->argv[0], 5, 127);
 	arg = add_slach_arg(cmd->argv[0]);
 	i = -1;
@@ -116,6 +119,7 @@ void       exec_run(t_commands *cmd, char **env)
 	char **test;
 
 	bin = NULL;
+
 	if (!(bin = exec_case_handling(env, cmd)))
 			bin = exec_find_handling(env, cmd);	
 	if (bin && !error_code_dollar)

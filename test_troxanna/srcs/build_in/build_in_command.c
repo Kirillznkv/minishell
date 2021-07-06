@@ -18,6 +18,8 @@ char		*get_env(t_env *env, char *str)
 	return (NULL);
 }
 
+
+
 static void		show_pwd(char *str, int fd)
 {
 	int i;
