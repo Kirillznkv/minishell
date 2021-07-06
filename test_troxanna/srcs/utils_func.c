@@ -150,7 +150,7 @@ int		check_env_line(char **env, char *key)
 	{
 		j = 0;
 		//проверить
-		while (env[i][j] != '=')
+		while (env[i][j] != '=' && env[i][j] != '\0')
 			j++;
 		if (!ft_strncmp(env[i], key, j))
 			return (1);
@@ -219,7 +219,7 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 	ptr = *env_export;
 	while (ptr && i < len)
 	{
-		if (!check_env_line(rewrite_env, ptr->content->key) && ft_strncmp(ptr->content->key, "OLDPWD", ft_strlen(ptr->content->key) >
+		if (ptr->content->value && !check_env_line(rewrite_env, ptr->content->key) && ft_strncmp(ptr->content->key, "OLDPWD", ft_strlen(ptr->content->key) >
 				6 ? ft_strlen(ptr->content->key) : 6))
 		{
 			write(1, ptr->content->key, ft_strlen(ptr->content->key));
