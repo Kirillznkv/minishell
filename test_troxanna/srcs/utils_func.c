@@ -213,7 +213,6 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 			free(tmp);
 		}
 	}
-	printf("%d\n", i);
 	i_safe = i;
 	while (i_safe < len)
         rewrite_env[i_safe++] = NULL;
@@ -228,9 +227,7 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 		}
 		ptr = ptr->next;
 	}
-	printf("%d\n", len);
 	if (new_env)
 		free_array((void **)new_env);
-	//write(1, ptr->content->key, ft_strlen(ptr->content->key));
 	return (rewrite_env);
 }
