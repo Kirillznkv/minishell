@@ -72,9 +72,9 @@ static char		*exec_case_handling(char **env, t_commands *cmd)
 	struct stat	buff[1];
 
 	bin = NULL;
-	if (!ft_strncmp("./", cmd->argv[0], 0)
-			|| !ft_strncmp("../", cmd->argv[0], 0)
-			|| !ft_strncmp("/", cmd->argv[0], 0))
+	if (!ft_strncmp("./", cmd->argv[0], 2)
+			|| !ft_strncmp("../", cmd->argv[0], 3)
+			|| !ft_strncmp("/", cmd->argv[0], 1))
 	{
 		bin = ft_strdup(cmd->argv[0]);
 		error_code_dollar = lstat(bin, buff);
