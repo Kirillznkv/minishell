@@ -36,6 +36,31 @@ static int		echo_case_handling(t_env *env, char *argv)
 	return (0);
 }
 
+int			echo_home(char **argv, int fd, int i)
+{
+	char *home;
+	int j;
+
+	j = i;
+	home = getenv("HOME");
+	while (argv[j])
+	{
+		if (!ft_strncmp(argv[j], "~", 0))
+			j++;
+		else
+		{
+			ft_putstr_fd("no such user or named directory: ", fd);
+			//write(fd, "no such user or named directory: ", 34);
+			ft_putstr_fd(argv[j] + 1, fd);
+			ft_putchar_fd('\n', fd);
+			error_code_dollar = 1;
+			return (0);
+		}
+	}
+	ft_putstr_fd(home, fd);
+	return (1);
+}
+
 void			ft_echo_shell(char **argv, int fd, t_env *env)
 {
 	int i;
@@ -48,7 +73,13 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 	{
 		while (argv[++i])
 		{
-			ft_putstr_fd(argv[i], fd);
+			if (argv[i][0] == '~')
+			{
+				if (!echo_home(argv, fd, i))
+					return;
+			}
+			else
+				ft_putstr_fd(argv[i], fd);
 			if (argv[i + 1] && argv[i][0] != '$')
 				ft_putchar_fd(' ', fd);
 		}
@@ -59,8 +90,12 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 	{
 		while (argv[i])
 		{
-			ft_putstr_fd(argv[i], fd);
-			if (argv[i + 1] && argv[i][0] != '$')
+			if (argv[i][0] == '~')
+			{
+				if (!echo_home(argv, fd, i))
+					return;
+			}
+			if (argv[i + 1])
 				ft_putchar_fd(' ', fd);
 			i++;
 		}
