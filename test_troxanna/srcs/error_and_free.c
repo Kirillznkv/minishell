@@ -1,5 +1,26 @@
 #include "../includes/minishell.h"
 
+void	free_array(void **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+	array = NULL;
+}
+
+void	free_t_env(t_env *env_t)
+{
+	if (env_t->content->key)
+		free(env_t->content->key);
+	if (env_t->content->value)
+		free(env_t->content->value);
+	free(env_t->content);
+	free(env_t);
+}
+
 void	ft_error(char *name, int n, int err_code, int fd)
 {
 	if (n == 1)

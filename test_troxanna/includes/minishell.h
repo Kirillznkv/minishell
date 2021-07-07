@@ -34,6 +34,7 @@ void		ft_putstr(char *s);
 int			ft_counter_env(char **env);
 int			ft_counter_lstenv(t_env *lst);
 t_env		*new_elem_env(void);
+void		add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s);
 void		free_array(void **array);
 t_env		*delete_head(t_env *root);
 t_env		*delet_elem(t_env *lst, t_env *root);
@@ -57,13 +58,12 @@ void		ft_cd_shell(char **argv, t_env *env, int fd);
 char		**rewrite_env_parse(t_env **env_export, char **new_env);
 t_env 		*ft_create_env(char **env);
 void       	exec_run(t_commands *cmd, char **env);
-void		ft_exit_shell();
+void		ft_exit_shell(int fd, char **argv, int argc);
 char		**new_env_malloc(char **env, int len);
 int			parse_command(t_commands *cmd, char ***env, t_env **env_main);
 void		execute_pipe(t_commands *cmd, char ***env, t_env **env_main);
 void		start_cmd(t_commands *cmd, char ***env, t_env **env_main);
 t_env		*check_export_line(t_env *env, char *str);
-void		add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s);
 void		write_env(t_env *env_export, char *env);
 
 #endif

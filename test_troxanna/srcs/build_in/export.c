@@ -1,47 +1,5 @@
 #include "../../includes/minishell.h"
 
-t_env			*new_elem_env(void)
-{
-	t_env		*new_elem;
-
-	if (!(new_elem = (t_env *)malloc(sizeof(t_env))))
-		exit(1);
-	if (!(new_elem->content = (t_content *)malloc(sizeof(t_content))))
-		exit(1);
-	new_elem->next = NULL;
-	new_elem->content->value = NULL;
-	new_elem->content->key = NULL;
-	return (new_elem);
-}
-
-void				add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s)
-{
-	t_env		*ptr;
-
-	wrt(new_env, s);
-	ptr = env;
-	if (env == NULL)
-		env = new_env;
-	else
-	{
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = new_env;
-	}
-}
-
-void				delet_elem_env(t_env *env, t_env *env_unset)
-{
-	t_env *ptr;
-
-	ptr = env;
-	while (ptr->next && ptr->next != env_unset) 
-	{ 
-	  ptr = ptr->next;
-	}
-	//ptr->next = free_t_env(env_unset); 
-	//free(env_unset); // освобождаем память удаляемого узла
-}
 
 void		write_env_value(t_env *env_export, char *env, int i)
 {
