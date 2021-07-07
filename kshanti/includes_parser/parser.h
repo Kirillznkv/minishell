@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/07 19:36:47 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 21:33:32 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_commands	*init_command(void);
 void		delete_one_char(char **p_command_line, size_t i);
 int			free_command(t_commands **command);
 int			fd_control(t_commands **command);
+int			check_pipe(char *str, int *i);
 /*-----------------------------------Redirect---------------------------------*/
 void		find_redirect(t_commands *command, char **p_command_line, \
 																	size_t *i);
