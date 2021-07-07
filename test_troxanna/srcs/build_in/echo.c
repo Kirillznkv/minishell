@@ -48,8 +48,7 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 	{
 		while (argv[++i])
 		{
-			if ((argv[i][0] == '$' && echo_case_handling(env, argv[i])) || argv[i][0] != '$')
-				ft_putstr_fd(argv[i], fd);
+			ft_putstr_fd(argv[i], fd);
 			if (argv[i + 1] && argv[i][0] != '$')
 				ft_putchar_fd(' ', fd);
 		}
@@ -60,8 +59,7 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 	{
 		while (argv[i])
 		{
-			if ((argv[i][0] == '$' && echo_case_handling(env, argv[i])) || argv[i][0] != '$')
-				ft_putstr_fd(argv[i], fd);
+			ft_putstr_fd(argv[i], fd);
 			if (argv[i + 1] && argv[i][0] != '$')
 				ft_putchar_fd(' ', fd);
 			i++;
