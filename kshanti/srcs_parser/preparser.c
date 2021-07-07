@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/01 21:06:34 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 18:42:22 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,18 @@ int	check_back_slash_at_the_end(char *commands_line)
 	return (0);
 }
 
+int	check_pipe(char *str, int *i)
+{
+	int	j;
+
+	if (str[*i] != '|')
+		return (0);
+	j = *i + 1;
+	if (str[j] == '|')
+		return (wr_er("bash: syntax error near unexpected token '|'\n", 258));
+	return (0);
+}
+
 int	preparser(char *commands_line)
 {
 	int		i;
@@ -75,6 +87,8 @@ int	preparser(char *commands_line)
 		if (check_single_quotes(commands_line, &i))
 			return (1);
 		if (check_double_quotes(commands_line, &i))
+			return (1);
+		if (check_pipe(commands_line, &i))
 			return (1);
 	}
 	return (0);
