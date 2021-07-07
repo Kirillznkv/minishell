@@ -7,7 +7,6 @@ char	**new_env_malloc(char **env, int len)
 	char	**new_env;
 	char	*tmp;
 
-
 	new_env = (char **)malloc((len + 1) * sizeof(char *));
 	new_env[len] = NULL;
 	j = 0;
@@ -39,7 +38,6 @@ char	**rewrite_env_parse(t_env **env_export, char **new_env)
 
 	ptr = *env_export;
 	len = 0;
-	//len[0] = ft_counter_env(new_env);
 	while (ptr)
 	{
 		if (ptr->content->value)
