@@ -1,60 +1,5 @@
 #include "../includes/minishell.h"
 
-int		ft_counter_env(char **env)
-{
-	int i;
-
-	i = 0;
-	while(env[i])
-		i++;
-	return (i);
-}
-
-int		check_equals_sign(char *argv)
-{
-	int i;
-
-	i = 0;
-	while (argv[i] != '=' && argv[i] != '\0')
-		i++;
-	return (i);
-}
-
-char		*get_env(t_env *env, char *str)
-{
-	int 		i;
-	char 		*p_str;
-	t_env		*ptr;
-
-	i = 0;
-	ptr = env;
-	while (ptr)
-	{
-		if (!ft_strncmp(ptr->content->key, str, 0))
-			return (ptr->content->value);
-		ptr = ptr->next;
-	}
-	return (NULL);
-}
-
-char		*get_env_char(char **env, char *str)
-{
-	int i;
-	char *ptr;
-
-	i = -1;
-	while (env[++i])
-	{
-		if (!ft_strncmp(env[i], str, ft_strlen(str) > check_equals_sign(env[i])
-									? ft_strlen(str) : check_equals_sign(env[i])))
-		{
-			ptr = env[i];
-			return (ptr + (ft_strlen(str) + 1));
-		}
-	}
-	return (NULL);
-}
-
 char	**new_env_malloc(char **env, int len)
 {
 	int		j;
@@ -79,48 +24,6 @@ char	**new_env_malloc(char **env, int len)
 			new_env[j++] = ft_strdup(env[i++]);
 	}
 	return (new_env);
-}
-
-int		check_env_line(char **env, char *key)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (env[i])
-	{
-		j = 0;
-		//проверить
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		if (!ft_strncmp(env[i], key, j > ft_strlen(key) ? j : ft_strlen(key)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-t_env		*check_export_line(t_env *env, char *str)
-{
-	t_env *ptr;
-	int len;
-
-	ptr = env;
-	int i = 0;
-	len = check_equals_sign(str);
-	while (ptr)
-	{
-		if (ptr->content->value && !ft_strncmp(ptr->content->key, str, ft_strlen(ptr->content->key) >
-				len ? ft_strlen(ptr->content->key) : len))
-		{
-			if (!ft_strncmp(ptr->content->value, str + (len + 1), 0))
-				return (env);
-			return (ptr);
-		}
-		ptr = ptr->next;
-	}
-	return (NULL);
 }
 
 char	**rewrite_env_parse(t_env **env_export, char **new_env)
