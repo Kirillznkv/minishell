@@ -28,9 +28,7 @@ typedef	struct 				s_env
 	struct s_env			*next;
 }							t_env;
 
-void		ft_putchar(char c);
 char		**ft_split(char *s, char c);
-void		ft_putstr(char *s);
 int			ft_counter_env(char **env);
 int			ft_counter_lstenv(t_env *lst);
 t_env		*new_elem_env(void);
@@ -42,6 +40,7 @@ void		free_t_env(t_env *env_t);
 int			check_equals_sign(char *argv);
 void		ft_error(char *name, int n, int err_code, int fd);
 void		ft_error_exec(char *name, int n, int err_code, int fd);
+int			check_env_line(char **env, char *key);
 t_env		*check_repeat_export(t_env *env_export, char *key);
 int			check_valid_identifier(char *id, int fd);
 char		*get_env_char(char **env, char *str);

@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-void	rewrite_repeat_export()
-{
-	
-}
+// void	rewrite_repeat_export()
+// {
+
+// }
 
 t_env	*check_repeat_export(t_env *env_export, char *key)
 {
@@ -40,16 +40,6 @@ int	check_valid_identifier(char *id, int fd)
 		return (0);
 	}
 	return (1);
-}
-
-void	write_env(t_env *env_export, char *env)
-{
-	int	i;
-
-	i = write_env_key(env_export, env);
-	if (i > 0 && ft_strncmp(env, "OLDPWD", check_equals_sign(env)
-			> 6 ? check_equals_sign(env) : 6))
-		write_env_value(env_export, env, i);
 }
 
 t_env	*ft_create_env(char **env)

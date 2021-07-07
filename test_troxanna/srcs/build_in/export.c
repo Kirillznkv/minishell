@@ -41,6 +41,16 @@ int	write_env_key(t_env *env_export, char *env)
 	return (j + 1);
 }
 
+void	write_env(t_env *env_export, char *env)
+{
+	int	i;
+
+	i = write_env_key(env_export, env);
+	if (i > 0 && ft_strncmp(env, "OLDPWD", check_equals_sign(env)
+			> 6 ? check_equals_sign(env) : 6))
+		write_env_value(env_export, env, i);
+}
+
 void	ft_env_sort(t_env **env_export, int i)
 {
 	t_content	*tmp;
@@ -75,7 +85,7 @@ void	ft_print_env(t_env **env_export, int fd)
 	while (ptr)
 	{
 		ft_putstr_fd("declare -x ", fd);
-		ft_putstr(ptr->content->key);
+		ft_putstr_fd(ptr->content->key, fd);
 		if (ptr->content->value)
 		{
 			ft_putchar_fd('=', fd);
