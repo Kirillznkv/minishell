@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:52:25 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/06 19:17:22 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 19:36:47 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 void		rl_replace_line(const char *str, int a);
 /*-----------------------------------Quotes-----------------------------------*/
-void		no_quotest(char **p_c_l, size_t i, size_t j);
 void		delete_quotes(char **p_command_line, size_t beg_quotes, \
 														size_t end_quotes);
 void		replace_single_quotes(char **p_command_line, size_t *begin_quotes);

@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 19:23:29 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/07 18:51:36 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 19:24:46 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ int	check_command(t_commands *command)
 	{
 		if (!(p->name))
 		{
-			if (p->fd_in == 0 && p->fd_out == 1)
+			if (p->next && p->fd_in == 0 && p->fd_out == 1)
 				wr_er("bash: syntax error near unexpected token '|'\n", 258);
+			else if (!(p->next) && p->fd_in == 0 && p->fd_out == 1)
+				wr_er("bash: syntax error near unexpected token ';'\n", 258);
 			return (0);
 		}
 		p = p->next;

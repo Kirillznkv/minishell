@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/07 18:42:22 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 19:29:19 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_single_quotes(char *str, int *i)
 	if (str[*i] != '\'')
 		return (0);
 	(*i)++;
-	while (str[*i] && !(str[*i] == '\'' && str[*i - 1] != '\\'))
+	while (str[*i] && !(str[*i] == '\''))
 		(*i)++;
 	if (!str[*i])
 		return (wr_er("Error: Single quote not closed\n", 1));
@@ -68,7 +68,7 @@ int	check_pipe(char *str, int *i)
 		return (0);
 	j = *i + 1;
 	if (str[j] == '|')
-		return (wr_er("bash: syntax error near unexpected token '|'\n", 258));
+		return (wr_er("bash: syntax error near unexpected token '||'\n", 258));
 	return (0);
 }
 

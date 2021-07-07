@@ -6,26 +6,11 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:35:57 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/06 16:50:40 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 19:36:36 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_parser/parser.h"
-
-void	no_quotest(char **p_c_l, size_t i, size_t j)
-{
-	int		k;
-	char	*s;
-
-	if (i + 1 == j)
-	{
-		s = *p_c_l;
-		k = (int)i;
-		k--;
-		if (k < 0 || s[k] == ' ' || s[k] == '\t' || s[k] == ';' || s[k] == '|')
-			skip_spases_tabs(p_c_l, ++k);
-	}
-}
 
 void	delete_quotes(char **p_command_line, size_t beg_quotes, \
 						size_t end_quotes)
@@ -61,7 +46,6 @@ void	replace_single_quotes(char **p_command_line, size_t *begin_quotes)
 	while (command_line[end_quotes] != '\'')
 		end_quotes++;
 	delete_quotes(p_command_line, *begin_quotes, end_quotes);
-	no_quotest(p_command_line, *begin_quotes, end_quotes);
 	*begin_quotes = end_quotes - 1;
 }
 
@@ -91,6 +75,5 @@ void	replace_double_quotes(char **p_command_line, char **env, \
 		end_q++;
 	}
 	delete_quotes(p_command_line, *begin_quotes, end_q);
-	no_quotest(p_command_line, *begin_quotes, end_q);
 	*begin_quotes = end_q - 1;
 }
