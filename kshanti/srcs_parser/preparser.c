@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:30:12 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/07 19:29:19 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 21:32:40 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,6 @@ int	check_back_slash_at_the_end(char *commands_line)
 		column_back_slash++;
 	if (column_back_slash % 2)
 		return (wr_er("Error: Back slash at the end of the line\n", 1));
-	return (0);
-}
-
-int	check_pipe(char *str, int *i)
-{
-	int	j;
-
-	if (str[*i] != '|')
-		return (0);
-	j = *i + 1;
-	if (str[j] == '|')
-		return (wr_er("bash: syntax error near unexpected token '||'\n", 258));
 	return (0);
 }
 

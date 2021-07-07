@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 19:43:39 by kshanti           #+#    #+#             */
-/*   Updated: 2021/07/02 19:46:57 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/07/07 21:33:05 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,16 @@ void	find_redirect(t_commands *command, char **p_command_line, size_t *i)
 		}
 	}
 	skip_spases_tabs(p_command_line, *i);
+}
+
+int	check_pipe(char *str, int *i)
+{
+	int	j;
+
+	if (str[*i] != '|')
+		return (0);
+	j = *i + 1;
+	if (str[j] == '|')
+		return (wr_er("bash: syntax error near unexpected token '||'\n", 258));
+	return (0);
 }
