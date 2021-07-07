@@ -20,6 +20,24 @@ int		check_equals_sign(char *argv)
 	return (i);
 }
 
+char		*get_env(t_env *env, char *str)
+{
+	int 		i;
+	char 		*p_str;
+	t_env		*ptr;
+
+	//p_str = NULL;
+	i = 0;
+	ptr = env;
+	while (ptr)
+	{
+		if (!ft_strncmp(ptr->content->key, str, 0))
+			return (ptr->content->value);
+		ptr = ptr->next;
+	}
+	return (NULL);
+}
+
 char		*get_env_char(char **env, char *str)
 {
 	int i;

@@ -1,28 +1,8 @@
 #include "../../includes/minishell.h"
 
-char		*get_env(t_env *env, char *str)
+static void	show_pwd(char *str, int fd)
 {
-	int 		i;
-	char 		*p_str;
-	t_env		*ptr;
-
-	//p_str = NULL;
-	i = 0;
-	ptr = env;
-	while (ptr)
-	{
-		if (!ft_strncmp(ptr->content->key, str, 0))
-			return (ptr->content->value);
-		ptr = ptr->next;
-	}
-	return (NULL);
-}
-
-
-
-static void		show_pwd(char *str, int fd)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '/' && str[i])
@@ -36,7 +16,7 @@ static void		show_pwd(char *str, int fd)
 
 void	ft_pwd_shell(int fd, t_env *env)
 {
-	char *str;
+	char	*str;
 
 	str = getcwd(NULL, 0);
 	if (str)
@@ -46,9 +26,9 @@ void	ft_pwd_shell(int fd, t_env *env)
 
 void	ft_env_shell(char **env, int fd, t_env *env_export)
 {
-	int i;
-	char *tmp;
-	int op;
+	int		i;
+	char	*tmp;
+	int		op;
 
 	i = -1;
 	op = 1;
@@ -57,8 +37,8 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 		op = 0;
 	while (env[++i])
 	{
-		if (!(!op && !ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) >
-				6 ? check_equals_sign(env[i]) : 6)))
+		if (!(!op && !ft_strncmp(env[i], "OLDPWD", check_equals_sign(env[i]) > 6
+					? check_equals_sign(env[i]) : 6)))
 		{
 			ft_putstr_fd(env[i], fd);
 			ft_putchar_fd('\n', 1);
@@ -68,7 +48,7 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 
 void	ft_unset_shell(t_env **env, char **argv, int argc, int fd)
 {
-	int 	args;
+	int		args;
 	t_env	*ptr;
 	t_env	*tmp;
 
