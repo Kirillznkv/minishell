@@ -44,18 +44,6 @@ void	ft_pwd_shell(int fd, t_env *env)
 	free(str);
 }
 
-// int		env_check_oldpwd(t_env *env_export)
-// {
-// 	t_env	*ptr;
-
-// 	ptr = env_export;
-// 	while (ptr)
-// 	{
-// 		if (!ft_strncmp(ptr->content->key, str, 0))
-// 		ptr = ptr->next;
-// 	}
-// }
-
 void	ft_env_shell(char **env, int fd, t_env *env_export)
 {
 	int i;
@@ -78,7 +66,6 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 	}
 }
 
-
 void	ft_unset_shell(t_env **env, char **argv, int argc, int fd)
 {
 	int 	args;
@@ -99,22 +86,4 @@ void	ft_unset_shell(t_env **env, char **argv, int argc, int fd)
 		}
 		args++;
 	}
-}
-
-void	ft_exit_shell(int fd, char **argv, int argc)
-{
-	//too many arguments 
-	if (argc > 2)
-	{
-		write(fd, "exit\n", 5);
-		write(1, "too many arguments\n", 19);
-		error_code_dollar = 1;
-		return ;
-	}
-	else if (argc == 2)
-		error_code_dollar = ft_atoi(argv[1]);
-	else
-		error_code_dollar = 0;
-	write(fd, "exit\n", 5);
-	exit(error_code_dollar);
 }

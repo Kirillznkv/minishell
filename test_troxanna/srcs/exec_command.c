@@ -35,7 +35,7 @@ static void	exec_fork(t_commands *cmd, char **env, char *bin)
 	}
 	xar_exec = execve(bin, cmd->argv, env);
 	if (xar_exec == -1)
-		ft_error(cmd->argv[0], 1, 126);
+		ft_error_exec(cmd->argv[0], 1, 126, cmd->fd_out);
 }
 
 static char	*exec_case_handling(char **env, t_commands *cmd)
@@ -51,7 +51,7 @@ static char	*exec_case_handling(char **env, t_commands *cmd)
 		bin = ft_strdup(cmd->argv[0]);
 		error_code_dollar = lstat(bin, buff);
 		if (error_code_dollar)
-			ft_error(cmd->argv[0], 5, 127);
+			ft_error_exec(cmd->argv[0], 5, 127, cmd->fd_out);
 	}
 	return (bin);
 }
@@ -67,7 +67,7 @@ static char	*exec_find_handling(char **env, t_commands *cmd)
 	ptr = get_env_char(env, "PATH");
 	path = ft_split(ptr, ':');
 	if (!ptr || !path)
-		ft_error(cmd->argv[0], 5, 127);
+		ft_error_exec(cmd->argv[0], 5, 127, cmd->fd_out);
 	ptr = add_slach_arg(cmd->argv[0]);
 	i = -1;
 	while (path[++i])
@@ -81,7 +81,7 @@ static char	*exec_find_handling(char **env, t_commands *cmd)
 	free_array((void **)path);
 	free(ptr);
 	if (error_code_dollar)
-		ft_error(cmd->argv[0], 2, 127);
+		ft_error_exec(cmd->argv[0], 2, 127, cmd->fd_out);
 	return (bin);
 }
 

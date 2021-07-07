@@ -75,32 +75,50 @@ void		ft_putstr(char *s)
 	write(1, s, ft_strlen(s));
 }
 
-void		ft_error(char *name, int n, int err_code)
+void		ft_error(char *name, int n, int err_code, int fd)
+{
+	if (n == 1)
+		ft_putstr_fd("OLDPWD not set\n", fd);
+	else if (n == 2)
+	{
+		ft_putstr_fd(name, fd);
+		ft_putstr_fd(": No such file or directory\n", fd);
+		ft_putchar_fd('\n', fd);
+	}
+	else if (n == 3)
+		ft_putstr_fd("too many arguments\n", fd);
+	else if (n == 4)
+	{
+		ft_putstr_fd(name, fd);
+		ft_putstr_fd(": numeric argument required\n", fd);
+	}
+	error_code_dollar = err_code;
+	return ;
+}
+
+void		ft_error_exec(char *name, int n, int err_code, int fd)
 {
 	if (n == 1)
 	{
-		ft_putstr(name);
-		write(1, ": permission denied\n", 20);
-		//return ;
+		ft_putstr_fd(name, fd);
+		ft_putstr_fd(": permission denied\n", fd);
 	}
 	else if (n == 2)
 	{
-		ft_putstr(name);
-		write(1, ": сommand not found\n", 21);
-		//return ;
+		ft_putstr_fd("сommand not found: ", fd);
+		ft_putstr_fd(name, fd);
+		ft_putchar_fd('\n', fd);
 	}
 	else if (n == 3)
-		write(1, "failed to fork\n", 15);
+		ft_putstr_fd("failed to fork\n", fd);
 	else if (n == 4)
-		write(1, "mallock error\n", 14);
+		ft_putstr_fd("mallock error\n", fd);
 	else if (n == 5)
 	{
-		write(1, "no such file or directory: ", 28);
-		ft_putstr(name);
-		ft_putchar('\n');
-		//return ;
+		ft_putstr_fd("no such file or directory: ", fd);
+		ft_putstr_fd(name, fd);
+		ft_putchar_fd('\n', fd);
 	}
-	//добавить обработку ошибки
 	error_code_dollar = err_code;
 	exit(error_code_dollar);
 }
