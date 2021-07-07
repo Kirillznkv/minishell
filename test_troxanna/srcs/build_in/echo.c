@@ -67,6 +67,7 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 
 	i = 1;
 
+	//write(1, argv[i], ft_strlen(argv[i]));
 	if (!argv[i])
 		ft_putchar_fd('\n', fd);
 	else if (!ft_strncmp(argv[i], "-n", 0))
@@ -95,6 +96,8 @@ void			ft_echo_shell(char **argv, int fd, t_env *env)
 				if (!echo_home(argv, fd, i))
 					return;
 			}
+			else
+				ft_putstr_fd(argv[i], fd);
 			if (argv[i + 1])
 				ft_putchar_fd(' ', fd);
 			i++;

@@ -62,6 +62,11 @@ void			ft_cd_shell(char **argv, t_env *env, int fd)
 		write(fd, ": no such file or directory\n", 28);
 		return ;
 	}
+	if (!ft_strncmp(argv[1], "-", 0))
+	{
+		ft_putstr_fd(tmp, fd);
+		ft_putchar_fd('\n', fd);
+	}
 	rewrite_env_pwd(env, "OLDPWD", old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (check_pwd_and_home(env, "PWD"))
