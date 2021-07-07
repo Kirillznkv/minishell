@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static void		*ft_split_free(char **str_main)
+static void	*ft_split_free(char **str_main)
 {
 	int			i;
 
@@ -26,7 +26,7 @@ static void		*ft_split_free(char **str_main)
 	return (NULL);
 }
 
-static char		**ft_split_malloc_char(char *s, char c, char **str_main)
+static char	**ft_split_malloc_char(char *s, char c, char **str_main)
 {
 	int			start;
 	int			i;
@@ -55,9 +55,9 @@ static char		**ft_split_malloc_char(char *s, char c, char **str_main)
 	return (NULL);
 }
 
-static char		**ft_split_string_null(int count)
+static char	**ft_split_string_null(int count)
 {
-	char **str_main;
+	char	**str_main;
 
 	str_main = (char **)malloc(count * sizeof(char *));
 	if (str_main)
@@ -68,7 +68,7 @@ static char		**ft_split_string_null(int count)
 	return (NULL);
 }
 
-static char		**ft_split_malloc_string(char *s, char c)
+static char	**ft_split_malloc_string(char *s, char c)
 {
 	char		**str_main;
 	int			i;
@@ -97,7 +97,7 @@ static char		**ft_split_malloc_string(char *s, char c)
 	return (NULL);
 }
 
-char			**ft_split(char *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char		**s_main;
 

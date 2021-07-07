@@ -10,6 +10,24 @@ int		ft_counter_env(char **env)
 	return (i);
 }
 
+char		*get_env_char(char **env, char *str)
+{
+	int i;
+	char *ptr;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp(env[i], str, ft_strlen(str) > check_equals_sign(env[i])
+									? ft_strlen(str) : check_equals_sign(env[i])))
+		{
+			ptr = env[i];
+			return (ptr + (ft_strlen(str) + 1));
+		}
+	}
+	return (NULL);
+}
+
 int			ft_counter_lstenv(t_env *lst)
 {
 	t_env	*ptr;

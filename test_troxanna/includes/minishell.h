@@ -42,6 +42,7 @@ int			check_equals_sign(char *argv);
 void		ft_error(char *name, int n, int err_code);
 t_env		*check_repeat_export(t_env *env_export, char *key);
 int			check_valid_identifier(char *id, int fd);
+char		*get_env_char(char **env, char *str);
 char		*get_env(t_env *env, char *str);
 void		ft_print_env(t_env **env_export, int fd);//
 void		ft_env_shell(char **env, int fd, t_env *env_main);//
@@ -57,6 +58,8 @@ t_env 		*ft_create_env(char **env);
 void       	exec_run(t_commands *cmd, char **env);
 void		ft_exit_shell();
 char		**new_env_malloc(char **env, int len);
+int			parse_command(t_commands *cmd, char ***env, t_env **env_main);
+void		execute_pipe(t_commands *cmd, char ***env, t_env **env_main);
 void		start_cmd(t_commands *cmd, char ***env, t_env **env_main);
 t_env		*check_export_line(t_env *env, char *str);
 void		add_elem_env(t_env *env, t_env *new_env, void (*wrt)(t_env *, char *), char *s);

@@ -56,13 +56,14 @@ void			ft_cd_shell(char **argv, t_env *env, int fd)
 			return ;
 		}
 	}
-	if (chdir(tmp) == -1)
+	if (chdir(tmp) > 0)
 	{
+		write(1, "test", 4);
 		write(fd, argv[1], ft_strlen(argv[1]));
 		write(fd, ": no such file or directory\n", 28);
 		return ;
 	}
-	if (!ft_strncmp(argv[1], "-", 0))
+	if (argv[1] && !ft_strncmp(argv[1], "-", 0))
 	{
 		ft_putstr_fd(tmp, fd);
 		ft_putchar_fd('\n', fd);
