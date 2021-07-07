@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-char	*add_slach_arg(char *str)
+static char	*add_slach_arg(char *str)
 {
 	int		count;
 	int		i;

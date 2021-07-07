@@ -10,6 +10,16 @@ int		ft_counter_env(char **env)
 	return (i);
 }
 
+int		check_equals_sign(char *argv)
+{
+	int i;
+
+	i = 0;
+	while (argv[i] != '=' && argv[i] != '\0')
+		i++;
+	return (i);
+}
+
 char		*get_env_char(char **env, char *str)
 {
 	int i;

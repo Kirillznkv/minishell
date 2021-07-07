@@ -78,16 +78,6 @@ void	ft_env_shell(char **env, int fd, t_env *env_export)
 	}
 }
 
-int		check_equals_sign(char *argv)
-{
-	int i;
-
-	i = 0;
-	while (argv[i] != '=' && argv[i] != '\0')
-		i++;
-	return (i);
-}
-
 
 void	ft_unset_shell(t_env **env, char **argv, int argc, int fd)
 {

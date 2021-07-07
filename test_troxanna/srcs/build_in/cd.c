@@ -1,4 +1,3 @@
-
 #include "../../includes/minishell.h"
 
 static void		rewrite_env_pwd(t_env *env, const char *str, char *pwd)

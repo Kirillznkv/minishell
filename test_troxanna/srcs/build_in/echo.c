@@ -1,30 +1,33 @@
 #include "../../includes/minishell.h"
 
-static void		print_echo_star(int fd)
+static void	print_echo_star(int fd)
 {
-	DIR *dir;
-	struct dirent *entry;
+	DIR				*dir;
+	struct dirent	*entry;
 
 	dir = opendir(".");
-	if (!dir) {
-        perror("diropen");
-        exit(1);
-    };
-	while ((entry = readdir(dir)) != NULL)
+	if (!dir)
+	{
+		perror("diropen");
+		exit(1);
+	}
+	entry = readdir(dir);
+	while (entry != NULL)
 	{
 		if (entry->d_name[0] != '.')
 		{
 			ft_putstr_fd(entry->d_name, fd);
 			ft_putchar_fd(' ', fd);
 		}
+		entry = readdir(dir);
 	}
 	ft_putchar_fd('\n', fd);
 	closedir(dir);
 }
 
-static int		echo_case_handling(t_env *env, char *argv)
+static int	echo_case_handling(t_env *env, char *argv)
 {
-	t_env *ptr;
+	t_env	*ptr;
 
 	ptr = env;
 	while (ptr)
@@ -36,10 +39,10 @@ static int		echo_case_handling(t_env *env, char *argv)
 	return (0);
 }
 
-int			echo_home(char **argv, int fd, int i)
+int	echo_home(char **argv, int fd, int i)
 {
-	char *home;
-	int j;
+	char	*home;
+	int		j;
 
 	j = i;
 	home = getenv("HOME");
@@ -50,7 +53,6 @@ int			echo_home(char **argv, int fd, int i)
 		else
 		{
 			ft_putstr_fd("no such user or named directory: ", fd);
-			//write(fd, "no such user or named directory: ", 34);
 			ft_putstr_fd(argv[j] + 1, fd);
 			ft_putchar_fd('\n', fd);
 			error_code_dollar = 1;
@@ -61,47 +63,42 @@ int			echo_home(char **argv, int fd, int i)
 	return (1);
 }
 
-void			ft_echo_shell(char **argv, int fd, t_env *env)
+static int	echo_cycle_write(int i, char **argv, int fd)
 {
-	int i;
+	while (argv[i])
+	{
+		if (argv[i][0] == '~')
+		{
+			if (!echo_home(argv, fd, i))
+				return (0);
+		}
+		else
+			ft_putstr_fd(argv[i], fd);
+		if (argv[i + 1])
+			ft_putchar_fd(' ', fd);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_echo_shell(char **argv, int fd, t_env *env)
+{
+	int	i;
 
 	i = 1;
-
-	//write(1, argv[i], ft_strlen(argv[i]));
 	if (!argv[i])
 		ft_putchar_fd('\n', fd);
 	else if (!ft_strncmp(argv[i], "-n", 0))
 	{
-		while (argv[++i])
-		{
-			if (argv[i][0] == '~')
-			{
-				if (!echo_home(argv, fd, i))
-					return;
-			}
-			else
-				ft_putstr_fd(argv[i], fd);
-			if (argv[i + 1] && argv[i][0] != '$')
-				ft_putchar_fd(' ', fd);
-		}
+		if (!echo_cycle_write(++i, argv, fd))
+			return ;
 	}
 	else if (!ft_strncmp(argv[i], "*", 0))
 		print_echo_star(fd);
 	else
 	{
-		while (argv[i])
-		{
-			if (argv[i][0] == '~')
-			{
-				if (!echo_home(argv, fd, i))
-					return;
-			}
-			else
-				ft_putstr_fd(argv[i], fd);
-			if (argv[i + 1])
-				ft_putchar_fd(' ', fd);
-			i++;
-		}
+		if (!echo_cycle_write(i, argv, fd))
+			return ;
 		ft_putchar_fd('\n', fd);
 	}
 }
