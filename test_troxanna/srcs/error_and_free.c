@@ -51,10 +51,7 @@ void	ft_error(char *name, int n, int err_code, int fd)
 void	ft_error_exec(char *name, int n, int err_code, int fd)
 {
 	if (n == 1)
-	{
-		ft_putstr_fd(name, fd);
-		ft_putstr_fd(": permission denied\n", fd);
-	}
+		write_error(": permission denied\n", name, fd);
 	else if (n == 2)
 	{
 		ft_putstr_fd("сommand not found: ", fd);
