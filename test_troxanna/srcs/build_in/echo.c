@@ -42,24 +42,12 @@ static int	echo_case_handling(t_env *env, char *argv)
 int	echo_home(char **argv, int fd, int i)
 {
 	char	*home;
-	int		j;
 
-	j = i;
 	home = getenv("HOME");
-	while (argv[j])
-	{
-		if (!ft_strncmp(argv[j], "~", 0))
-			j++;
-		else
-		{
-			ft_putstr_fd("no such user or named directory: ", fd);
-			ft_putstr_fd(argv[j] + 1, fd);
-			ft_putchar_fd('\n', fd);
-			g_error_code_dollar = 1;
-			return (0);
-		}
-	}
-	ft_putstr_fd(home, fd);
+	if (!ft_strncmp(argv[i], "~", 0))
+		ft_putstr_fd(home, fd);
+	else
+		ft_putstr_fd(argv[i], fd);
 	return (1);
 }
 

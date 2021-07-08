@@ -21,7 +21,7 @@ void	free_t_env(t_env *env_t)
 	free(env_t);
 }
 
-static void	write_error(char *str, char *name, int fd)
+static void	write_error(char *name, char *str, int fd)
 {
 	ft_putstr_fd(name, fd);
 	ft_putstr_fd(str, fd);
@@ -44,6 +44,12 @@ void	ft_error(char *name, int n, int err_code, int fd)
 		write_error(": not a valid identifier\n", name, fd);
 	else if (n == 6)
 		write_error(": invalid option\n", name, fd);
+	else if (n == 7)
+	{
+		ft_putstr_fd("no such user or named directory: ", fd);
+		ft_putstr_fd(name, fd);
+		ft_putchar_fd('\n', fd);
+	}
 	g_error_code_dollar = err_code;
 	return ;
 }
