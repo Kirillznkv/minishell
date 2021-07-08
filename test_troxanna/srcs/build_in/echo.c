@@ -76,7 +76,7 @@ void	ft_echo_shell(char **argv, int fd, t_env *env)
 	i = 1;
 	if (!argv[i])
 		ft_putchar_fd('\n', fd);
-	else if (!ft_strncmp(argv[i], "-n", 0))
+	else if (!ft_strncmp(argv[i], "-n", 2))
 	{
 		if (!echo_cycle_write(++i, argv, fd))
 			return ;
