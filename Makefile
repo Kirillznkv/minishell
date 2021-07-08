@@ -14,7 +14,7 @@ NAME = minishell
 
 HEAD = ./kshanti/includes_parser
 SRCS = ./kshanti/srcs_parser/
-SRCS2 = ./test_troxanna/srcs/
+SRCS2 = ./troxanna/srcs/
 SRCS3 = $(SRCS2)build_in/
 GNL = ./kshanti/get_next_line/
 RL = -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include -lreadline

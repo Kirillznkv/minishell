@@ -16,7 +16,7 @@
 # include "structures.h"
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
-# include "../../test_troxanna/includes/minishell.h"
+# include "../../troxanna/includes/minishell.h"
 # include "readline/readline.h"
 # include "readline/history.h"
 # include "stdio.h"
