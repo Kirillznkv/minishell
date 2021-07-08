@@ -50,7 +50,8 @@ void	start_cmd(t_commands *cmd, char ***env, t_env **env_main)
 		execute_pipe(cmd, env, env_main);
 	else
 		execute_command(cmd, env, env_main);
-	if (!ft_strncmp(cmd->name, "export", 0) || !ft_strncmp(cmd->name, "unset", 0))
+	if (!ft_strncmp(cmd->name, "export", 0)
+		|| !ft_strncmp(cmd->name, "unset", 0))
 		*env = rewrite_env_parse(env_main, *env);
 	dup2(tmp_fd, 0);
 }

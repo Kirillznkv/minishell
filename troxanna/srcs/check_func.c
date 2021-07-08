@@ -51,3 +51,16 @@ t_env	*check_export_line(t_env *env, char *str)
 	}
 	return (NULL);
 }
+
+int	**create_pipe_fd(int count)
+{
+	int		**fd;
+	int		i;
+
+	i = 0;
+	fd = (int **)malloc(sizeof(int *) * count + 1);
+	fd[count] = NULL;
+	while (i < count)
+		fd[i++] = (int *)malloc(sizeof(int) * 2);
+	return (fd);
+}

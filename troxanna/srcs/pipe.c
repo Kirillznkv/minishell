@@ -15,19 +15,6 @@ static int	count_pipe(t_commands *cmd)
 	return (i);
 }
 
-static int	**create_pipe_fd(int count)
-{
-	int		**fd;
-	int		i;
-
-	i = 0;
-	fd = (int **)malloc(sizeof(int *) * count + 1);
-	fd[count] = NULL;
-	while (i < count)
-		fd[i++] = (int *)malloc(sizeof(int) * 2);
-	return (fd);
-}
-
 static void	pipe_child(int **fd, int i, int count)
 {
 	if (i == 0)
@@ -49,7 +36,7 @@ static void	pipe_child(int **fd, int i, int count)
 	}	
 }
 
-int	fork_start(int *pid, int **fd, int i)
+static int	fork_start(int *pid, int **fd, int i)
 {
 	*pid = fork();
 	if (*pid != 0)
@@ -57,31 +44,41 @@ int	fork_start(int *pid, int **fd, int i)
 	return (1);
 }
 
+static void	wait_fork(pid_t *pid, int i, int **fd)
+{
+	int			status;
+
+	while (i > -1)
+		waitpid(pid[i--], &status, WUNTRACED | WCONTINUED);
+	g_error_code_dollar = WEXITSTATUS(status);
+	free_array((void **)fd);
+}
+
 void	execute_pipe(t_commands *cmd, char ***env, t_env **env_main)
 {
 	int			pid_i[2];
 	int			**fd;
 	t_commands	*ptr;
-	int			status;
+	pid_t		*pid;
+	int			i;
 
 	fd = create_pipe_fd(count_pipe(cmd) + 1);
 	ptr = cmd;
-	pid_i[1] = -1;
-	while (++pid_i[1] < count_pipe(cmd))
-		pipe(fd[pid_i[1]]);
-	pid_i[1] = -1;
-	while (++pid_i[1] < count_pipe(cmd) + 1)
+	pid = (pid_t *)malloc(sizeof(pid_t) * count_pipe(cmd));
+	i = -1;
+	while (++i < count_pipe(cmd))
+		pipe(fd[i]);
+	i = -1;
+	while (++i < count_pipe(cmd) + 1)
 	{
-		if (fork_start(&pid_i[0], fd, pid_i[1]) && !pid_i[0])
+		if (fork_start(&pid[i], fd, i) && !pid[i])
 		{
-			pipe_child(fd, pid_i[1], count_pipe(cmd));
+			pipe_child(fd, i, count_pipe(cmd));
 			if (parse_command(ptr, env, env_main))
 				exit(g_error_code_dollar);
 			exec_run(ptr, *env);
 		}
 		ptr = ptr->next;
 	}
-	waitpid(pid_i[0], &status, WUNTRACED | WCONTINUED);
-	g_error_code_dollar = WEXITSTATUS(status);
-	free_array((void **)fd);
+	wait_fork(pid, i, fd);
 }

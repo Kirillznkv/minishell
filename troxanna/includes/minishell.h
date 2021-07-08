@@ -39,6 +39,7 @@ void		free_t_env(t_env *env_t);
 int			check_equals_sign(char *argv);
 void		ft_error(char *name, int n, int err_code, int fd);
 void		ft_error_exec(char *name, int n, int err_code, int fd);
+int			**create_pipe_fd(int count);
 int			check_env_line(char **env, char *key);
 t_env		*check_repeat_export(t_env *env_export, char *key);
 int			check_valid_identifier(char *id, int fd);
