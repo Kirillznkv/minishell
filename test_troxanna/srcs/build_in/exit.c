@@ -25,10 +25,10 @@ void	ft_exit_shell(int fd, char **argv, int argc)
 		if (!check_exit_number(argv[1]))
 			ft_error(argv[1], 4, 255, fd);
 		else
-			error_code_dollar = ft_atoi(argv[1]);
+			g_error_code_dollar = ft_atoi(argv[1]);
 	}
 	else
-		error_code_dollar = 0;
+		g_error_code_dollar = 0;
 	write(fd, "exit\n", 5);
-	exit(error_code_dollar);
+	exit(g_error_code_dollar);
 }

@@ -32,7 +32,7 @@ void	redirect_error_openfile(char *file_name)
 	write(1, "bash: ", 7);
 	write(1, file_name, ft_strlen(file_name));
 	write(1, ": No such file or directory\n", 29);
-	error_code_dollar = 1;
+	g_error_code_dollar = 1;
 }
 
 int	fd_control(t_commands **p_command)

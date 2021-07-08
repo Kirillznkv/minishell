@@ -1,57 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	write_env_value(t_env *env_export, char *env, int i)
-{
-	int	j;
-	int	tmp;
-
-	j = 0;
-	tmp = i;
-	while (env[tmp++])
-		j++;
-	env_export->content->value = (char *)malloc(sizeof(char) * (j) + 1);
-	j = 0;
-	while (env[i])
-	{
-		(env_export->content)->value[j] = env[i];
-		j++;
-		i++;
-	}
-	env_export->content->value[j] = '\0';
-}
-
-int	write_env_key(t_env *env_export, char *env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env[i] != '=' && env[i] != '\0')
-		i++;
-	env_export->content->key = (char *)malloc(sizeof(char) * i + 1);
-	while (j < i)
-	{
-		env_export->content->key[j] = env[j];
-		j++;
-	}
-	env_export->content->key[j] = '\0';
-	if (env[i] == '\0')
-		return (0);
-	return (j + 1);
-}
-
-void	write_env(t_env *env_export, char *env)
-{
-	int	i;
-
-	i = write_env_key(env_export, env);
-	if (i > 0 && ft_strncmp(env, "OLDPWD", check_equals_sign(env)
-			> 6 ? check_equals_sign(env) : 6))
-		write_env_value(env_export, env, i);
-}
-
-void	ft_env_sort(t_env **env_export, int i)
+static void	ft_env_sort(t_env **env_export, int i)
 {
 	t_content	*tmp;
 	t_env		*ptr;
@@ -76,7 +25,7 @@ void	ft_env_sort(t_env **env_export, int i)
 	}
 }
 
-void	ft_print_env(t_env **env_export, int fd)
+static void	ft_print_env(t_env **env_export, int fd)
 {
 	t_env	*ptr;
 
@@ -98,15 +47,30 @@ void	ft_print_env(t_env **env_export, int fd)
 	}
 }
 
-void	rewrite_repeat_export()
+static void	handling_write_export(t_env **env_export,
+						char **argv, int args, int fd)
 {
-	
+	t_env	*tmp;
+	t_env	*ptr;
+
+	ptr = *env_export;
+	if (check_valid_identifier(argv[args], fd))
+	{
+		tmp = check_repeat_export(*env_export, argv[args]);
+		if (argv[args][check_equals_sign(argv[args])] == '=')
+		{
+			if (tmp && *env_export == tmp)
+				*env_export = delete_head(tmp);
+			else if (tmp)
+				ptr = delet_elem(tmp, *env_export);
+		}
+		if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
+			add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
+	}
 }
 
 void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 {
-	t_env	*tmp;
-	t_env	*ptr;
 	int		args;
 
 	args = 1;
@@ -116,20 +80,7 @@ void	ft_export_shell(t_env **env_export, char **argv, int argc, int fd)
 	{
 		while (args < argc)
 		{
-			ptr = *env_export;
-			if (check_valid_identifier(argv[args], fd))
-			{
-				tmp = check_repeat_export(ptr, argv[args]);
-				if (argv[args][check_equals_sign(argv[args])] == '=')
-				{
-					if (tmp && *env_export == tmp)
-						*env_export = delete_head(tmp);
-					else if (tmp)
-						ptr = delet_elem(tmp, *env_export);
-				}
-				if (!tmp || argv[args][check_equals_sign(argv[args])] == '=')
-					add_elem_env(*env_export, new_elem_env(), write_env, argv[args]);
-			}
+			handling_write_export(env_export, argv, args, fd);
 			args++;
 		}
 	}

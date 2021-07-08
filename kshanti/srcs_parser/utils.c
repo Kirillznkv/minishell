@@ -15,7 +15,7 @@
 int	wr_er(char *s, int error_code)
 {
 	write(1, s, ft_strlen(s));
-	error_code_dollar = error_code;
+	g_error_code_dollar = error_code;
 	return (1);
 }
 

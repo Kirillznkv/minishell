@@ -76,12 +76,12 @@ void	execute_pipe(t_commands *cmd, char ***env, t_env **env_main)
 		{
 			pipe_child(fd, pid_i[1], count_pipe(cmd));
 			if (parse_command(ptr, env, env_main))
-				exit(error_code_dollar);
+				exit(g_error_code_dollar);
 			exec_run(ptr, *env);
 		}
 		ptr = ptr->next;
 	}
 	waitpid(pid_i[0], &status, WUNTRACED | WCONTINUED);
-	error_code_dollar = WEXITSTATUS(status);
+	g_error_code_dollar = WEXITSTATUS(status);
 	free_array((void **)fd);
 }

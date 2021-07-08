@@ -36,7 +36,7 @@ int	check_valid_identifier(char *id, int fd)
 	{
 		write(fd, id, ft_strlen(id));
 		write(fd, ": not a valid identifier\n", 25);
-		error_code_dollar = 1;
+		g_error_code_dollar = 1;
 		return (0);
 	}
 	return (1);

@@ -38,7 +38,7 @@ void	ft_error(char *name, int n, int err_code, int fd)
 		ft_putstr_fd(name, fd);
 		ft_putstr_fd(": numeric argument required\n", fd);
 	}
-	error_code_dollar = err_code;
+	g_error_code_dollar = err_code;
 	return ;
 }
 
@@ -63,6 +63,6 @@ void	ft_error_exec(char *name, int n, int err_code, int fd)
 		ft_putstr_fd(name, fd);
 		ft_putchar_fd('\n', fd);
 	}
-	error_code_dollar = err_code;
-	exit(error_code_dollar);
+	g_error_code_dollar = err_code;
+	exit(g_error_code_dollar);
 }

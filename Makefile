@@ -29,8 +29,8 @@ C_FILE =	$(SRCS)parser.c $(SRCS)parser_utils.c $(SRCS)preparser.c $(SRCS)quotes.
 			./main.c\
 			$(SRCS2)exec_command.c $(SRCS2)ft_split.c $(SRCS2)env_utils.c $(SRCS2)start_cmd.c\
 			$(SRCS3)other_commands.c $(SRCS3)export.c $(SRCS3)echo.c $(SRCS3)cd.c $(SRCS2)pipe.c\
-			$(SRCS3)exit.c $(SRCS2)error_and_free.c $(SRCS2)list.c $(SRCS2)check_func.c $(SRCS2)export_utils.c\
-			$(SRCS2)rewrite_env.c
+			$(SRCS3)exit.c $(SRCS2)error_and_free.c $(SRCS2)list.c $(SRCS2)check_func.c $(SRCS3)export_utils.c\
+			$(SRCS2)rewrite_env.c $(SRCS3)export_write.c
 
 O_FILE = $(C_FILE:.c=.o)
 

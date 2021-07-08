@@ -55,7 +55,7 @@ int	echo_home(char **argv, int fd, int i)
 			ft_putstr_fd("no such user or named directory: ", fd);
 			ft_putstr_fd(argv[j] + 1, fd);
 			ft_putchar_fd('\n', fd);
-			error_code_dollar = 1;
+			g_error_code_dollar = 1;
 			return (0);
 		}
 	}

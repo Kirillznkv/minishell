@@ -34,7 +34,7 @@ static void	execute_command(t_commands *cmd, char ***env, t_env **env_main)
 		else
 		{
 			waitpid(pid, &status, WUNTRACED | WCONTINUED);
-			error_code_dollar = WEXITSTATUS(status);
+			g_error_code_dollar = WEXITSTATUS(status);
 		}
 	}
 }
@@ -45,7 +45,7 @@ void	start_cmd(t_commands *cmd, char ***env, t_env **env_main)
 	char	**tmp;
 
 	tmp_fd = dup(0);
-	error_code_dollar = 0;
+	g_error_code_dollar = 0;
 	if (cmd->pipe)
 		execute_pipe(cmd, env, env_main);
 	else

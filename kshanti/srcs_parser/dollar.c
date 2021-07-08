@@ -19,7 +19,7 @@ void	past_error_code(char **p_command_line, size_t *i)
 	char	*last_part;
 	char	*save_to_free;
 
-	string_error_code = ft_itoa(error_code_dollar);
+	string_error_code = ft_itoa(g_error_code_dollar);
 	first_part = ft_substr(*p_command_line, 0, *i);
 	last_part = ft_substr(*p_command_line, *i, -1);
 	free(*p_command_line);

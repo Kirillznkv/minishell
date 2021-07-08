@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **env)
 	t_env	*env_main;
 	t_env	*ptr;
 
-	error_code_dollar = 0;
+	g_error_code_dollar = 0;
 	env_main = ft_create_env(env);
 	new_env = new_env_malloc(env, ft_counter_env(env));
 	inc_shlvl(env_main);
@@ -46,5 +46,5 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGQUIT, ctrl_slash);
 	}
 	ctrl_d();
-	return (error_code_dollar);
+	return (g_error_code_dollar);
 }
