@@ -32,11 +32,12 @@ int	check_valid_identifier(char *id, int fd)
 	int	i;
 
 	i = 0;
-	if (id[0] == '=' || ft_isdigit(id[0]))
+	if (id[0] == '=' || ft_isdigit(id[0]) || id[0] == '-')
 	{
-		write(fd, id, ft_strlen(id));
-		write(fd, ": not a valid identifier\n", 25);
-		g_error_code_dollar = 1;
+		if (id[0] == '-')
+			ft_error(id, 6, 2, fd);
+		else
+			ft_error(id, 5, 1, fd);
 		return (0);
 	}
 	return (1);

@@ -21,23 +21,29 @@ void	free_t_env(t_env *env_t)
 	free(env_t);
 }
 
+static void	write_error(char *str, char *name, int fd)
+{
+	ft_putstr_fd(name, fd);
+	ft_putstr_fd(str, fd);
+}
+
 void	ft_error(char *name, int n, int err_code, int fd)
 {
 	if (n == 1)
 		ft_putstr_fd("OLDPWD not set\n", fd);
 	else if (n == 2)
 	{
-		ft_putstr_fd(name, fd);
-		ft_putstr_fd(": No such file or directory\n", fd);
+		write_error(": No such file or directory\n", name, fd);
 		ft_putchar_fd('\n', fd);
 	}
 	else if (n == 3)
 		ft_putstr_fd("too many arguments\n", fd);
 	else if (n == 4)
-	{
-		ft_putstr_fd(name, fd);
-		ft_putstr_fd(": numeric argument required\n", fd);
-	}
+		write_error(": numeric argument required\n", name, fd);
+	else if (n == 5)
+		write_error(": not a valid identifier\n", name, fd);
+	else if (n == 6)
+		write_error(": invalid option\n", name, fd);
 	g_error_code_dollar = err_code;
 	return ;
 }
