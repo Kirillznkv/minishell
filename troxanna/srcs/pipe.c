@@ -81,4 +81,5 @@ void	execute_pipe(t_commands *cmd, char ***env, t_env **env_main)
 		ptr = ptr->next;
 	}
 	wait_fork(pid, i, fd);
+	free(pid);
 }
